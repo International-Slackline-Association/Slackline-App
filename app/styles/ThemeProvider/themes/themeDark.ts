@@ -6,7 +6,7 @@ const theme: IThemeInterface = {
   name: 'dark',
 
   text: rgba(colors.white, 1),
-  textSecondary: rgba(colors.white, 0.6),
+  textSecondary: rgba(colors.white, 0.5),
   textTertiary: rgba(colors.white, 0.3),
 
   // fill: rgba(lighten(0.03, colors.primary), 1),

@@ -8,7 +8,7 @@ const GlobalStyles = createGlobalStyle`
         height: 100%;
         font-size: 100%;
         ${media.desktop`
-            font-size: 200%;
+            font-size: 150%;
         `}
     }
     body {

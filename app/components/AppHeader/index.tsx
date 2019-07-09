@@ -2,6 +2,8 @@ import React, { memo } from 'react';
 import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
 import Title from './Title';
+import Description from './Description';
+import toolsIcon from './tools_icon.svg';
 
 interface Props {}
 
@@ -9,28 +11,41 @@ function AppHeader(props: Props) {
   return (
     <Wrapper>
       <InnerWrapper>
+        <Logo src={toolsIcon} />
         <Title />
+        {/* <Description /> */}
       </InnerWrapper>
       <ClippedZone />
     </Wrapper>
   );
 }
 
+const Logo = styled.img`
+  display: none;
+  flex: none;
+  height: auto;
+  width: 3em;
+  justify-content: center;
+  align-self: center;
+  margin: 1em 0;
+  ${media.desktop`
+    display: flex;
+  `};
+`;
+
 const InnerWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
+  padding: 1em;
+  flex-grow: 1;
+  ${media.desktop`
+    padding: 2em 2em 2em 0;
+  `};
 `;
 const ClippedZone = styled.div`
   display: flex;
-  flex-basis: 16%;
-`;
-
-const desktop = css`
-  flex-direction: row-reverse;
-  width: 66vh;
-  height: 100vh;
-  clip-path: polygon(16% 0, 100% 0, 100% 100%, 16% 100%, 0 33%);
+  flex: 0 0 16%;
 `;
 
 const Wrapper = styled.div`
@@ -42,7 +57,10 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   clip-path: polygon(0 0, 100% 0, 100% 84%, 66% 100%, 0 84%);
   ${media.desktop`
-    ${desktop}
+    flex-direction: row-reverse;
+    width: 66vh;
+    height: 100vh;
+    clip-path: polygon(16% 0, 100% 0, 100% 100%, 16% 100%, 0 33%);
   `};
 `;
 

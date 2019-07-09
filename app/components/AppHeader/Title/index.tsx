@@ -22,22 +22,26 @@ function Title() {
 const Logo = styled.img`
   display: flex;
   flex: none;
-  height: 33%;
-  width: 100%;
+  align-self: center;
+  ${media.desktop`
+    width: 100%;
+  `};
 `;
 
 const Text = styled.span`
+  font-size: 1em;
   font-weight: bold;
   text-align: center;
 `;
 
 const Span = styled.span`
-  font-size: 0.5rem;
-  margin: 0 0.5rem;
+  font-size: 0.5em;
+  font-weight: bold;
+  margin: 0 1em;
 `;
 
 const Divider = styled.div`
-  width: 2rem;
+  width: 2em;
   height: 1px;
   background-color: ${props => props.theme.text};
   ${media.desktop`
@@ -49,7 +53,7 @@ const ByWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem 0;
+  margin: 0.5em 0;
   ${media.desktop`
   `};
 `;
@@ -57,10 +61,10 @@ const ByWrapper = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  flex-basis: 66%;
+  justify-content: flex-start;
+  margin-bottom: 0em;
   ${media.desktop`
-    flex-basis: 50%;
+    margin-bottom: 2em;
   `};
 `;
 
