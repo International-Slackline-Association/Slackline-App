@@ -17,6 +17,11 @@ const GlobalStyles = createGlobalStyle`
         height: 100%;
         width: 100%;
         color: ${p => p.theme.text};
+        a {
+            text-decoration: none;
+            color: ${p => p.theme.text};
+
+        }
     }
     #root {
         height: 100%;

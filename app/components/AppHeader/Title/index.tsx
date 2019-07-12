@@ -8,7 +8,7 @@ interface Props {}
 function Title() {
   return (
     <Wrapper>
-      <Text>Slackline Web Tools</Text>
+      <Text href="/">Slackline Web Tools</Text>
       <ByWrapper>
         <Divider />
         <Span>by</Span>
@@ -28,10 +28,11 @@ const Logo = styled.img`
   `};
 `;
 
-const Text = styled.span`
+const Text = styled.a`
   font-size: 1em;
   font-weight: bold;
   text-align: center;
+  text-decoration: none;
 `;
 
 const Span = styled.span`
@@ -55,6 +56,7 @@ const ByWrapper = styled.div`
   align-items: center;
   margin: 0.5em 0;
   ${media.desktop`
+    margin: 1.5em 0;
   `};
 `;
 

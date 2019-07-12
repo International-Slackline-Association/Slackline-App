@@ -7,6 +7,7 @@ export const fontFamily = css`
 
 export const touchableOpacity = css`
   ${transitions(['opacity'], '0.2s')}
+  cursor: pointer;
 
   &:hover {
     opacity: 0.7;
