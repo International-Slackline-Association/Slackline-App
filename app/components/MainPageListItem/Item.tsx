@@ -35,9 +35,9 @@ function Item(props: Props) {
       isAvailable={props.isAvailable}
     >
       <Icon iconType={props.icon} />
-      {isHoverState && !props.isAvailable && (
+      {!props.isAvailable && (
         <NotAvailableWrapper>
-          <span>SOON...</span>
+          <span>AVAILABLE SOON...</span>
         </NotAvailableWrapper>
       )}
       <TitleWrapper>
@@ -54,6 +54,7 @@ const NotAvailableWrapper = styled.div`
   justify-content: center;
   background-color: ${props => props.theme.overlay};
   & span {
+    font-size: 0.8em;
     display: flex;
     align-self: center;
   }
