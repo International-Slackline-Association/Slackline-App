@@ -14,18 +14,26 @@ function Title() {
         <Span>by</Span>
         <Divider />
       </ByWrapper>
-      <Logo src={logo} />
+      <Logo href={'//www.slacklineinternational.org'} target="_blank">
+        <Img src={logo} />
+      </Logo>
     </Wrapper>
   );
 }
 
-const Logo = styled.img`
+const Img = styled.img`
   display: flex;
   flex: none;
   align-self: center;
   ${media.desktop`
-    width: 100%;
+    width: 20em;
   `};
+`;
+
+const Logo = styled.a`
+  display: flex;
+  flex: none;
+  align-self: center;
 `;
 
 const Text = styled.a`
@@ -33,10 +41,13 @@ const Text = styled.a`
   font-weight: bold;
   text-align: center;
   text-decoration: none;
+  ${media.desktop`
+    font-size: 1.5em;
+  `};
 `;
 
 const Span = styled.span`
-  font-size: 0.5em;
+  font-size: 1em;
   font-weight: bold;
   margin: 0 1em;
 `;

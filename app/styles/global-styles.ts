@@ -6,21 +6,19 @@ import media from './media';
 const GlobalStyles = createGlobalStyle`
     html {
         height: 100%;
+        max-height: 100%;
         font-size: 100%;
-        ${media.desktop`
-            font-size: 150%;
-        `}
     }
     body {
         font-family: 'metropolis', Arial, Helvetica, sans-serif;
         background-color: ${props => props.theme.background};
         height: 100%;
+        max-height: 100%;
         width: 100%;
         color: ${p => p.theme.text};
         a {
             text-decoration: none;
             color: ${p => p.theme.text};
-
         }
     }
     #root {

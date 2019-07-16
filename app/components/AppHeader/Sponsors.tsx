@@ -4,12 +4,14 @@ import media from '../../styles/media';
 
 interface Props {}
 
-function Description(props: Props) {
+function Sponsors(props: Props) {
   return (
     <Wrapper>
       <span>
-        Slackline web tools is offline web application to provide
-        frequently needed resources and tools for slackliners all bundled together.
+        Supported / Sponsored by
+      </span>
+      <span>
+        [Logos...]
       </span>
     </Wrapper>
   );
@@ -17,18 +19,19 @@ function Description(props: Props) {
 
 const Wrapper = styled.div`
   display: none;
-
+  justify-content: center;
+  flex-direction: column;
   ${media.desktop`
     display: flex;
   `};
   & span {
+
     font-size: 1em;
-    margin: 2em 0em;
-    /* font-weight: bolder; */
+    margin: 1em 0em;
+    /* font-weight: bold; */
     font-style: italic;
-    line-height: 1.5em;
-    text-align: left;
+    text-align: center;
   }
 `;
 
-export default memo(Description);
+export default memo(Sponsors);

@@ -7,27 +7,23 @@ import media from '../../styles/media';
 import AppHeader from '../../components/AppHeader';
 
 const HomePage = lazy(() => import('../HomePage'));
+const InstructorCertificateExplorer = lazy(() =>
+  import('../InstructorCertificateExplorer'),
+);
 
 const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
-      <Wrapper>
-        <AppHeader />
         <Switch>
           <Route path={'/'} component={HomePage} />
+          <Route
+            path={'/instructor-certificate-explorer'}
+            component={InstructorCertificateExplorer}
+          />
         </Switch>
-      </Wrapper>
       <GlobalStyles />
     </Suspense>
   );
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  ${media.desktop`
-    flex-direction: row-reverse;
-  `}
-`;
 
 export default memo(App);

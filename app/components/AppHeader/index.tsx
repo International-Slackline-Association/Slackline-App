@@ -4,6 +4,7 @@ import media from '../../styles/media';
 import Title from './Title';
 import Description from './Description';
 import toolsIcon from './tools_icon.svg';
+import Sponsors from './Sponsors';
 
 interface Props {}
 
@@ -13,7 +14,8 @@ function AppHeader(props: Props) {
       <InnerWrapper>
         <Logo src={toolsIcon} />
         <Title />
-        {/* <Description /> */}
+        <Description />
+        <Sponsors />
       </InnerWrapper>
       <ClippedZone />
     </Wrapper>

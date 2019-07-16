@@ -2,11 +2,13 @@ import React, { memo, useState } from 'react';
 import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
 import icon from './Icons/tools_icon.svg';
+
 import { touchableOpacity } from 'styles/mixins';
 import { cover } from 'polished';
+import Icon, { IconType } from './Icon';
 
 interface Props {
-  icon: string;
+  icon: IconType;
   title: string;
   subtitle: string;
   isAvailable: boolean;
@@ -32,10 +34,10 @@ function Item(props: Props) {
       onMouseLeave={handleMouseHover}
       isAvailable={props.isAvailable}
     >
-      <Icon src={icon} />
+      <Icon iconType={props.icon} />
       {isHoverState && !props.isAvailable && (
         <NotAvailableWrapper>
-          <span>COMING SOON</span>
+          <span>SOON...</span>
         </NotAvailableWrapper>
       )}
       <TitleWrapper>
@@ -58,13 +60,13 @@ const NotAvailableWrapper = styled.div`
 `;
 
 const Subtitle = styled.span`
-  font-size: 0.6em;
+  font-size: 0.7em;
   text-align: left;
   color: ${props => props.theme.textSecondary};
 `;
 
 const Title = styled.span`
-  font-size: 0.7em;
+  font-size: 1em;
   font-weight: bold;
   text-align: left;
   margin-bottom: 0.5em;
@@ -73,14 +75,7 @@ const Title = styled.span`
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0.2em;
-`;
-
-const Icon = styled.img`
-  display: flex;
-  flex: none;
-  width: 2em;
-  margin-right: 0.5em;
+  padding: 0 0.2em 0.2em 0.2em;
 `;
 
 const Wrapper = styled.a<{ isAvailable: boolean }>`

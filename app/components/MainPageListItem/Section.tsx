@@ -3,7 +3,7 @@ import media from '../../styles/media';
 
 export const MainPageSection = styled.span`
   color: ${props => props.theme.brand};
-  font-size: 0.6em;
+  font-size: 0.8em;
   text-align: center;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 `;
