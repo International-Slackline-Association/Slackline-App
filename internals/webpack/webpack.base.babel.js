@@ -6,7 +6,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const WebpackBar = require('webpackbar'); 
+const WebpackBar = require('webpackbar');
 
 module.exports = options => ({
   mode: options.mode,
@@ -124,7 +124,6 @@ module.exports = options => ({
     }),
     new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
     new WebpackBar(),
-
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
