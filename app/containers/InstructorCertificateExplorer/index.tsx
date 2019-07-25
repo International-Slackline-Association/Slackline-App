@@ -8,6 +8,9 @@ import { selectDefault } from './selectors';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import styled from 'styles/styled-components';
 import media from 'styles/media';
+import { Icon } from 'components/Icons/Icon';
+import { TextInput } from 'components/TextInput';
+import { LoadableButton } from 'components/LoadableButton';
 
 const key = 'test';
 
@@ -23,42 +26,74 @@ export default function InstructorCertificateExplorer() {
   useInjectReducer({ key: key, reducer: reducer });
   return (
     <AppBackgroundContainer>
-      <Header>
-        {/* <Icon src={icon} /> */}
-      </Header>
+      <Wrapper>
+        <Header>
+          <HeaderIcon iconType="instructor_certificate" />
+          <span>Instructor Certificate Explorer</span>
+        </Header>
+        <TextInput label="Type the ID of the instructor" />
+        <CustomLoadableButton isLoading={false}>CHECK</CustomLoadableButton>
+        <Divider />
+        <ResultText>ABC</ResultText>
+      </Wrapper>
     </AppBackgroundContainer>
   );
 }
 
-const Icon = styled.img`
-  display: flex;
-  flex: none;
-  width: 2em;
-  margin-right: 0.5em;
+
+const ResultText = styled.span`
 `;
 
-const ItemsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  margin-bottom: 4em;
+  background-color: ${props => props.theme.border};
   ${media.desktop`
-    flex-direction: row;
-    align-self: flex-start;
-    flex-wrap: wrap;
-    overflow-y: scroll;
-    max-height: 66vh;
+    height: 1px;
   `};
+`;
+const CustomLoadableButton = styled(LoadableButton)`
+  margin-top: 4em;
+  margin-bottom: 4em;
+  font-size: 0.8em;
+  border-radius: 2em;
+`;
+
+const HeaderIcon = styled(Icon)`
+  display: flex;
+  flex: none;
+  width: 3em;
+  height: 3em;
 `;
 
 const Header = styled.div`
-  align-self: center;
-  font-size: 1em;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4em;
   ${media.desktop`
+    margin-top: 3em;
+  `};
+  & span {
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.05em;
     margin-top: 1em;
-    margin-bottom: 3em;
-    text-align: left;
-    align-self: flex-start;
+    ${media.desktop`
+      font-size: 1.5em;
+  `};
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  ${media.desktop`
   `};
 `;

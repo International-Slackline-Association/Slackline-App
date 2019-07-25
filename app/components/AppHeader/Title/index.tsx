@@ -78,6 +78,7 @@ const Wrapper = styled.div`
   margin-bottom: 0em;
   ${media.desktop`
     margin-bottom: 2em;
+    margin-top: 25%;
   `};
 `;
 

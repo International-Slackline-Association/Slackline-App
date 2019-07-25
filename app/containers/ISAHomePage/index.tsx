@@ -6,7 +6,7 @@ import { MainPageSection } from 'components/MainPageListItem/Section';
 import { data } from './data';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
 
-export default function HomePage() {
+export default function ISAHomePage() {
   function onItemClick(path: string) {
     return () => {};
   }
@@ -15,7 +15,7 @@ export default function HomePage() {
     <AppBackgroundContainer>
       <Wrapper>
         <Text>
-          Collection of the tools you need <br /> Access Offline
+          International Slackline Association <br /> Online Tools
         </Text>
         <ItemsWrapper>
           {data.map((section, index) => {
@@ -99,7 +99,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  flex: 1;
   ${media.desktop`
   `};
 `;

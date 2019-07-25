@@ -12,7 +12,7 @@ function AppHeader(props: Props) {
   return (
     <Wrapper>
       <InnerWrapper>
-        <Logo src={toolsIcon} />
+        {/* <Logo src={toolsIcon} /> */}
         <Title />
         <Description />
         <Sponsors />
@@ -60,7 +60,8 @@ const Wrapper = styled.div`
   clip-path: polygon(0 0, 100% 0, 100% 84%, 66% 100%, 0 84%);
   ${media.desktop`
     flex-direction: row-reverse;
-    width: 66vh;
+    width: 30%;
+    min-width: 400px;
     height: 100vh;
     clip-path: polygon(16% 0, 100% 0, 100% 100%, 16% 100%, 0 33%);
   `};

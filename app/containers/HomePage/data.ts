@@ -1,4 +1,4 @@
-import { IconType } from 'components/MainPageListItem/Icon';
+import { IconType } from 'components/Icons/Icon';
 
 interface MainPageSection {
   title: string;
@@ -35,13 +35,6 @@ export const data: MainPageSection[] = [
         subtitle: 'Simulate the backup fall for your highline',
         isAvailable: false,
       },
-      {
-        icon: 'stretch_chart',
-        path: '',
-        title: 'Stretch Charts',
-        subtitle: 'View stretch charts of the webbings',
-        isAvailable: false,
-      },
     ],
   },
   {
@@ -71,53 +64,33 @@ export const data: MainPageSection[] = [
     ],
   },
   {
-    title: 'Certificates',
+    title: 'Gears',
     items: [
       {
-        icon: 'instructor_certificate',
-        path: 'instructor-certificate-explorer',
-        title: 'Instructor Certificate Explorer',
-        subtitle: 'Check the certificate of an instructor',
+        icon: 'stretch_chart',
+        path: '',
+        title: 'Webbing Comparison',
+        subtitle: 'Compare webbings by stretch, price, weight',
         isAvailable: true,
-      },
-      {
-        icon: 'rigger_certificate',
-        path: '',
-        title: 'Rigger Certificate Explorer',
-        subtitle: 'Check the certificate of a rigger',
-        isAvailable: false,
-      },
-      {
-        icon: 'gear_certificate',
-        path: '',
-        title: 'Gear Certificate Explorer',
-        subtitle: 'Check the certificate of a gear',
-        isAvailable: false,
       },
     ],
   },
   {
-    title: 'Documents & PDF',
+    title: 'Knowledge',
     items: [
       {
         icon: 'collection',
         path: '',
-        title: 'Top Picks',
-        subtitle:
-          'Quick access to the most recommended documents',
-        isAvailable: false,
+        title: 'Top Picks from ISA',
+        subtitle: 'Quick access to the most recommended documents from ISA',
+        isAvailable: true,
       },
-    ],
-  },
-  {
-    title: 'Miscellaneous',
-    items: [
       {
-        icon: 'risk_builder',
+        icon: 'collection',
         path: '',
-        title: 'Risk Management Builder',
-        subtitle: 'Construct a risk management document',
-        isAvailable: false,
+        title: 'Tutorials',
+        subtitle: 'Essential tutorials',
+        isAvailable: true,
       },
     ],
   },

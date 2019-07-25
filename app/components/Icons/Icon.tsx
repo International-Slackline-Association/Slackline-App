@@ -1,19 +1,19 @@
 import React, { memo, useState } from 'react';
 import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
-import icon from './Icons/tools_icon.svg';
-import InstructorCertificateIcon from './Icons/instructor_certificate.svg';
-import RiggerCertificateIcon from './Icons/rigger_certificate.svg';
-import GearCertificateIcon from './Icons/gear_certificate.svg';
-import TensionIcon from './Icons/tension.svg';
-import MassConverterIcon from './Icons/mass_converter.svg';
-import StabilityCalculatorIcon from './Icons/stability.svg';
-import BackupSimulatorIcon from './Icons/backup_simulator.svg';
-import StretchChartIcon from './Icons/stretch_chart.svg';
-import RiskBuilderIcon from './Icons/risk_builder.svg';
-import LengthConverterIcon from './Icons/measure.svg';
-import ForceConverterIcon from './Icons/spring.svg';
-import CollectionIcon from './Icons/bookmark.svg';
+import icon from './svgs/tools_icon.svg';
+import InstructorCertificateIcon from './svgs/instructor_certificate.svg';
+import RiggerCertificateIcon from './svgs/rigger_certificate.svg';
+import GearCertificateIcon from './svgs/gear_certificate.svg';
+import TensionIcon from './svgs/tension.svg';
+import MassConverterIcon from './svgs/mass_converter.svg';
+import StabilityCalculatorIcon from './svgs/stability.svg';
+import BackupSimulatorIcon from './svgs/backup_simulator.svg';
+import StretchChartIcon from './svgs/stretch_chart.svg';
+import RiskBuilderIcon from './svgs/risk_builder.svg';
+import LengthConverterIcon from './svgs/measure.svg';
+import ForceConverterIcon from './svgs/spring.svg';
+import CollectionIcon from './svgs/bookmark.svg';
 
 export type IconType =
   | 'instructor_certificate'
@@ -32,9 +32,10 @@ export type IconType =
 
 interface Props {
   iconType: IconType;
+  className?: any;
 }
 
-function Icon(props: Props) {
+export const Icon = memo((props: Props) => {
   let src = icon;
 
   switch (props.iconType) {
@@ -77,15 +78,5 @@ function Icon(props: Props) {
     default:
       break;
   }
-  return <Img src={src} />;
-}
-
-const Img = styled.img`
-  display: flex;
-  width: 2em;
-  height: 2em;
-  margin-top: 0.2em;
-  margin-right: 0.5em;
-`;
-
-export default memo(Icon);
+  return <img className={props.className} src={src} />;
+});

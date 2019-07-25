@@ -23,6 +23,7 @@ const ContentSection = styled.div`
   align-items: center;
   flex: 1;
   ${media.desktop`
+    align-items: flex-start;
     padding: 2em 2em 0em 3em;
   `};
 `;

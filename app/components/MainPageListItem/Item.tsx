@@ -1,11 +1,11 @@
 import React, { memo, useState } from 'react';
-import styled, { css } from '../../styles/styled-components';
+import styled from '../../styles/styled-components';
 import media from '../../styles/media';
 import icon from './Icons/tools_icon.svg';
 
 import { touchableOpacity } from 'styles/mixins';
 import { cover } from 'polished';
-import Icon, { IconType } from './Icon';
+import { Icon, IconType } from '../Icons/Icon';
 
 interface Props {
   icon: IconType;
@@ -34,7 +34,7 @@ function Item(props: Props) {
       onMouseLeave={handleMouseHover}
       isAvailable={props.isAvailable}
     >
-      <Icon iconType={props.icon} />
+      <LeftIcon iconType={props.icon} />
       {!props.isAvailable && (
         <NotAvailableWrapper>
           <span>AVAILABLE SOON...</span>
@@ -47,6 +47,14 @@ function Item(props: Props) {
     </Wrapper>
   );
 }
+
+const LeftIcon = styled(Icon)`
+  display: flex;
+  width: 2em;
+  height: 2em;
+  margin-top: 0.2em;
+  margin-right: 0.5em;
+`;
 
 const NotAvailableWrapper = styled.div`
   ${cover()}
