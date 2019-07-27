@@ -77,7 +77,7 @@ const Header = styled.div`
     margin-top: 3em;
   `};
   & span {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-size: 1em;
     font-weight: bold;
     text-align: center;

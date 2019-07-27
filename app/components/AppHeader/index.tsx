@@ -3,7 +3,7 @@ import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
 import Title from './Title';
 import Description from './Description';
-import toolsIcon from './tools_icon.svg';
+import isaLogo from './logo.svg';
 import Sponsors from './Sponsors';
 
 interface Props {}
@@ -15,6 +15,9 @@ function AppHeader(props: Props) {
         {/* <Logo src={toolsIcon} /> */}
         <Title />
         <Description />
+        <Logo href={'//www.slacklineinternational.org'} target="_blank">
+          <img style={{ width: '100%' }} src={isaLogo} />
+        </Logo>
         <Sponsors />
       </InnerWrapper>
       <ClippedZone />
@@ -22,14 +25,10 @@ function AppHeader(props: Props) {
   );
 }
 
-const Logo = styled.img`
+const Logo = styled.a`
   display: none;
-  flex: none;
-  height: auto;
-  width: 3em;
-  justify-content: center;
-  align-self: center;
-  margin: 1em 0;
+  align-self: flex-start;
+  width: 66%;
   ${media.desktop`
     display: flex;
   `};
@@ -42,7 +41,7 @@ const InnerWrapper = styled.div`
   padding: 1em;
   flex-grow: 1;
   ${media.desktop`
-    padding: 2em 2em 2em 0;
+    padding: 2em 0em 2em 4em;
   `};
 `;
 const ClippedZone = styled.div`
@@ -53,17 +52,25 @@ const ClippedZone = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.brandSecondary};
   width: 100%;
   height: 135px;
+  flex: 0 0 auto;
   justify-content: flex-end;
   clip-path: polygon(0 0, 100% 0, 100% 84%, 66% 100%, 0 84%);
+  background: ${props =>
+    `linear-gradient(180deg, ${props.theme.brandSecondary} 0%, ${
+      props.theme.background
+    } 100%)`};
   ${media.desktop`
-    flex-direction: row-reverse;
-    width: 30%;
+    flex-direction: row;
+    width: 33%;
     min-width: 400px;
     height: 100vh;
-    clip-path: polygon(16% 0, 100% 0, 100% 100%, 16% 100%, 0 33%);
+    background: ${props =>
+      `linear-gradient(90deg, ${props.theme.brandSecondary} 0%, ${
+        props.theme.background
+      } 100%)`};
+    clip-path: polygon(0 0, 84% 0, 100% 33%, 84% 100%, 0 100%);
   `};
 `;
 

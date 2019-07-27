@@ -22,7 +22,7 @@ const theme: IThemeInterface = {
   brand: rgba(colors.brand, 1),
   brandSecondary: rgba(colors.brand, 0.3),
 
-  border: rgba(colors.white, 0.1),
+  border: rgba(colors.white, 0.3),
 
   background: rgba(colors.black, 1),
   backgroundTransparent: rgba(colors.white, 0.07),

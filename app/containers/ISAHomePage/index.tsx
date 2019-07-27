@@ -69,6 +69,7 @@ const SectionWrapper = styled.div`
 const ItemsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: green;
   ${media.desktop`
     flex-direction: row;
     align-self: flex-start;

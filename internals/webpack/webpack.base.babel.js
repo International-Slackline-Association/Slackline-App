@@ -55,7 +55,15 @@ module.exports = options => ({
       },
       {
         test: /\.svg$/,
-        use: [
+        oneOf: [
+          {
+            resourceQuery: /file/,
+            loader: 'svg-url-loader',
+            options: {
+              limit: 1,
+              noquotes: true,
+            },
+          },
           {
             loader: 'svg-url-loader',
             options: {

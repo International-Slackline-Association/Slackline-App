@@ -34,12 +34,12 @@ function Item(props: Props) {
       onMouseLeave={handleMouseHover}
       isAvailable={props.isAvailable}
     >
-      <LeftIcon iconType={props.icon} />
       {!props.isAvailable && (
         <NotAvailableWrapper>
-          <span>AVAILABLE SOON...</span>
+          <span>Available Soon...</span>
         </NotAvailableWrapper>
       )}
+      <LeftIcon iconType={props.icon} />
       <TitleWrapper>
         <Title>{props.title}</Title>
         <Subtitle>{props.subtitle}</Subtitle>
@@ -54,17 +54,19 @@ const LeftIcon = styled(Icon)`
   height: 2em;
   margin-top: 0.2em;
   margin-right: 0.5em;
+  color: red;
 `;
 
 const NotAvailableWrapper = styled.div`
   ${cover()}
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: ${props => props.theme.overlay};
   & span {
+    background-color: ${props => props.theme.background};
+    /* transform: rotate(-45deg); */
     font-size: 0.8em;
-    display: flex;
-    align-self: center;
   }
 `;
 
@@ -76,7 +78,7 @@ const Subtitle = styled.span`
 
 const Title = styled.span`
   font-size: 1em;
-  font-weight: bold;
+  font-weight: 500;
   text-align: left;
   margin-bottom: 0.5em;
 `;

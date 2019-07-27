@@ -7,28 +7,33 @@ interface Props {}
 function Description(props: Props) {
   return (
     <Wrapper>
-      <span>
-        Slackline web tools is offline web application to provide
-        frequently needed resources and tools for slackliners all bundled together.
-      </span>
+      <Span>
+        Collection of tools and resources you need |
+        <BoldSpan> access offline</BoldSpan>
+      </Span>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   display: none;
+  margin: 2em 0em 1em 0em;
 
   ${media.desktop`
     display: flex;
   `};
-  & span {
-    font-size: 1em;
-    margin: 2em 0em;
-    /* font-weight: bolder; */
-    font-style: italic;
-    line-height: 1.5em;
-    text-align: left;
-  }
+`;
+
+const Span = styled.span`
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: left;
+`;
+
+const BoldSpan = styled.span`
+  font-size: 1.2em;
+  text-align: left;
+  font-weight: bold;
 `;
 
 export default memo(Description);

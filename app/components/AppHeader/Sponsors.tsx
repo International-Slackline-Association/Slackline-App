@@ -8,7 +8,7 @@ function Sponsors(props: Props) {
   return (
     <Wrapper>
       <span>
-        Supported / Sponsored by
+        Supported by
       </span>
       <span>
         [Logos...]
@@ -19,18 +19,18 @@ function Sponsors(props: Props) {
 
 const Wrapper = styled.div`
   display: none;
-  justify-content: center;
+  align-self: flex-start;
+  justify-content: flex-end;
   flex-direction: column;
+  flex-grow: 1;
+  margin-bottom: 3em;
   ${media.desktop`
     display: flex;
   `};
   & span {
-
+    color: ${props => props.theme.textSecondary};
     font-size: 1em;
-    margin: 1em 0em;
-    /* font-weight: bold; */
-    font-style: italic;
-    text-align: center;
+    margin: 0.5em 0em;
   }
 `;
 

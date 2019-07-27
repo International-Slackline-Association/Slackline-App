@@ -81,8 +81,8 @@ export const data: MainPageSection[] = [
       {
         icon: 'collection',
         path: '',
-        title: 'Top Picks from ISA',
-        subtitle: 'Quick access to the most recommended documents from ISA',
+        title: 'ISA Recommendations',
+        subtitle: 'Recommended articles from ISA',
         isAvailable: true,
       },
       {

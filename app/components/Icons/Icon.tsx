@@ -78,5 +78,14 @@ export const Icon = memo((props: Props) => {
     default:
       break;
   }
-  return <img className={props.className} src={src} />;
+  return <Img className={props.className} src={src} />;
 });
+
+const Img = styled.img`
+  /* color: ${props => props.theme.brand}, */
+  color: red;
+
+  path {
+    color:red;
+  }
+`;

@@ -16,6 +16,8 @@ function Component(props: Props) {
 }
 
 const Label = styled.span`
+  display: flex;
+  /* flex-basis: auto; */
   margin-bottom: 0.5em;
   color: ${props => props.theme.textSecondary};
   font-size: 0.8em;
@@ -25,7 +27,6 @@ const Label = styled.span`
 const Input = styled.input`
   background: transparent;
   outline: none;
-  /* border: none; */
   border-width: 0 0 1px;
   border-color: ${props => props.theme.text};
 
@@ -37,6 +38,7 @@ const Input = styled.input`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 `;
 
 export const TextInput = memo(Component);

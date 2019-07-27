@@ -17,7 +17,7 @@ export const LoadableButton = styled.button<Props>`
   border: none;
   background-color: ${props => props.theme.brand};
   border-radius: 3px;
-  font-weight: bold;
+  font-weight: 600;
   /* font-size: 1em; */
   padding: 1em 2em;
   outline: none;
