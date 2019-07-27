@@ -12,12 +12,8 @@ function AppHeader(props: Props) {
   return (
     <Wrapper>
       <InnerWrapper>
-        {/* <Logo src={toolsIcon} /> */}
         <Title />
         <Description />
-        <Logo href={'//www.slacklineinternational.org'} target="_blank">
-          <img style={{ width: '100%' }} src={isaLogo} />
-        </Logo>
         <Sponsors />
       </InnerWrapper>
       <ClippedZone />
@@ -25,23 +21,13 @@ function AppHeader(props: Props) {
   );
 }
 
-const Logo = styled.a`
-  display: none;
-  align-self: flex-start;
-  width: 66%;
-  ${media.desktop`
-    display: flex;
-  `};
-`;
-
 const InnerWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 1em;
   flex-grow: 1;
   ${media.desktop`
-    padding: 2em 0em 2em 4em;
+    padding: 2rem 0rem 2rem 4rem;
   `};
 `;
 const ClippedZone = styled.div`

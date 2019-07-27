@@ -18,11 +18,9 @@ export const LoadableButton = styled.button<Props>`
   background-color: ${props => props.theme.brand};
   border-radius: 3px;
   font-weight: 600;
-  /* font-size: 1em; */
   padding: 1em 2em;
   outline: none;
   cursor: pointer;
-  /* line-height: 14px; */
   transition: all 0.2s;
   color: ${props => props.theme.text};
   user-select: none;

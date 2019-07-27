@@ -50,10 +50,10 @@ function Item(props: Props) {
 
 const LeftIcon = styled(Icon)`
   display: flex;
-  width: 2em;
-  height: 2em;
-  margin-top: 0.2em;
-  margin-right: 0.5em;
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.2rem;
+  margin-right: 0.5rem;
   color: red;
 `;
 
@@ -66,27 +66,27 @@ const NotAvailableWrapper = styled.div`
   & span {
     background-color: ${props => props.theme.background};
     /* transform: rotate(-45deg); */
-    font-size: 0.8em;
+    font-size: 0.8rem;
   }
 `;
 
 const Subtitle = styled.span`
-  font-size: 0.7em;
+  font-size: 0.7rem;
   text-align: left;
   color: ${props => props.theme.textSecondary};
 `;
 
 const Title = styled.span`
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 500;
   text-align: left;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 0.2em 0.2em 0.2em;
+  padding: 0 0.2rem 0.2rem 0.2rem;
 `;
 
 const Wrapper = styled.a<{ isAvailable: boolean }>`
@@ -94,7 +94,7 @@ const Wrapper = styled.a<{ isAvailable: boolean }>`
   position: relative;
   text-decoration: none;
   color: ${props => props.theme.text};
-  margin: 1em 0em;
+  margin: 1rem 0rem;
   ${props => (props.isAvailable ? touchableOpacity : '')}
 `;
 

@@ -6,7 +6,7 @@ import { MainPageSection } from 'components/MainPageListItem/Section';
 import { data } from './data';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
 
-export default function ISAHomePage() {
+export default function HomePage() {
   function onItemClick(path: string) {
     return () => {};
   }
@@ -14,9 +14,11 @@ export default function ISAHomePage() {
   return (
     <AppBackgroundContainer>
       <Wrapper>
-        <Text>
-          International Slackline Association <br /> Online Tools
-        </Text>
+        <TextSection>
+          <Text>
+            International Slackline Association <br /> Online Tools
+          </Text>
+        </TextSection>
         <ItemsWrapper>
           {data.map((section, index) => {
             return (
@@ -59,48 +61,43 @@ const SectionWrapper = styled.div`
   flex-direction: column;
   margin: 0em 1em 1.5em 1em;
   max-width: 66vw;
-  flex-grow: 0;
   ${media.desktop`
     margin: 0em 3em 2em 0em;
-    width: 16em;
+    width: 15em;
   `};
 `;
 
 const ItemsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: green;
   ${media.desktop`
     flex-direction: row;
-    align-self: flex-start;
     flex-wrap: wrap;
-    overflow-y: scroll;
-    max-height: 66vh;
+  `};
+`;
+
+const TextSection = styled.span`
+  display: flex;
+  margin-bottom: 2em;
+  ${media.desktop`
+    display: none;
   `};
 `;
 
 const Text = styled.span`
-  text-transform: uppercase;
   align-self: center;
   font-size: 1em;
-  font-weight: bold;
   text-align: center;
   line-height: 2em;
-  margin-bottom: 2em;
-  ${media.desktop`
-    font-size: 1.5em;
-    margin-top: 2em;
-    margin-bottom: 3em;
-    text-align: left;
-    align-self: flex-start;
-  `};
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  width: 100%;
   ${media.desktop`
+    margin-top: 5em;
+    margin-bottom: 2em;
   `};
 `;

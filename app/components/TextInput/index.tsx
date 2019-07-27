@@ -4,13 +4,20 @@ import media from '../../styles/media';
 
 interface Props {
   label: string;
+  onChange(value: string): void;
 }
 
 function Component(props: Props) {
+  // const [value, setValue] = useState();
+
+  function updateValue(evt: any) {
+    // setValue(evt.target.value);
+    props.onChange(evt.target.value);
+  }
   return (
     <Wrapper>
       <Label>{props.label}</Label>
-      <Input />
+      <Input onChange={updateValue} />
     </Wrapper>
   );
 }
@@ -18,9 +25,9 @@ function Component(props: Props) {
 const Label = styled.span`
   display: flex;
   /* flex-basis: auto; */
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
   color: ${props => props.theme.textSecondary};
-  font-size: 0.8em;
+  font-size: 0.8rem;
   font-style: italic;
 `;
 

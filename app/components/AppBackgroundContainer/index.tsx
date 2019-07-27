@@ -5,9 +5,11 @@ import AppHeader from 'components/AppHeader';
 import backgroundSvg from './background.svg?file';
 import { cover } from 'polished';
 import { BackgroundPattern } from './BackgroundPattern';
+import AppFooter from 'components/AppFooter';
 
 interface Props {
   children?: ReactNode;
+  hideFooter?: boolean;
 }
 
 function AppBackgroundContainer(props: Props) {
@@ -17,6 +19,7 @@ function AppBackgroundContainer(props: Props) {
       <Wrapper>
         <AppHeader />
         <ContentSection>{props.children}</ContentSection>
+        {!props.hideFooter && <AppFooter />}
       </Wrapper>
     </React.Fragment>
   );
@@ -25,13 +28,13 @@ function AppBackgroundContainer(props: Props) {
 const ContentSection = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  padding: 1rem;
   align-items: center;
   flex: 1;
   overflow-y: scroll;
   ${media.desktop`
     align-items: flex-start;
-    padding: 2em 2em 0em 3em;
+    padding: 2rem 2rem 0rem 3em;
   `};
 `;
 

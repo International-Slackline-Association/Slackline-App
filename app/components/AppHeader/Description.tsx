@@ -17,7 +17,7 @@ function Description(props: Props) {
 
 const Wrapper = styled.div`
   display: none;
-  margin: 2em 0em 1em 0em;
+  margin: 2rem 0rem 1rem 0rem;
 
   ${media.desktop`
     display: flex;
@@ -25,13 +25,13 @@ const Wrapper = styled.div`
 `;
 
 const Span = styled.span`
-  font-size: 1.2em;
-  line-height: 2em;
+  font-size: 1.2rem;
+  line-height: 2rem;
   text-align: left;
 `;
 
 const BoldSpan = styled.span`
-  font-size: 1.2em;
+  font-size: 1.2rem;
   text-align: left;
   font-weight: bold;
 `;

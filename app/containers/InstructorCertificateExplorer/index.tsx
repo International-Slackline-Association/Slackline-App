@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,16 +22,24 @@ export default function InstructorCertificateExplorer() {
   const { dflt } = useSelector(selector);
 
   const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState<string>();
+
+  function updateValue(value: string) {
+    setInputValue(value);
+  }
 
   useInjectReducer({ key: key, reducer: reducer });
   return (
-    <AppBackgroundContainer>
+    <AppBackgroundContainer hideFooter>
       <Wrapper>
         <Header>
           <HeaderIcon iconType="instructor_certificate" />
           <span>Instructor Certificate Explorer</span>
         </Header>
-        <TextInput label="Type the ID of the instructor" />
+        <TextInput
+          label="Type the ID of the instructor"
+          onChange={updateValue}
+        />
         <CustomLoadableButton isLoading={false}>CHECK</CustomLoadableButton>
         <Divider />
         <ResultText>ABC</ResultText>
@@ -40,9 +48,7 @@ export default function InstructorCertificateExplorer() {
   );
 }
 
-
-const ResultText = styled.span`
-`;
+const ResultText = styled.span``;
 
 const Divider = styled.div`
   width: 100%;

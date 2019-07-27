@@ -18,15 +18,10 @@ function Sponsors(props: Props) {
 }
 
 const Wrapper = styled.div`
-  display: none;
-  align-self: flex-start;
-  justify-content: flex-end;
+  display: flex;
+  align-items: center;
   flex-direction: column;
   flex-grow: 1;
-  margin-bottom: 3rem;
-  ${media.desktop`
-    display: flex;
-  `};
   & span {
     color: ${props => props.theme.textSecondary};
     font-size: 1rem;
