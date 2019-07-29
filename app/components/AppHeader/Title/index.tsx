@@ -33,10 +33,11 @@ const Linebreak = styled.br`
 const Logo = styled.a`
   display: flex;
   align-self: center;
-  width: 50%;
+  width: 15rem;
   ${media.desktop`
     align-self: flex-start;
-    width: 66%;
+    width: 100%;
+    /* max-width: inherit; */
   `};
 `;
 

@@ -49,8 +49,8 @@ const Wrapper = styled.div`
     } 100%)`};
   ${media.desktop`
     flex-direction: row;
-    width: 33%;
-    min-width: 400px;
+    /* width: 25%; */
+    width: 22rem;
     height: 100vh;
     background: ${props =>
       `linear-gradient(90deg, ${props.theme.brandSecondary} 0%, ${

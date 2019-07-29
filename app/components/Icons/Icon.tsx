@@ -14,6 +14,9 @@ import RiskBuilderIcon from './svgs/risk_builder.svg';
 import LengthConverterIcon from './svgs/measure.svg';
 import ForceConverterIcon from './svgs/spring.svg';
 import CollectionIcon from './svgs/bookmark.svg';
+import RecommendedIcon from './svgs/recommended.svg';
+import MapsIcon from './svgs/maps.svg';
+import TutorialIcon from './svgs/tutorial.svg';
 
 export type IconType =
   | 'instructor_certificate'
@@ -28,6 +31,9 @@ export type IconType =
   | 'backup_simulator'
   | 'risk_builder'
   | 'collection'
+  | 'tutorial'
+  | 'recommended'
+  | 'maps'
   | 'default';
 
 interface Props {
@@ -74,6 +80,15 @@ export const Icon = memo((props: Props) => {
       break;
     case 'collection':
       src = CollectionIcon;
+      break;
+    case 'recommended':
+      src = RecommendedIcon;
+      break;
+    case 'tutorial':
+      src = TutorialIcon;
+      break;
+    case 'maps':
+      src = MapsIcon;
       break;
     default:
       break;

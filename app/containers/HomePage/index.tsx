@@ -71,6 +71,7 @@ const SectionWrapper = styled.div`
 const ItemsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   ${media.desktop`
     flex-direction: row;
     flex-wrap: wrap;
@@ -100,5 +101,6 @@ const Wrapper = styled.div`
   ${media.desktop`
     margin-top: 5em;
     margin-bottom: 2em;
+    align-items: flex-start;
   `};
 `;
