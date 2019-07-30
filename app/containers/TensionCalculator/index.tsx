@@ -10,23 +10,45 @@ import { replace } from 'connected-react-router';
 import DrawingSVG from './drawing.svg';
 import DrawingMobileSVG from './drawing_mobile.svg';
 
-interface Props extends RouteComponentProps {}
+export default function TensionCalculator() {
+  const [length, setLength] = useState(50);
+  const [weight, setWeight] = useState(75);
+  const [sag, setSag] = useState(4);
+  const [tension, setTension] = useState<number>();
 
-export default function TensionCalculator(props: Props) {
-  const [length, setLength] = useState('50');
-  const [weight, setWeight] = useState('75');
-  const [sag, setSag] = useState('4');
+  useEffect(() => {
+    updateTension();
+  }, [length, weight, sag]);
 
   const dispatch = useDispatch();
 
   function updateLengthValue(value: string, switchValue?: boolean) {
-    setLength(value);
+    let v = parseInt(value, 10);
+    if (v <= 0) {
+      v = 1;
+    }
+    setLength(v);
   }
   function updateWeightValue(value: string, switchValue?: boolean) {
-    setWeight(value);
+    let v = parseInt(value, 10);
+    if (v <= 0) {
+      v = 1;
+    }
+    setWeight(v);
   }
   function updateSagValue(value: string, switchValue?: boolean) {
-    setSag(value);
+    let v = parseInt(value, 10);
+    if (v <= 0) {
+      v = 1;
+    }
+    setSag(v);
+  }
+
+  function updateTension() {
+    if (length && weight && sag) {
+      const tension = (length * weight) / (sag * 400);
+      setTension(tension);
+    }
   }
 
   return (
@@ -45,27 +67,48 @@ export default function TensionCalculator(props: Props) {
             type="number"
             label="Length"
             onChange={updateLengthValue}
-            value={length}
+            value={length.toString()}
           />
           <Input
             switchValues={['kilogram', 'pounds']}
             type="number"
             label="Weight"
             onChange={updateWeightValue}
-            value={weight}
+            value={weight.toString()}
           />
           <Input
             switchValues={['meters', 'feet']}
             type="number"
             label="Sag"
             onChange={updateSagValue}
-            value={sag}
+            value={sag.toString()}
           />
         </InputsWrapper>
+        {tension && (
+          <React.Fragment>
+            <Result>Results</Result>
+            <ResultText>
+              Approximate Tension:&nbsp;<b>{tension.toFixed(2)} kn</b>
+            </ResultText>
+          </React.Fragment>
+        )}
       </Wrapper>
     </AppBackgroundContainer>
   );
 }
+
+const Result = styled.span`
+  font-weight: bold;
+  margin-bottom: 1rem;
+`;
+
+const ResultText = styled.span`
+  display: flex;
+  width: 100%;
+  white-space: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 const Input = styled(TextInput)`
   margin: 1rem 1rem;
@@ -77,6 +120,7 @@ const InputsWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
   ${media.desktop`
   `};
 `;

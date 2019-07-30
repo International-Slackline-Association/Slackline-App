@@ -26,6 +26,13 @@ export const data: MainPageSection[] = [
         subtitle: 'Simulate the backup fall for your highline',
         isAvailable: true,
       },
+      {
+        icon: 'maps_distance',
+        path: '',
+        title: 'Distance Measurer',
+        subtitle: 'Measure the distance between two points using google maps',
+        isAvailable: false,
+      },
     ],
   },
   {

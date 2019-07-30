@@ -18,6 +18,7 @@ import RecommendedIcon from './svgs/recommended.svg';
 import MapsIcon from './svgs/maps.svg';
 import TutorialIcon from './svgs/tutorial.svg';
 import ScatterGraphIcon from './svgs/scatter_graph.svg';
+import MapsDistanceIcon from './svgs/maps_distance.svg';
 
 export type IconType =
   | 'instructor_certificate'
@@ -36,6 +37,7 @@ export type IconType =
   | 'recommended'
   | 'maps'
   | 'scatter_graph'
+  | 'maps_distance'
   | 'default';
 
 interface Props {
@@ -94,6 +96,9 @@ export const Icon = memo((props: Props) => {
       break;
     case 'maps':
       src = MapsIcon;
+      break;
+    case 'maps_distance':
+      src = MapsDistanceIcon;
       break;
     default:
       break;
