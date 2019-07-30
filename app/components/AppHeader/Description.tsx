@@ -8,7 +8,7 @@ function Description(props: Props) {
   return (
     <Wrapper>
       <Span>
-        Collection of tools and resources you need |
+        Collection of the tools and resources you need |
         <BoldSpan> access offline</BoldSpan>
       </Span>
     </Wrapper>

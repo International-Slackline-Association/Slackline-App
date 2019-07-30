@@ -1,45 +1,100 @@
 import React, { memo, useState } from 'react';
 import styled from '../../styles/styled-components';
 import media from '../../styles/media';
+import { ToggleSwitch } from 'components/ToggleSwitch';
 
 interface Props {
+  className?: string;
+  type: string;
+  switchValues?: string[];
   label: string;
-  onChange(value: string): void;
+  value?: string;
+  onChange(value: string, switchValue: boolean): void;
 }
 
 function Component(props: Props) {
-  // const [value, setValue] = useState();
+  const [switchValue, setSwitchValue] = useState(false);
+  const [inputValue, setInputValue] = useState(props.value);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   function updateValue(evt: any) {
-    // setValue(evt.target.value);
-    props.onChange(evt.target.value);
+    setInputValue(evt.target.value);
+    props.onChange(evt.target.value, switchValue);
+  }
+
+  function inputFocused(evt: any) {
+    setIsInputFocused(true);
+  }
+  function inputFocusedOut(evt: any) {
+    setIsInputFocused(false);
+  }
+
+  function toggleSelected(value: boolean) {
+    setSwitchValue(value);
+    if (inputValue) {
+      props.onChange(inputValue, switchValue);
+    }
   }
   return (
-    <Wrapper>
+    <Wrapper className={props.className}>
       <Label>{props.label}</Label>
-      <Input onChange={updateValue} />
+      <InputWrapper>
+        <Input
+          cover={props.switchValues === undefined}
+          type={props.type}
+          onFocus={inputFocused}
+          onBlur={inputFocusedOut}
+          onChange={updateValue}
+          value={props.value}
+        />
+        {props.switchValues && (
+          <Switch
+            id={props.label}
+            toggleSelected={toggleSelected}
+            leftText={props.switchValues[0]}
+            rightText={props.switchValues[1]}
+          />
+        )}
+      </InputWrapper>
+      <Border focused={isInputFocused} />
     </Wrapper>
   );
 }
 
+const Border = styled.div<{ focused?: boolean }>`
+  background-color: ${props =>
+    props.focused ? props.theme.brand : props.theme.text};
+  height: 1px;
+  width: 100%;
+`;
+
+const Switch = styled(ToggleSwitch)`
+  display: flex;
+  margin-bottom: 0.2rem;
+`;
+
 const Label = styled.span`
   display: flex;
-  /* flex-basis: auto; */
   margin-bottom: 0.5rem;
   color: ${props => props.theme.textSecondary};
   font-size: 0.8rem;
   font-style: italic;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ cover: boolean }>`
   background: transparent;
   outline: none;
-  border-width: 0 0 1px;
-  border-color: ${props => props.theme.text};
+  border: none;
+  margin-right: 0.5rem;
+  width: ${props => (props.cover ? '100%' : '25%')};
+  min-width: 3rem;
+`;
 
-  &:focus {
-    border-color: ${props => props.theme.brand};
-  }
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`

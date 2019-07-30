@@ -1,22 +1,13 @@
 import { IconType } from 'components/Icons/Icon';
+import { MainPageSection } from './types';
 
-interface MainPageSection {
-  title: string;
-  items: Array<{
-    title: string;
-    subtitle: string;
-    icon: IconType;
-    path: string;
-    isAvailable: boolean;
-  }>;
-}
 export const data: MainPageSection[] = [
   {
     title: 'Calculators',
     items: [
       {
         icon: 'tension',
-        path: '',
+        path: 'tension-calculator',
         title: 'Tension Calculator',
         subtitle: 'Calculate the tension of the line',
         isAvailable: true,
@@ -73,6 +64,13 @@ export const data: MainPageSection[] = [
         subtitle: 'Compare webbings by stretch ratio, price, weight etc...',
         isAvailable: true,
       },
+      {
+        icon: 'scatter_graph',
+        path: '',
+        title: 'Weblock Comparison',
+        subtitle: 'Compare weblocks by price and weight',
+        isAvailable: true,
+      },
     ],
   },
   {
@@ -89,7 +87,7 @@ export const data: MainPageSection[] = [
         icon: 'tutorial',
         path: '',
         title: 'Tutorials',
-        subtitle: 'Quick offline tutorials for beginners',
+        subtitle: 'Online tutorials for everyone',
         isAvailable: true,
       },
     ],
@@ -114,7 +112,7 @@ export const data: MainPageSection[] = [
         path: '',
         title: 'My Bookmarks',
         subtitle: 'Bookmark your own links, pdfs, posts etc... to access later',
-        isAvailable: true,
+        isAvailable: false,
       },
     ],
   },

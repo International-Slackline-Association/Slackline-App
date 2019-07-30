@@ -39,8 +39,8 @@ function Item(props: Props) {
           <span>Available Soon...</span>
         </NotAvailableWrapper>
       )}
-      <LeftIcon iconType={props.icon} />
-      <TitleWrapper>
+      <LeftIcon disabled={!props.isAvailable} iconType={props.icon} />
+      <TitleWrapper disabled={!props.isAvailable} >
         <Title>{props.title}</Title>
         <Subtitle>{props.subtitle}</Subtitle>
       </TitleWrapper>
@@ -48,13 +48,14 @@ function Item(props: Props) {
   );
 }
 
-const LeftIcon = styled(Icon)`
+const LeftIcon = styled(Icon)<{ disabled?: boolean }>`
   display: flex;
   width: 2rem;
   height: 2rem;
   margin-top: 0.2rem;
   margin-right: 0.5rem;
   color: red;
+  opacity: ${props => (props.disabled ? 0.3 : 1)};
 `;
 
 const NotAvailableWrapper = styled.div`
@@ -62,9 +63,9 @@ const NotAvailableWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.overlay};
+  /* background-color: ${props => props.theme.overlay}; */
   & span {
-    background-color: ${props => props.theme.background};
+    /* background-color: ${props => props.theme.background}; */
     /* transform: rotate(-45deg); */
     font-size: 0.8rem;
   }
@@ -83,10 +84,11 @@ const Title = styled.span`
   margin-bottom: 0.5rem;
 `;
 
-const TitleWrapper = styled.div`
+const TitleWrapper = styled.div<{ disabled?: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 0 0.2rem 0.2rem 0.2rem;
+  opacity: ${props => (props.disabled ? 0.3 : 1)};
 `;
 
 const Wrapper = styled.a<{ isAvailable: boolean }>`

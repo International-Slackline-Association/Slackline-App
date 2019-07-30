@@ -17,6 +17,7 @@ import CollectionIcon from './svgs/bookmark.svg';
 import RecommendedIcon from './svgs/recommended.svg';
 import MapsIcon from './svgs/maps.svg';
 import TutorialIcon from './svgs/tutorial.svg';
+import ScatterGraphIcon from './svgs/scatter_graph.svg';
 
 export type IconType =
   | 'instructor_certificate'
@@ -34,6 +35,7 @@ export type IconType =
   | 'tutorial'
   | 'recommended'
   | 'maps'
+  | 'scatter_graph'
   | 'default';
 
 interface Props {
@@ -74,6 +76,9 @@ export const Icon = memo((props: Props) => {
       break;
     case 'stretch_chart':
       src = StretchChartIcon;
+      break;
+    case 'scatter_graph':
+      src = ScatterGraphIcon;
       break;
     case 'risk_builder':
       src = RiskBuilderIcon;

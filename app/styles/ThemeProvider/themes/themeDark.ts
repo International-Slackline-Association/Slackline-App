@@ -29,10 +29,10 @@ const theme: IThemeInterface = {
   surface: rgba(darken(0.11, colors.dark), 1),
   overlay: rgba(colors.black, 0.7),
 
-  // red: rgba(colors.red, 1),
-  // redSecondary: rgba(colors.red, 0.5),
-  // redTertiary: rgba(colors.red, 0.27),
-  // redQuaternary: rgba(colors.red, 0.16),
+  red: rgba(colors.red, 1),
+  redSecondary: rgba(colors.red, 0.5),
+  redTertiary: rgba(colors.red, 0.27),
+  redQuaternary: rgba(colors.red, 0.16),
 
   // textOnRed: rgba(colors.white, 1),
   // textOnRedSecondary: rgba(colors.white, 1),

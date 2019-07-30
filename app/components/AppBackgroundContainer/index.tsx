@@ -41,9 +41,13 @@ const ContentSection = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  /* justify-content: space-between; */
   ${media.desktop`
     flex-direction: row;
+    min-height: auto;
     max-height: 100vh;
+
     /* overflow: hidden; */
   `}
 `;
@@ -53,6 +57,7 @@ const BackgroundImage = styled(BackgroundPattern)`
   right: 0;
   bottom: 0;
   width: 100%;
+  z-index: -999;
   ${media.desktop`
     width: auto;
   `}

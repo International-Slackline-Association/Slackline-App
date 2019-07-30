@@ -50,7 +50,7 @@ const Wrapper = styled.div`
   ${media.desktop`
     flex-direction: row;
     /* width: 25%; */
-    width: 22rem;
+    width: 24rem;
     height: 100vh;
     background: ${props =>
       `linear-gradient(90deg, ${props.theme.brandSecondary} 0%, ${

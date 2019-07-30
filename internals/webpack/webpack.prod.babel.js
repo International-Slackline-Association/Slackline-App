@@ -130,8 +130,8 @@ module.exports = require('./webpack.base.babel')({
       name: 'ISA Web Tools',
       short_name: 'Web Tools',
       description: 'Slackline Web Tools from ISA',
-      background_color: '#13A89E',
-      theme_color: '#13A89E',
+      background_color: '#232F3E',
+      theme_color: '#232F3E',
       inject: true,
       ios: true,
       icons: [

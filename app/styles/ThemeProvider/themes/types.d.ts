@@ -20,8 +20,8 @@ interface IThemeInterface {
   // textOnFillQuaternary: string;
 
   brand: string;
-  brandSecondary: string; 
-  
+  brandSecondary: string;
+
   border: string;
 
   background: string;
@@ -29,10 +29,10 @@ interface IThemeInterface {
   surface: string;
   overlay: string;
 
-  // red: string;
-  // redSecondary: string;
-  // redTertiary: string;
-  // redQuaternary: string;
+  red: string;
+  redSecondary: string;
+  redTertiary: string;
+  redQuaternary: string;
 
   // textOnRed: string;
   // textOnRedSecondary: string;

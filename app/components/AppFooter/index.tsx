@@ -30,6 +30,7 @@ const ClippedZone = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
+  align-self: flex-end;
   flex-direction: column;
   width: 100%;
   height: 135px;

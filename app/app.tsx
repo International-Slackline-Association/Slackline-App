@@ -20,9 +20,6 @@ import FontFaceObserver from 'fontfaceobserver';
 // Import root app
 import App from 'containers/App';
 
-// Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
-
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
@@ -44,11 +41,9 @@ const render = (messages: any, Component = App) => {
     // tslint:disable-next-line:jsx-wrap-multiline
     <Provider store={store}>
       <ThemeProvider>
-        <LanguageProvider messages={messages}>
           <ConnectedRouter history={history}>
             <Component />
           </ConnectedRouter>
-        </LanguageProvider>
       </ThemeProvider>
     </Provider>,
     MOUNT_NODE,

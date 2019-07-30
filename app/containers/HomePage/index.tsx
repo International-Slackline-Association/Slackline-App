@@ -3,12 +3,27 @@ import styled from '../../styles/styled-components';
 import media from 'styles/media';
 import { MainPageItem } from 'components/MainPageListItem/Item';
 import { MainPageSection } from 'components/MainPageListItem/Section';
-import { data } from './data';
+import { data as mainPageData } from './main-page-data';
+import { data as isaPageData } from './isa-page-data';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
+import { RouteComponentProps } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 
-export default function HomePage() {
+interface Props extends RouteComponentProps {}
+
+export default function HomePage(props: Props) {
+  let data = mainPageData;
+  if (props.location.pathname === '/isa') {
+    data = isaPageData;
+  }
+
+  const dispatch = useDispatch();
+
   function onItemClick(path: string) {
-    return () => {};
+    return () => {
+      dispatch(push(path));
+    };
   }
 
   return (

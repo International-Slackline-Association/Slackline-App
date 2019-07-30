@@ -1,15 +1,5 @@
-import { IconType } from 'components/Icons/Icon';
+import { MainPageSection } from './types';
 
-interface MainPageSection {
-  title: string;
-  items: Array<{
-    title: string;
-    subtitle: string;
-    icon: IconType;
-    path: string;
-    isAvailable: boolean;
-  }>;
-}
 export const data: MainPageSection[] = [
   {
     title: 'Certificates',
