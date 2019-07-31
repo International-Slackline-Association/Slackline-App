@@ -51,7 +51,7 @@
     "**/*.tsx"
   ],
   "lint-staged": {
-    "*.js": [
+    "app/**/*.js": [
       "npm run lint:eslint:fix",
       "git add --force"
     ],
