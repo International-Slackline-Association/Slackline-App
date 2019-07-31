@@ -1,7 +1,10 @@
-const k = 'AIzaSyBF2ByiWqnfBG5hPbUOyl5hp' + '_' + 'ij87ExD1w';
+const k = 'AIzaSyD1d4S8fcj' + '_' + 'UEcRnxuQqpJypb9slGV9XNw'; // Its restricted to this app only. No need to steal ;)
 // tslint:disable-next-line: max-line-length
-const url = `https://sheets.googleapis.com/v4/spreadsheets/10fE6gHsAxGc_4p0Dr-1KgTKdB0Cxv_-oeWfonAdrfeE/values/Masterlist?key=${k}`;
+const url = `https://sheets.googleapis.com/v4/spreadsheets/10fE6gHsAxGc_4p0Dr-1KgTKdB0Cxv_-oeWfonAdrfeE/values/Masterlist?key=`;
 
+function spreadsheetUrl() {
+  return url + k;
+}
 interface SheetResponse {
   values: SheetItem[];
 }
@@ -67,6 +70,6 @@ function parseSheetResponse(resp: SheetResponse): InstructorItem[] {
 }
 
 async function getSpreadsheetData(): Promise<SheetResponse> {
-  const data = await fetch(url).then(response => response.json());
+  const data = await fetch(spreadsheetUrl()).then(response => response.json());
   return data;
 }
