@@ -9,12 +9,18 @@ import { useDispatch } from 'react-redux';
 import { replace } from 'connected-react-router';
 import DrawingSVG from './drawing.svg';
 import DrawingMobileSVG from './drawing_mobile.svg';
+import { convertLength } from 'components/Converter/Length/formula';
+import { convertMass } from 'components/Converter/Mass/formula';
 
 export default function TensionCalculator() {
   const [length, setLength] = useState(50);
   const [weight, setWeight] = useState(75);
   const [sag, setSag] = useState(4);
   const [tension, setTension] = useState<number>();
+
+  const [lengthString, setLengthString] = useState(length.toString());
+  const [weightString, setWeightString] = useState(weight.toString());
+  const [sagString, setSagString] = useState(sag.toString());
 
   useEffect(() => {
     updateTension();
@@ -27,6 +33,10 @@ export default function TensionCalculator() {
     if (v <= 0) {
       v = 1;
     }
+    setLengthString(v.toString());
+    if (!switchValue) {
+      v = convertLength(undefined, v)!.meters;
+    }
     setLength(v);
   }
   function updateWeightValue(value: string, switchValue?: boolean) {
@@ -34,12 +44,20 @@ export default function TensionCalculator() {
     if (v <= 0) {
       v = 1;
     }
+    setWeightString(v.toString());
+    if (!switchValue) {
+      v = convertMass(undefined, v)!.kg;
+    }
     setWeight(v);
   }
   function updateSagValue(value: string, switchValue?: boolean) {
     let v = parseInt(value, 10);
     if (v <= 0) {
       v = 1;
+    }
+    setSagString(v.toString());
+    if (!switchValue) {
+      v = convertLength(undefined, v)!.meters;
     }
     setSag(v);
   }
@@ -67,21 +85,21 @@ export default function TensionCalculator() {
             type="number"
             label="Length"
             onChange={updateLengthValue}
-            value={length.toString()}
+            value={lengthString}
           />
           <Input
             switchValues={['kilogram', 'pounds']}
             type="number"
             label="Weight"
             onChange={updateWeightValue}
-            value={weight.toString()}
+            value={weightString}
           />
           <Input
             switchValues={['meters', 'feet']}
             type="number"
             label="Sag"
             onChange={updateSagValue}
-            value={sag.toString()}
+            value={sagString}
           />
         </InputsWrapper>
         {tension && (

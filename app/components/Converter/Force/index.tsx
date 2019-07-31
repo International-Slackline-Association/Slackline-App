@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from 'react';
 import styled from 'styles/styled-components';
 import media from 'styles/media';
 import ArrowSvg from '../../svg/DoubledArrow.svg';
-import { convertLength } from './formula';
+import { convertForce } from './formula';
 import { Wrapper, InputsWrapper, Arrow, Header } from '../SharedComponents';
 import { TextInput } from 'components/TextInput';
 
@@ -19,7 +19,7 @@ function Component(props: Props) {
   }, []);
 
   function calculate(kn?: number, newton?: number, kgf?: number, lbf?: number) {
-    const values = convertLength(kn, newton, kgf, lbf);
+    const values = convertForce(kn, newton, kgf, lbf);
     if (values) {
       setKn(values.kn);
       setNewton(values.n);

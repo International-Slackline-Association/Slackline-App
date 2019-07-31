@@ -1,4 +1,4 @@
-export function convertLength(
+export function convertForce(
   kn?: number,
   newton?: number,
   kgf?: number,

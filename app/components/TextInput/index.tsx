@@ -9,6 +9,7 @@ interface Props {
   switchValues?: string[];
   label: string;
   value?: string;
+  defaultValue?: string;
   onChange(value: string, switchValue: boolean): void;
 }
 
@@ -46,6 +47,7 @@ function Component(props: Props) {
           onBlur={inputFocusedOut}
           onChange={updateValue}
           value={props.value}
+          defaultValue={props.defaultValue}
         />
         {props.switchValues && (
           <Switch
