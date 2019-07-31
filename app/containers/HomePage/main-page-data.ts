@@ -6,6 +6,13 @@ export const data: MainPageSection[] = [
     title: 'Calculators',
     items: [
       {
+        icon: 'unit_converter',
+        path: 'unit-converter',
+        title: 'Unit Converter',
+        subtitle: 'Convert mass, length and force into other units',
+        isAvailable: true,
+      },
+      {
         icon: 'tension',
         path: 'tension-calculator',
         title: 'Tension Calculator',
@@ -32,32 +39,6 @@ export const data: MainPageSection[] = [
         title: 'Distance Measurer',
         subtitle: 'Measure the distance between two points using google maps',
         isAvailable: false,
-      },
-    ],
-  },
-  {
-    title: 'Conversions',
-    items: [
-      {
-        icon: 'mass_converter',
-        path: '',
-        title: 'Mass conversion',
-        subtitle: 'Convert mass to various units',
-        isAvailable: true,
-      },
-      {
-        icon: 'length_converter',
-        path: '',
-        title: 'Length conversion',
-        subtitle: 'Convert length to various units',
-        isAvailable: true,
-      },
-      {
-        icon: 'force_converter',
-        path: '',
-        title: 'Force conversion',
-        subtitle: 'Convert froce to various units',
-        isAvailable: true,
       },
     ],
   },
@@ -95,7 +76,7 @@ export const data: MainPageSection[] = [
         path: '',
         title: 'Tutorials',
         subtitle: 'Online tutorials for everyone',
-        isAvailable: true,
+        isAvailable: false,
       },
     ],
   },

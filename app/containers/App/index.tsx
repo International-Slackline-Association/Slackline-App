@@ -8,25 +8,26 @@ const HomePage = lazy(() => import('../HomePage'));
 const InstructorCertificateExplorer = lazy(() =>
   import('../InstructorCertificateExplorer'),
 );
-
-const TensionCalculator = lazy(() =>
-  import('../TensionCalculator'),
+const UnitConverter = lazy(() =>
+  import('../UnitConverter'),
 );
+
+const TensionCalculator = lazy(() => import('../TensionCalculator'));
 
 const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
       <Switch>
-        <Route path={'/isa'} component={HomePage} />
+        <Route
+          path={'/unit-converter'}
+          component={UnitConverter}
+        />
+        <Route path={'/tension-calculator'} component={TensionCalculator} />
         <Route
           path={'/instructor-certificate-explorer'}
           component={InstructorCertificateExplorer}
         />
-        <Route
-          path={'/tension-calculator'}
-          component={TensionCalculator}
-        />
-        <Route path={'/'} component={HomePage} />
+        <Route path={['/', '/isa']} component={HomePage} />
       </Switch>
       <GlobalStyles />
     </Suspense>

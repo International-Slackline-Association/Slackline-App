@@ -6,6 +6,7 @@ import InstructorCertificateIcon from './svgs/instructor_certificate.svg';
 import RiggerCertificateIcon from './svgs/rigger_certificate.svg';
 import GearCertificateIcon from './svgs/gear_certificate.svg';
 import TensionIcon from './svgs/tension.svg';
+import UnitConverterIcon from './svgs/unit_converter.svg';
 import MassConverterIcon from './svgs/mass_converter.svg';
 import StabilityCalculatorIcon from './svgs/stability.svg';
 import BackupSimulatorIcon from './svgs/backup_simulator.svg';
@@ -25,6 +26,7 @@ export type IconType =
   | 'gear_certificate'
   | 'rigger_certificate'
   | 'tension'
+  | 'unit_converter'
   | 'mass_converter'
   | 'length_converter'
   | 'force_converter'
@@ -49,6 +51,9 @@ export const Icon = memo((props: Props) => {
   let src = icon;
 
   switch (props.iconType) {
+    case 'unit_converter':
+      src = UnitConverterIcon;
+      break;
     case 'mass_converter':
       src = MassConverterIcon;
       break;
