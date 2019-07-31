@@ -127,9 +127,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'ISA Web Tools',
+      name: 'Slackline Web Tools',
       short_name: 'Web Tools',
-      description: 'Slackline Web Tools from ISA',
+      description: 'Slackline Web Tools',
       background_color: '#232F3E',
       theme_color: '#232F3E',
       inject: true,
