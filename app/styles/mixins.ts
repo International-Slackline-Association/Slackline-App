@@ -8,6 +8,7 @@ export const fontFamily = css`
 export const touchableOpacity = css`
   ${transitions(['opacity'], '0.2s')}
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     opacity: 0.7;
@@ -16,6 +17,9 @@ export const touchableOpacity = css`
   &:active {
     transition: none;
     opacity: 0.4;
+  }
+  &:focus{
+    background-color: transparent;
   }
 `;
 

@@ -34,7 +34,7 @@ export default function TensionCalculator() {
       v = 1;
     }
     setLengthString(v.toString());
-    if (!switchValue) {
+    if (switchValue) {
       v = convertLength(undefined, v)!.meters;
     }
     setLength(v);
@@ -45,7 +45,7 @@ export default function TensionCalculator() {
       v = 1;
     }
     setWeightString(v.toString());
-    if (!switchValue) {
+    if (switchValue) {
       v = convertMass(undefined, v)!.kg;
     }
     setWeight(v);
@@ -56,7 +56,7 @@ export default function TensionCalculator() {
       v = 1;
     }
     setSagString(v.toString());
-    if (!switchValue) {
+    if (switchValue) {
       v = convertLength(undefined, v)!.meters;
     }
     setSag(v);
@@ -71,7 +71,7 @@ export default function TensionCalculator() {
 
   return (
     // tslint:disable-next-line: jsx-wrap-multiline
-    <AppBackgroundContainer>
+    <AppBackgroundContainer showBackButton>
       <Wrapper>
         <Header>
           <HeaderIcon iconType="tension" />

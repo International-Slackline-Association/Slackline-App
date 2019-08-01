@@ -13,7 +13,7 @@ interface Props extends RouteComponentProps {}
 
 export default function UnitConverter(props: Props) {
   return (
-    <AppBackgroundContainer>
+    <AppBackgroundContainer showBackButton>
       <Wrapper>
         <Header>
           <HeaderIcon iconType="unit_converter" />

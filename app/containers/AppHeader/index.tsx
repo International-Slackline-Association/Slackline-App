@@ -3,15 +3,26 @@ import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
 import Title from './Title';
 import Description from './Description';
-import isaLogo from './logo.svg';
+import BackButtonSVG from './backButton.svg';
 import Sponsors from './Sponsors';
+import { touchableOpacity } from 'styles/mixins';
+import { useDispatch } from 'react-redux';
+import { goBack } from 'connected-react-router';
 
-interface Props {}
+interface Props {
+  showBackButton?: boolean;
+}
 
 function AppHeader(props: Props) {
+  const dispatch = useDispatch();
+
+  function onBackButtonClick() {
+    dispatch(goBack());
+  }
   return (
     <Wrapper>
       <InnerWrapper>
+        {props.showBackButton && <BackButton src={BackButtonSVG} onClick={onBackButtonClick}/>}
         <Title />
         <Description />
         <Sponsors />
@@ -21,11 +32,24 @@ function AppHeader(props: Props) {
   );
 }
 
+const BackButton = styled.img`
+  ${touchableOpacity}
+  display: none;
+  position: absolute;
+  top: 40%;
+  left: 1rem;
+  width: 2rem;
+  ${media.pwaInstalled`
+    display: flex;
+  `};
+`;
+
 const InnerWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   flex-grow: 1;
+  position: relative;
   ${media.desktop`
     padding: 2rem 0rem 2rem 4rem;
   `};

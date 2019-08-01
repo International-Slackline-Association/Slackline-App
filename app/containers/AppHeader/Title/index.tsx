@@ -2,13 +2,21 @@ import React, { memo } from 'react';
 import styled from '../../../styles/styled-components';
 import media from '../../../styles/media';
 import isaLogo from '../isaLogo.svg';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
+import { touchableOpacity } from 'styles/mixins';
 
 interface Props {}
 
 function Title() {
+  const dispatch = useDispatch();
+
+  function goMainPage() {
+    dispatch(push('/'));
+  }
   return (
     <Wrapper>
-      <Text href="/">
+      <Text onClick={goMainPage}>
         Slackline <Linebreak />
         Web Tools
       </Text>
@@ -70,10 +78,13 @@ const ByWrapper = styled.div`
 `;
 
 const Text = styled.a`
+  ${touchableOpacity}
+
   font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
+
   ${media.desktop`
     font-size: 2.5rem;
     text-align: left;

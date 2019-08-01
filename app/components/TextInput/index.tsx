@@ -33,7 +33,7 @@ function Component(props: Props) {
   function toggleSelected(value: boolean) {
     setSwitchValue(value);
     if (inputValue) {
-      props.onChange(inputValue, switchValue);
+      props.onChange(inputValue, value);
     }
   }
   return (

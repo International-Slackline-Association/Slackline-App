@@ -4,11 +4,12 @@ import media from 'styles/media';
 import { TextInput } from 'components/TextInput';
 
 export const Arrow = styled.img`
-  transform: rotate(90deg);
+  display: none;
   width: 2rem;
   margin: 1rem 1rem;
   align-self: center;
   ${media.desktop`
+    display: flex;
     transform: rotate(0deg);
   `};
 `;
@@ -20,14 +21,14 @@ export const Input = styled(TextInput)`
 
 export const InputsWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
   background-color: ${props => props.theme.surface};
   border-radius: 1rem;
   ${media.desktop`
-    flex-direction: row;
   `};
 `;
 
@@ -51,8 +52,6 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-
   ${media.desktop`
-    flex-direction: column;
   `};
 `;
