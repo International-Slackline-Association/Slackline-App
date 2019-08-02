@@ -9,6 +9,7 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import { RouteComponentProps } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
+import { Helmet } from 'react-helmet';
 
 interface Props extends RouteComponentProps {}
 
@@ -28,6 +29,13 @@ export default function HomePage(props: Props) {
 
   return (
     <AppBackgroundContainer>
+      <Helmet>
+        <title>Slackline Web Tools</title>
+        <meta
+          name="description"
+          content="Collection of tools and resources"
+        />
+      </Helmet>
       <Wrapper>
         <TextSection>
           <Text>

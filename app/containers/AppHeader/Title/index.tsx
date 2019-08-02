@@ -12,7 +12,7 @@ function Title() {
   const dispatch = useDispatch();
 
   function goMainPage() {
-    dispatch(push('/'));
+    dispatch(push(''));
   }
   return (
     <Wrapper>

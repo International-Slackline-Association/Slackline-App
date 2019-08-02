@@ -5,37 +5,14 @@ import media from 'styles/media';
 import { Icon, IconType } from 'components/Icons/Icon';
 import { TextInput } from 'components/TextInput';
 import { RouteComponentProps } from 'react-router';
-import { MassConverter } from 'components/Converter/Mass';
-import { LengthConverter } from 'components/Converter/Length';
-import { ForceConverter } from 'components/Converter/Force';
-import { Helmet } from 'react-helmet';
 
 interface Props extends RouteComponentProps {}
 
-export default function UnitConverter(props: Props) {
+export default function WebbingComparison(props: Props) {
   return (
-    <React.Fragment>
-      <Helmet>
-        <title>Unit Converter</title>
-        <meta
-          name="description"
-          content="Convert mass, length and force units"
-        />
-      </Helmet>
-      <AppBackgroundContainer showBackButton>
-        <Wrapper>
-          <Header>
-            <HeaderIcon iconType="unit_converter" />
-            <span>Unit Converter</span>
-          </Header>
-          <InputsWrapper>
-            <MassConverter />
-            <LengthConverter />
-            <ForceConverter />
-          </InputsWrapper>
-        </Wrapper>
-      </AppBackgroundContainer>
-    </React.Fragment>
+    <AppBackgroundContainer showBackButton>
+      <Wrapper />
+    </AppBackgroundContainer>
   );
 }
 

@@ -11,6 +11,7 @@ import DrawingSVG from './drawing.svg';
 import DrawingMobileSVG from './drawing_mobile.svg';
 import { convertLength } from 'components/Converter/Length/formula';
 import { convertMass } from 'components/Converter/Mass/formula';
+import { Helmet } from 'react-helmet';
 
 export default function TensionCalculator() {
   const [length, setLength] = useState(50);
@@ -70,48 +71,56 @@ export default function TensionCalculator() {
   }
 
   return (
-    // tslint:disable-next-line: jsx-wrap-multiline
-    <AppBackgroundContainer showBackButton>
-      <Wrapper>
-        <Header>
-          <HeaderIcon iconType="tension" />
-          <span>Tension Calculator</span>
-        </Header>
-        <Drawing device={'desktop'} src={DrawingSVG} />
-        <Drawing device={'mobile'} src={DrawingMobileSVG} />
-        <InputsWrapper>
-          <Input
-            switchValues={['meters', 'feet']}
-            type="number"
-            label="Length"
-            onChange={updateLengthValue}
-            value={lengthString}
-          />
-          <Input
-            switchValues={['kilogram', 'pounds']}
-            type="number"
-            label="Weight"
-            onChange={updateWeightValue}
-            value={weightString}
-          />
-          <Input
-            switchValues={['meters', 'feet']}
-            type="number"
-            label="Sag"
-            onChange={updateSagValue}
-            value={sagString}
-          />
-        </InputsWrapper>
-        {tension && (
-          <React.Fragment>
-            <Result>Results</Result>
-            <ResultText>
-              Approximate Tension:&nbsp;<b>{tension.toFixed(2)} kn</b>
-            </ResultText>
-          </React.Fragment>
-        )}
-      </Wrapper>
-    </AppBackgroundContainer>
+    <React.Fragment>
+      <Helmet>
+        <title>Tension Calculator</title>
+        <meta
+          name="description"
+          content="Calculate the tension(force) of the line"
+        />
+      </Helmet>
+      <AppBackgroundContainer showBackButton>
+        <Wrapper>
+          <Header>
+            <HeaderIcon iconType="tension" />
+            <span>Tension Calculator</span>
+          </Header>
+          <Drawing device={'desktop'} src={DrawingSVG} />
+          <Drawing device={'mobile'} src={DrawingMobileSVG} />
+          <InputsWrapper>
+            <Input
+              switchValues={['meters', 'feet']}
+              type="number"
+              label="Length"
+              onChange={updateLengthValue}
+              value={lengthString}
+            />
+            <Input
+              switchValues={['kilogram', 'pounds']}
+              type="number"
+              label="Weight"
+              onChange={updateWeightValue}
+              value={weightString}
+            />
+            <Input
+              switchValues={['meters', 'feet']}
+              type="number"
+              label="Sag"
+              onChange={updateSagValue}
+              value={sagString}
+            />
+          </InputsWrapper>
+          {tension && (
+            <React.Fragment>
+              <Result>Results</Result>
+              <ResultText>
+                Approximate Tension:&nbsp;<b>{tension.toFixed(2)} kn</b>
+              </ResultText>
+            </React.Fragment>
+          )}
+        </Wrapper>
+      </AppBackgroundContainer>
+    </React.Fragment>
   );
 }
 
