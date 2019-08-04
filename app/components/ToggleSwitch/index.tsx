@@ -52,6 +52,7 @@ const SwitchWrapper = styled.div`
 
 const Label = styled.label`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   text-indent: -9999px;
   min-width: 2rem;
   width: 2.5rem;

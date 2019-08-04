@@ -32,4 +32,8 @@ const media = Object.keys(breakpoints).reduce(
   >,
 );
 
+export function isMobile() {
+  return window.innerWidth < breakpoints.desktop;
+}
+
 export default media;

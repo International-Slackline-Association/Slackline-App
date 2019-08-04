@@ -7,8 +7,8 @@ import './font-face.css';
 const GlobalStyles = createGlobalStyle`
     html {
         font-size: 100%;
-        /* height: 100%;
-        width: 100%; */
+        height: 100%;
+        width: 100%;
     }
     body {
         font-family: 'metropolis', Arial, Helvetica, sans-serif;
