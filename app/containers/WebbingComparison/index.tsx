@@ -3,7 +3,7 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import styled, { css } from 'styles/styled-components';
 import media, { isMobile } from 'styles/media';
 import { RouteComponentProps } from 'react-router';
-import { ISeries } from './interface';
+import { ISeries, IChartWebbing, IChartBrand, IChartData } from './interface';
 
 import {
   XYPlot,
@@ -19,10 +19,10 @@ import {
   FlexibleWidthXYPlot,
   FlexibleXYPlot,
   FlexibleHeightXYPlot,
+  Hint,
 } from 'react-vis';
 import RVStyles from 'react-vis-styles';
 import { Header, HeaderIcon } from './Header';
-import { useWindowSize } from './windowSize';
 import {
   ChartTypeItemTextWrapper,
   ChartTypeText,
@@ -30,42 +30,68 @@ import {
   Divider,
 } from './ChartType';
 import { Helmet } from 'react-helmet';
-import { chartStrechRates, chartWeightRates, chartPriceRates } from './chartData';
+import { stretchSeries, generateChartData } from './chartData';
+import { Legend } from './Legend';
+import { IWebbing } from './data';
 
 type ChartType = 'Stretch' | 'Weight' | 'Price' | 'MBS';
 const chartTypes: ChartType[] = ['Stretch', 'Weight', 'Price', 'MBS'];
 
 interface Props extends RouteComponentProps {}
 export default function WebbingComparison(props: Props) {
-  const size = useWindowSize();
   const [selectedChartType, setSelectedChartType] = useState(0);
+  const [data, setData] = useState(generateChartData());
 
-  const strechValues = chartStrechRates();
-  const weightValues = chartWeightRates();
-  const priceValues = chartPriceRates();
+  const stretchSeriesData = stretchSeries(data);
+  // const weightValues = chartWeightRates();
+  // const priceValues = chartPriceRates();
 
-  const [series, setSeries] = useState<ISeries>(strechValues);
-  console.log(series);
-
+  const [series, setSeries] = useState<ISeries>(stretchSeriesData);
   function selectChartType(index: number) {
     return evt => {
       setSelectedChartType(index);
       switch (index) {
         case 0:
-          setSeries(strechValues);
+          setSeries(stretchSeriesData);
           break;
-        case 1:
-          setSeries(weightValues);
-          break;
-        case 2:
-          setSeries(priceValues);
-          break;
+        // case 1:
+        //   setSeries(weightValues);
+        //   break;
+        // case 2:
+        //   setSeries(priceValues);
+        //   break;
         default:
           break;
       }
     };
   }
 
+  function webbingClicked(selectedWebbing: IChartWebbing) {
+    const newData: IChartData = {
+      brands: data.brands.map(b => {
+        const brand: IChartBrand = {
+          ...b,
+          webbings: b.webbings.map(w => {
+            const webbing: IChartWebbing = {
+              ...w,
+              disabled: selectedWebbing !== w,
+            };
+            return webbing;
+          }),
+        };
+        return brand;
+      }),
+    };
+    setData(newData);
+    setSeries(stretchSeries(newData));
+  }
+
+  function brandClicked(brand: IChartBrand) {}
+
+  function setHint(value) {}
+  function removeHint() {
+    console.log('remove');
+  }
   return (
     <React.Fragment>
       <Helmet>
@@ -103,23 +129,28 @@ export default function WebbingComparison(props: Props) {
                 {series.map(serie => {
                   return (
                     <LineMarkSeries
-                      strokeStyle={'dashed'}
-                      size={4}
+                      key={JSON.stringify(serie.data)}
+                      opacity={serie.disabled ? 0.2 : 1}
+                      color={serie.color}
+                      strokeStyle={'solid'}
+                      size={3}
                       curve={'curveCardinal'}
-                      key={serie.title}
                       data={serie.data}
+                      onValueMouseOver={setHint}
+                      onValueMouseOut={removeHint}
                     />
                   );
                 })}
-                <XAxis animation />
-                <YAxis animation />
+
+                <XAxis title={'kn'} />
+                <YAxis />
               </Chart>
             </ChartContainer>
 
             <Legends
-              onItemClick={undefined}
-              orientation={isMobile() ? 'horizontal' : 'vertical'}
-              items={series}
+              onItemClick={webbingClicked}
+              onSectionClick={brandClicked}
+              data={data}
             />
           </ChartWrapper>
         </Wrapper>
@@ -138,15 +169,13 @@ const Chart = styled(FlexibleXYPlot)`
   } */
 `;
 
-const Legends = styled(DiscreteColorLegend)`
-  margin: 1rem;
-  .rv-discrete-color-legend-item {
-    display: flex;
-    align-items: center;
-  }
-  .rv-discrete-color-legend-item__title {
-    word-break: keep-all;
-  }
+const Legends = styled(Legend)`
+  margin: 0rem 1rem;
+  width: 100%;
+  ${media.desktop`
+    width: auto;
+    height: 30rem;
+  `};
 `;
 
 const ChartContainer = styled.div`
@@ -158,7 +187,6 @@ const ChartContainer = styled.div`
   ${media.desktop`
     width: auto;
     height: 30rem;
-
   `};
   .rv-discrete-color-legend {
     overflow: unset;
@@ -173,7 +201,6 @@ const ChartWrapper = styled.div`
   justify-content: flex-start;
   width: 100%;
   overflow: scroll;
-  background-color: ${props => props.theme.surface};
   ${media.desktop`
     flex-direction: row;
   `};

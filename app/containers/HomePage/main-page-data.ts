@@ -43,7 +43,7 @@ export const data: MainPageSection[] = [
     ],
   },
   {
-    title: 'Gears',
+    title: 'Gear',
     items: [
       {
         icon: 'stretch_chart',

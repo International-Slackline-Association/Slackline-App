@@ -1,18 +1,21 @@
-interface IWebbingData {
-  brands: Array<{
-    name: string;
-    webbings: Array<{
-      name: string;
-      shortName: string;
-      stretch: Array<{ kn: number; percent: number }>;
-      weight: number;
-      priceMeter: { value: number; currency: string };
-      breakingStrength: number;
-    }>;
-  }>;
+export interface IWebbingData {
+  brands: IBrand[];
 }
 
+export interface IBrand {
+  name: string;
+  webbings: IWebbing[];
+}
 
+export interface IWebbing {
+  name: string;
+  shortName: string;
+  colorCode: string;
+  stretch: Array<{ kn: number; percent: number }>;
+  weight: number;
+  priceMeter: { value: number; currency: string };
+  breakingStrength: number;
+}
 
 export const data: IWebbingData = {
   brands: [
@@ -22,6 +25,7 @@ export const data: IWebbingData = {
         {
           name: 'Sonic 2',
           shortName: '',
+          colorCode: '#D59E2A',
           stretch: [
             { kn: 2, percent: 2.6 },
             { kn: 3, percent: 4.6 },
@@ -43,6 +47,7 @@ export const data: IWebbingData = {
         {
           name: 'Unicorn',
           shortName: '',
+          colorCode: '#9FBD73',
           stretch: [
             { kn: 2, percent: 1.1 },
             { kn: 3, percent: 1.7 },
@@ -64,6 +69,7 @@ export const data: IWebbingData = {
         {
           name: 'Voyage',
           shortName: '',
+          colorCode: '#1CB0E4',
           stretch: [
             { kn: 2, percent: 0.6 },
             { kn: 3, percent: 0.9 },
@@ -85,6 +91,7 @@ export const data: IWebbingData = {
         {
           name: 'White Magic',
           shortName: 'w.magic',
+          colorCode: '#FFFFFF',
           stretch: [
             { kn: 2, percent: 0.7 },
             { kn: 3, percent: 1.1 },
@@ -111,6 +118,7 @@ export const data: IWebbingData = {
         {
           name: 'Mcfly',
           shortName: '',
+          colorCode: '#BB1461',
           stretch: [
             { kn: 5, percent: 8.5 },
             { kn: 10, percent: 12.5 },
@@ -126,11 +134,12 @@ export const data: IWebbingData = {
         {
           name: 'Moonwalk',
           shortName: '',
+          colorCode: '#F37F61',
           stretch: [
             { kn: 5, percent: 2.4 },
             { kn: 10, percent: 4 },
             { kn: 15, percent: 4.4 },
-            { kn: 15, percent: 5 },
+            { kn: 20, percent: 5 },
           ],
           weight: 33.4,
           priceMeter: {
@@ -147,6 +156,7 @@ export const data: IWebbingData = {
         {
           name: 'Bluewing',
           shortName: '',
+          colorCode: '#187EC2',
           stretch: [
             { kn: 1, percent: 0.5 },
             { kn: 2, percent: 1 },
@@ -179,6 +189,7 @@ export const data: IWebbingData = {
         {
           name: 'Passion',
           shortName: '',
+          colorCode: '#C51429',
           stretch: [
             { kn: 2, percent: 3.5 },
             { kn: 4, percent: 6.5 },
@@ -206,6 +217,7 @@ export const data: IWebbingData = {
         {
           name: 'Feather PRO',
           shortName: 'FeatherPro',
+          colorCode: '#13985C',
           stretch: [
             { kn: 1, percent: 0.4 },
             { kn: 2, percent: 1.3 },
@@ -238,6 +250,7 @@ export const data: IWebbingData = {
         {
           name: 'Feather',
           shortName: '',
+          colorCode: '#67D175',
           stretch: [
             { kn: 1, percent: 0.58 },
             { kn: 2, percent: 1.15 },
@@ -260,6 +273,7 @@ export const data: IWebbingData = {
         {
           name: 'Mantra MK4',
           shortName: 'Mantra4',
+          colorCode: '#3D3A79',
           stretch: [
             { kn: 1, percent: 0.26 },
             { kn: 2, percent: 0.56 },
@@ -292,6 +306,7 @@ export const data: IWebbingData = {
         {
           name: 'Lift',
           shortName: '',
+          colorCode: '#DF6F25',
           stretch: [
             { kn: 1, percent: 2.37 },
             { kn: 2, percent: 4.87 },
@@ -329,6 +344,7 @@ export const data: IWebbingData = {
         {
           name: 'MOTM',
           shortName: '',
+          colorCode: '#A70024',
           stretch: [
             { kn: 1, percent: 4 },
             { kn: 2, percent: 6 },
@@ -361,6 +377,7 @@ export const data: IWebbingData = {
         {
           name: 'Rainbow',
           shortName: '',
+          colorCode: '#D7F10E',
           stretch: [
             { kn: 1, percent: 0.3 },
             { kn: 2, percent: 0.6 },
@@ -389,6 +406,7 @@ export const data: IWebbingData = {
         {
           name: 'Helium',
           shortName: '',
+          colorCode: '#D8D8D8',
           stretch: [
             { kn: 1, percent: 0.3 },
             { kn: 2, percent: 0.6 },
@@ -421,6 +439,7 @@ export const data: IWebbingData = {
         {
           name: 'Parsec',
           shortName: '',
+          colorCode: '#0F0F16',
           stretch: [
             { kn: 1, percent: 0.25 },
             { kn: 2, percent: 0.5 },
@@ -458,6 +477,7 @@ export const data: IWebbingData = {
         {
           name: 'Dragon',
           shortName: '',
+          colorCode: '#2D77C0',
           stretch: [
             { kn: 2.5, percent: 3 },
             { kn: 5, percent: 4 },
@@ -474,6 +494,7 @@ export const data: IWebbingData = {
         {
           name: 'Element',
           shortName: '',
+          colorCode: '#C8811C',
           stretch: [
             { kn: 2.5, percent: 7 },
             { kn: 5, percent: 11 },
@@ -490,6 +511,7 @@ export const data: IWebbingData = {
         {
           name: 'Fresh',
           shortName: '',
+          colorCode: '#724483',
           stretch: [
             { kn: 5, percent: 8 },
             { kn: 10, percent: 11 },
@@ -511,6 +533,7 @@ export const data: IWebbingData = {
         {
           name: 'Pinktube',
           shortName: '',
+          colorCode: '#6ECFAF',
           stretch: [
             { kn: 1, percent: 1.6 },
             { kn: 2, percent: 6.6 },
@@ -543,11 +566,11 @@ export const data: IWebbingData = {
         {
           name: 'Redtube',
           shortName: '',
+          colorCode: '#A92732',
           stretch: [
             { kn: 1, percent: 1.1 },
-            { kn: 2, percent: 3.6 },
-            { kn: 3, percent: 3.1 },
-            { kn: 4, percent: 6.6 },
+            { kn: 2, percent: 3.1 },
+            { kn: 3, percent: 6.6 },
             { kn: 4, percent: 9.6 },
             { kn: 5, percent: 11.7 },
             { kn: 6, percent: 13.5 },
@@ -576,6 +599,7 @@ export const data: IWebbingData = {
         {
           name: 'Half Marathon',
           shortName: 'H.Marathon',
+          colorCode: '#E7F5F8',
           stretch: [
             { kn: 1, percent: 0.3 },
             { kn: 2, percent: 0.5 },
@@ -608,6 +632,7 @@ export const data: IWebbingData = {
         {
           name: 'Y2k',
           shortName: '',
+          colorCode: '#07427F',
           stretch: [{ kn: 10, percent: 0.1 }],
           weight: 33.1,
           priceMeter: {
