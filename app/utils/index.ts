@@ -13,4 +13,15 @@ export namespace Utils {
     // console.log('Query variable %s not found', variable);
     return '';
   }
+  export function isNil(...value: any) {
+    return value.every((e: any) => is_value_nil(e));
+  }
+
+  export function isSomeNil(...value: any) {
+    return value.some((e: any) => is_value_nil(e));
+  }
+
+  function is_value_nil(v: any) {
+    return v === null || v === undefined;
+  }
 }

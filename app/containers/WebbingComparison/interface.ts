@@ -9,6 +9,17 @@ interface Serie {
   data?: Array<{ x: number | string; y: number }>;
 }
 
+export type ChartType = 'Stretch' | 'Weight' | 'Price' | 'MBS';
+
+export interface IChart {
+  series: ISeries;
+  xAxisTitle: string;
+  yAxisTitle: string;
+  xAxisTickTotal?: number;
+  yAxisTickTotal?: number;
+}
+
+
 export interface IChartData {
   brands: IChartBrand[];
 }

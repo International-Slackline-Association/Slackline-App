@@ -13,7 +13,7 @@ export interface IWebbing {
   colorCode: string;
   stretch: Array<{ kn: number; percent: number }>;
   weight: number;
-  priceMeter: { value: number; currency: string };
+  priceMeter: { value: number; currency: 'dolar' | 'euro' };
   breakingStrength: number;
 }
 
@@ -34,7 +34,7 @@ export const data: IWebbingData = {
             { kn: 6, percent: 10.8 },
             { kn: 7, percent: 12.0 },
             { kn: 8, percent: 13.1 },
-            { kn: 9, percent: 13.1 },
+            { kn: 9, percent: 14.1 },
             { kn: 10, percent: 15.0 },
           ],
           weight: 69,

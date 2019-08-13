@@ -7,8 +7,11 @@ import { touchableOpacity } from 'styles/mixins';
 interface Props {
   className?: string;
   data: IChartData;
+  onItemHover(webbing: IChartWebbing): void;
   onItemClick(webbing: IChartWebbing): void;
+  onSectionHover(brand: IChartBrand): void;
   onSectionClick(brand: IChartBrand): void;
+  onMouseExit(): void;
 }
 
 function Component(props: Props) {
@@ -24,14 +27,33 @@ function Component(props: Props) {
     };
   }
 
+  function onItemHover(item: IChartWebbing) {
+    return () => {
+      props.onItemHover(item);
+    };
+  }
+
+  function onSectionHover(brand: IChartBrand) {
+    return () => {
+      props.onSectionHover(brand);
+    };
+  }
+
+  function onMouseExit() {
+    return () => {
+      props.onMouseExit();
+    };
+  }
+
   return (
-    <Wrapper className={props.className}>
+    <Wrapper className={props.className} onMouseLeave={onMouseExit()}>
       {props.data.brands.map(brand => {
         return (
           <Section key={brand.name}>
             <SectionTitle
               onClick={onSectionClick(brand)}
-              style={{ opacity: brand.disabled ? 0.5 : 1 }}
+              onMouseOver={onSectionHover(brand)}
+              style={{ opacity: brand.disabled ? 0.2 : 1 }}
             >
               {brand.name}
             </SectionTitle>
@@ -41,7 +63,7 @@ function Component(props: Props) {
                   <ItemWrapper
                     key={webbing.name}
                     onClick={onItemClick(webbing)}
-                    onMouseOver={onItemClick(webbing)}
+                    onMouseOver={onItemHover(webbing)}
                     style={{ opacity: webbing.disabled ? 0.2 : 1 }}
                   >
                     <ColorRectange
@@ -64,10 +86,10 @@ function Component(props: Props) {
 const Section = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0rem 0.3rem;
+  margin: 0.5rem 0.3rem;
   ${media.desktop`
     flex-direction: column;
-    margin: 0.5rem 0rem;
+    margin: 0.5rem 0.5rem;
   `}
 `;
 const SectionTitle = styled.span`

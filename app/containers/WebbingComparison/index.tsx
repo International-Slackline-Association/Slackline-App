@@ -3,23 +3,15 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import styled, { css } from 'styles/styled-components';
 import media, { isMobile } from 'styles/media';
 import { RouteComponentProps } from 'react-router';
-import { ISeries, IChartWebbing, IChartBrand, IChartData } from './interface';
+import { IChartWebbing, IChartBrand, IChartData, ChartType } from './interface';
 
 import {
-  XYPlot,
   XAxis,
   YAxis,
-  HorizontalGridLines,
-  LineSeries,
-  LineSeriesCanvas,
   LineMarkSeries,
-  VerticalGridLines,
-  DiscreteColorLegend,
-  MarkSeries,
-  FlexibleWidthXYPlot,
   FlexibleXYPlot,
-  FlexibleHeightXYPlot,
-  Hint,
+  HorizontalGridLines,
+  VerticalGridLines,
 } from 'react-vis';
 import RVStyles from 'react-vis-styles';
 import { Header, HeaderIcon } from './Header';
@@ -30,67 +22,95 @@ import {
   Divider,
 } from './ChartType';
 import { Helmet } from 'react-helmet';
-import { stretchSeries, generateChartData } from './chartData';
+import {
+  generateChartData,
+  generateDefaultChartData,
+  selectDeselectWebbing,
+  selectDeselectBrand,
+  deselectAll,
+} from './chartData';
 import { Legend } from './Legend';
-import { IWebbing } from './data';
+import { generateChart } from './chartGenerator';
 
-type ChartType = 'Stretch' | 'Weight' | 'Price' | 'MBS';
 const chartTypes: ChartType[] = ['Stretch', 'Weight', 'Price', 'MBS'];
+const defaultChartData = generateDefaultChartData();
 
 interface Props extends RouteComponentProps {}
 export default function WebbingComparison(props: Props) {
-  const [selectedChartType, setSelectedChartType] = useState(0);
-  const [data, setData] = useState(generateChartData());
+  const [data, setData] = useState<IChartData>(defaultChartData);
+  const [legendStatus, setLegendStatus] = useState({
+    selected: false,
+    hovered: false,
+  });
+  const [isChartAnimated, setIsCharAnimated] = useState(true);
+  const [selectedChartType, setSelectedChartType] = useState<ChartType>(
+    'Stretch',
+  );
+  const [crosshairValues, setCrosshairValues] = useState();
 
-  const stretchSeriesData = stretchSeries(data);
-  // const weightValues = chartWeightRates();
-  // const priceValues = chartPriceRates();
+  useEffect(() => {
+    generateChartData().then(data => {
+      setIsCharAnimated(true);
+      setData(data);
+    });
+  }, []);
 
-  const [series, setSeries] = useState<ISeries>(stretchSeriesData);
-  function selectChartType(index: number) {
+  function selectChartType(type: ChartType) {
     return evt => {
-      setSelectedChartType(index);
-      switch (index) {
-        case 0:
-          setSeries(stretchSeriesData);
-          break;
-        // case 1:
-        //   setSeries(weightValues);
-        //   break;
-        // case 2:
-        //   setSeries(priceValues);
-        //   break;
-        default:
-          break;
-      }
+      setIsCharAnimated(true);
+      setSelectedChartType(type);
     };
   }
 
   function webbingClicked(selectedWebbing: IChartWebbing) {
-    const newData: IChartData = {
-      brands: data.brands.map(b => {
-        const brand: IChartBrand = {
-          ...b,
-          webbings: b.webbings.map(w => {
-            const webbing: IChartWebbing = {
-              ...w,
-              disabled: selectedWebbing !== w,
-            };
-            return webbing;
-          }),
-        };
-        return brand;
-      }),
-    };
-    setData(newData);
-    setSeries(stretchSeries(newData));
+    setIsCharAnimated(false);
+    const disableDeselect = !legendStatus.selected;
+    setLegendStatus({ selected: true, hovered: legendStatus.hovered });
+    setData(
+      selectDeselectWebbing(data, selectedWebbing, false, disableDeselect),
+    );
+  }
+  function webbingHovered(selectedWebbing: IChartWebbing) {
+    setIsCharAnimated(false);
+    setLegendStatus({ selected: legendStatus.selected, hovered: true });
+    if (!legendStatus.selected) {
+      setData(selectDeselectWebbing(data, selectedWebbing, true, true));
+    }
   }
 
-  function brandClicked(brand: IChartBrand) {}
+  function brandClicked(selectedBrand: IChartBrand) {
+    setIsCharAnimated(false);
+    setLegendStatus({ selected: true, hovered: legendStatus.hovered });
+    setData(selectDeselectBrand(data, selectedBrand, false));
+  }
 
-  function setHint(value) {}
-  function removeHint() {
-    console.log('remove');
+  function brandHovered(selectedBrand: IChartBrand) {
+    setIsCharAnimated(false);
+    setLegendStatus({ selected: legendStatus.selected, hovered: true });
+    if (!legendStatus.selected) {
+      setData(selectDeselectBrand(data, selectedBrand, true, true));
+    }
+  }
+
+  function onLegendMouseExit() {
+    if (legendStatus.hovered && !legendStatus.selected) {
+      setData(deselectAll(data));
+    }
+  }
+
+
+
+  const chart = generateChart(selectedChartType, data);
+
+  function mouseLeaveHandler() {
+    setCrosshairValues([]);
+  }
+  function nearestXYHandler(value, { index }) {}
+
+  function seriesMouseOverHandler(index: number) {
+    return () => {
+      //  chart.series[index].title;
+    };
   }
   return (
     <React.Fragment>
@@ -112,8 +132,8 @@ export default function WebbingComparison(props: Props) {
                 return (
                   <React.Fragment key={index}>
                     <ChartTypeItemText
-                      onClick={selectChartType(index)}
-                      isSelected={selectedChartType === index}
+                      onClick={selectChartType(type)}
+                      isSelected={selectedChartType === type}
                     >
                       {type}
                     </ChartTypeItemText>
@@ -123,33 +143,46 @@ export default function WebbingComparison(props: Props) {
               })}
             </ChartTypeItemTextWrapper>
             <ChartContainer>
-              <Chart animation>
-                <HorizontalGridLines />
-                <VerticalGridLines />
-                {series.map(serie => {
+              <Chart animation={isChartAnimated}>
+                {/* <HorizontalGridLines />
+                <VerticalGridLines /> */}
+                {chart.series.map((serie, index) => {
                   return (
                     <LineMarkSeries
-                      key={JSON.stringify(serie.data)}
-                      opacity={serie.disabled ? 0.2 : 1}
+                      key={serie.title}
+                      opacity={serie.disabled ? 0.1 : 1}
                       color={serie.color}
                       strokeStyle={'solid'}
                       size={3}
                       curve={'curveCardinal'}
                       data={serie.data}
-                      onValueMouseOver={setHint}
-                      onValueMouseOut={removeHint}
+                      onSeriesMouseOver={seriesMouseOverHandler(index)}
                     />
                   );
                 })}
 
-                <XAxis title={'kn'} />
-                <YAxis />
+                <XAxis
+                  title={chart.xAxisTitle}
+                  tickSizeInner={0}
+                  tickSizeOuter={8}
+                  tickTotal={chart.xAxisTickTotal}
+                  animation={false}
+                />
+                <YAxis
+                  title={chart.yAxisTitle}
+                  tickSizeInner={0}
+                  tickSizeOuter={8}
+                  tickTotal={chart.yAxisTickTotal}
+                  animation={false}
+                />
               </Chart>
             </ChartContainer>
-
             <Legends
+              onItemHover={webbingHovered}
               onItemClick={webbingClicked}
+              onSectionHover={brandHovered}
               onSectionClick={brandClicked}
+              onMouseExit={onLegendMouseExit}
               data={data}
             />
           </ChartWrapper>
@@ -174,7 +207,7 @@ const Legends = styled(Legend)`
   width: 100%;
   ${media.desktop`
     width: auto;
-    height: 30rem;
+    height: 100%;
   `};
 `;
 
