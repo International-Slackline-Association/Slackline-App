@@ -19,16 +19,11 @@ export interface IChart {
   yAxisTickTotal?: number;
 }
 
-
 export interface IChartData {
-  brands: IChartBrand[];
-}
-
-export interface IChartBrand extends IBrand {
-  disabled?: boolean;
   webbings: IChartWebbing[];
 }
 
 export interface IChartWebbing extends IWebbing {
   disabled?: boolean;
+  brandName: string;
 }

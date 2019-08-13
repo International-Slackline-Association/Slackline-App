@@ -3,7 +3,7 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import styled, { css } from 'styles/styled-components';
 import media, { isMobile } from 'styles/media';
 import { RouteComponentProps } from 'react-router';
-import { IChartWebbing, IChartBrand, IChartData, ChartType } from './interface';
+import { IChartWebbing, IChartData, ChartType } from './interface';
 
 import {
   XAxis,
@@ -25,9 +25,8 @@ import { Helmet } from 'react-helmet';
 import {
   generateChartData,
   generateDefaultChartData,
-  selectDeselectWebbing,
-  selectDeselectBrand,
-  deselectAll,
+  selectOrDeselectWebbings,
+  selectAll,
 } from './chartData';
 import { Legend } from './Legend';
 import { generateChart } from './chartGenerator';
@@ -62,43 +61,39 @@ export default function WebbingComparison(props: Props) {
     };
   }
 
-  function webbingClicked(selectedWebbing: IChartWebbing) {
+  function webbingsClicked(selectedWebbings: IChartWebbing[]) {
     setIsCharAnimated(false);
     const disableDeselect = !legendStatus.selected;
     setLegendStatus({ selected: true, hovered: legendStatus.hovered });
-    setData(
-      selectDeselectWebbing(data, selectedWebbing, false, disableDeselect),
-    );
+    setData(selectOrDeselectWebbings(data, selectedWebbings, false));
   }
-  function webbingHovered(selectedWebbing: IChartWebbing) {
+  function webbingsHovered(selectedWebbings: IChartWebbing[]) {
     setIsCharAnimated(false);
     setLegendStatus({ selected: legendStatus.selected, hovered: true });
     if (!legendStatus.selected) {
-      setData(selectDeselectWebbing(data, selectedWebbing, true, true));
+      setData(selectOrDeselectWebbings(data, selectedWebbings, true, true));
     }
   }
 
-  function brandClicked(selectedBrand: IChartBrand) {
-    setIsCharAnimated(false);
-    setLegendStatus({ selected: true, hovered: legendStatus.hovered });
-    setData(selectDeselectBrand(data, selectedBrand, false));
-  }
+  // function brandClicked(selectedBrand: IChartBrand) {
+  //   setIsCharAnimated(false);
+  //   setLegendStatus({ selected: true, hovered: legendStatus.hovered });
+  //   setData(selectDeselectBrand(data, selectedBrand, false));
+  // }
 
-  function brandHovered(selectedBrand: IChartBrand) {
-    setIsCharAnimated(false);
-    setLegendStatus({ selected: legendStatus.selected, hovered: true });
-    if (!legendStatus.selected) {
-      setData(selectDeselectBrand(data, selectedBrand, true, true));
-    }
-  }
+  // function brandHovered(selectedBrand: IChartBrand) {
+  //   setIsCharAnimated(false);
+  //   setLegendStatus({ selected: legendStatus.selected, hovered: true });
+  //   if (!legendStatus.selected) {
+  //     setData(selectDeselectBrand(data, selectedBrand, true, true));
+  //   }
+  // }
 
   function onLegendMouseExit() {
     if (legendStatus.hovered && !legendStatus.selected) {
-      setData(deselectAll(data));
+      setData(selectAll(data));
     }
   }
-
-
 
   const chart = generateChart(selectedChartType, data);
 
@@ -178,10 +173,10 @@ export default function WebbingComparison(props: Props) {
               </Chart>
             </ChartContainer>
             <Legends
-              onItemHover={webbingHovered}
-              onItemClick={webbingClicked}
-              onSectionHover={brandHovered}
-              onSectionClick={brandClicked}
+              onItemsHover={webbingsHovered}
+              onItemsClick={webbingsClicked}
+              // onSectionHover={brandHovered}
+              // onSectionClick={brandClicked}
               onMouseExit={onLegendMouseExit}
               data={data}
             />

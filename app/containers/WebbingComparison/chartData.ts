@@ -1,64 +1,58 @@
-import { IChartData, IChartWebbing, IChartBrand } from './interface';
-import { data as rawData, IWebbing } from './data';
+import { IChartData, IChartWebbing } from './interface';
+import { rawData } from './data';
 import { convertDolarToEuro } from './currencyConversion';
-import { Utils } from 'utils/index';
 
 export function generateDefaultChartData(): IChartData {
-  const data = clone(rawData);
+  const data = rawData();
+  const webbings: IChartWebbing[] = [];
   for (const b of data.brands) {
     for (const w of b.webbings) {
-      w.stretch.forEach((s, index) => {
+      const webbing: IChartWebbing = {
+        ...w,
+        brandName: b.name,
+      };
+      webbing.stretch.forEach((s, index) => {
         s.kn = s.kn;
         s.percent = s.kn;
       });
+      webbings.push(webbing);
     }
   }
-  return data;
+  return { webbings: webbings };
 }
 export async function generateChartData(): Promise<IChartData> {
-  for (const b of rawData.brands) {
+  const data = rawData();
+  const webbings: IChartWebbing[] = [];
+  for (const b of data.brands) {
     for (const w of b.webbings) {
-      if (w.priceMeter.currency === 'dolar') {
-        w.priceMeter.currency = 'euro';
-        w.priceMeter.value = await convertDolarToEuro(w.priceMeter.value);
+      const webbing: IChartWebbing = {
+        ...w,
+        brandName: b.name,
+      };
+      if (webbing.priceMeter.currency === 'dolar') {
+        webbing.priceMeter.currency = 'euro';
+        webbing.priceMeter.value = await convertDolarToEuro(w.priceMeter.value);
       }
+      webbings.push(webbing);
     }
   }
-  return rawData;
+  return { webbings: webbings };
 }
 
 function clone(data: IChartData): IChartData {
   const newData: IChartData = {
-    brands: data.brands.map(b => {
-      const brand: IChartBrand = {
-        ...b,
-        webbings: b.webbings.map(w => {
-          const webbing: IChartWebbing = {
-            ...w,
-            stretch: w.stretch.map(s => {
-              return { ...s };
-            }),
-          };
-          return webbing;
+    webbings: data.webbings.map(w => {
+      const webbing: IChartWebbing = {
+        ...w,
+        stretch: w.stretch.map(s => {
+          return { ...s };
         }),
       };
-      return brand;
+      return webbing;
     }),
   };
   return newData;
 }
-
-export function isAWebbingSelected(d: IChartData) {
-  for (const b of d.brands) {
-    for (const w of b.webbings) {
-      if (!Utils.isNil(w.disabled) && w.disabled === false) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
 
 export function findWebbingAtIndex(index: number) {
   // for (const b of d.brands) {
@@ -71,63 +65,42 @@ export function findWebbingAtIndex(index: number) {
   // return false;
 }
 
-
-
 // Reducer-like functions (useReducer was way more messy and not readable)
 // tslint:disable: prefer-conditional-expression
 
-export function deselectAll(data: IChartData): IChartData {
+export function selectAll(data: IChartData): IChartData {
   const d = clone(data);
-  for (const b of d.brands) {
-    b.disabled = false;
-    for (const w of b.webbings) {
-      w.disabled = false;
-    }
+  for (const w of d.webbings) {
+    w.disabled = false;
   }
   return d;
 }
 
-export function selectDeselectWebbing(
+export function selectOrDeselectWebbings(
   data: IChartData,
-  webbing: IChartWebbing,
+  webbings: IChartWebbing[],
   disableElse: boolean,
   disableDeselect = false,
 ): IChartData {
   const d = clone(data);
-  for (const b of d.brands) {
-    let disableBrand = false;
-    for (const w of b.webbings) {
-      if (w.name === webbing.name) {
-        w.disabled = disableDeselect ? false : !w.disabled;
+  let shouldDisableAll = false;
+  if (webbings.length > 1) {
+    shouldDisableAll = d.webbings
+      .filter(w => webbings.find(w2 => w2.name === w.name))
+      .some(w => w.disabled === false);
+  }
+
+  for (const w of d.webbings) {
+    if (webbings.find(w2 => w2.name === w.name)) {
+      if (disableDeselect) {
+        w.disabled = false;
+      } else if (shouldDisableAll) {
+        w.disabled = true;
       } else {
-        w.disabled = disableElse ? true : w.disabled;
+        w.disabled = !w.disabled;
       }
-      disableBrand = disableBrand || w.disabled === false;
-    }
-    b.disabled = !disableBrand;
-  }
-  return d;
-}
-
-export function selectDeselectBrand(
-  data: IChartData,
-  brand: IChartBrand,
-  disableElse: boolean,
-  disableDeselect = false,
-): IChartData {
-  const d = clone(data);
-  for (const b of d.brands) {
-    if (brand.name === b.name) {
-      b.disabled = disableDeselect ? false : !b.disabled;
     } else {
-      b.disabled = disableElse ? true : b.disabled;
-    }
-    for (const w of b.webbings) {
-      if (brand.name === b.name) {
-        w.disabled = disableDeselect ? false : b.disabled;
-      } else {
-        w.disabled = disableElse ? true : w.disabled;
-      }
+      w.disabled = disableElse ? true : w.disabled;
     }
   }
   return d;

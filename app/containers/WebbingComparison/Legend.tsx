@@ -1,41 +1,91 @@
 import React, { memo } from 'react';
 import styled from 'styles/styled-components';
 import media from 'styles/media';
-import { IChartData, IChartWebbing, IChartBrand } from './interface';
+import { IChartData, IChartWebbing } from './interface';
 import { touchableOpacity } from 'styles/mixins';
 
 interface Props {
   className?: string;
   data: IChartData;
-  onItemHover(webbing: IChartWebbing): void;
-  onItemClick(webbing: IChartWebbing): void;
-  onSectionHover(brand: IChartBrand): void;
-  onSectionClick(brand: IChartBrand): void;
+  onItemsHover(webbings: IChartWebbing[]): void;
+  onItemsClick(webbings: IChartWebbing[]): void;
   onMouseExit(): void;
+}
+interface GroupedWebbings {
+  brands: IBrand[];
+}
+
+interface IBrand {
+  name: string;
+  disabled: boolean;
+  webbings: IChartWebbing[];
+}
+function isBrandDisabled(data: IChartData, brandName: string) {
+  let result = true;
+  for (const webbing of data.webbings) {
+    if (webbing.brandName === brandName) {
+      result = (result && webbing.disabled) || false;
+    }
+  }
+  return result;
+}
+
+function allWebbingsOfBrand(data: IChartData, brandName: string) {
+  const webbings: IChartWebbing[] = [];
+  for (const webbing of data.webbings) {
+    if (webbing.brandName === brandName) {
+      webbings.push(webbing);
+    }
+  }
+  return webbings;
+}
+function groupByBrand(data: IChartData): GroupedWebbings {
+  const brandsDict: { [key: string]: IBrand } = {};
+  for (const webbing of data.webbings) {
+    let brand = brandsDict[webbing.brandName];
+    if (!brand) {
+      brand = {
+        webbings: [],
+        name: webbing.brandName,
+        disabled: isBrandDisabled(data, webbing.brandName),
+      };
+    }
+    brand.webbings.push(webbing);
+    brandsDict[webbing.brandName] = brand;
+  }
+
+  const brands: IBrand[] = [];
+  // tslint:disable-next-line: forin
+  for (const key in brandsDict) {
+    brands.push(brandsDict[key]);
+  }
+  return { brands: brands };
 }
 
 function Component(props: Props) {
+  const data = groupByBrand(props.data);
+
   function onItemClick(item: IChartWebbing) {
     return () => {
-      props.onItemClick(item);
+      props.onItemsClick([item]);
     };
   }
 
-  function onSectionClick(brand: IChartBrand) {
+  function onSectionClick(brand: IBrand) {
     return () => {
-      props.onSectionClick(brand);
+      props.onItemsClick(allWebbingsOfBrand(props.data, brand.name));
     };
   }
 
   function onItemHover(item: IChartWebbing) {
     return () => {
-      props.onItemHover(item);
+      props.onItemsHover([item]);
     };
   }
 
-  function onSectionHover(brand: IChartBrand) {
+  function onSectionHover(brand: IBrand) {
     return () => {
-      props.onSectionHover(brand);
+      props.onItemsHover(allWebbingsOfBrand(props.data, brand.name));
     };
   }
 
@@ -47,7 +97,7 @@ function Component(props: Props) {
 
   return (
     <Wrapper className={props.className} onMouseLeave={onMouseExit()}>
-      {props.data.brands.map(brand => {
+      {data.brands.map(brand => {
         return (
           <Section key={brand.name}>
             <SectionTitle

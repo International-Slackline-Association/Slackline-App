@@ -33,61 +33,49 @@ export function generateChart(
 }
 
 export function stretchSeries(data: IChartData): ISeries {
-  return data.brands
-    .map(brand => {
-      return brand.webbings.map(webbing => {
+  return data.webbings.map(webbing => {
+    return {
+      title: webbing.name,
+      color: webbing.colorCode,
+      disabled: webbing.disabled,
+      data: webbing.stretch.map(rate => {
         return {
-          title: webbing.name,
-          color: webbing.colorCode,
-          disabled: webbing.disabled,
-          data: webbing.stretch.map(rate => {
-            return {
-              x: rate.kn,
-              y: rate.percent,
-            };
-          }),
+          x: rate.kn,
+          y: rate.percent,
         };
-      });
-    })
-    .reduce((a, b) => a.concat(b));
+      }),
+    };
+  });
 }
 
 export function weightSeries(data: IChartData): ISeries {
-  return data.brands
-    .map(brand => {
-      return brand.webbings.map((webbing, index) => {
-        return {
-          title: webbing.name,
-          color: webbing.colorCode,
-          disabled: webbing.disabled,
-          data: [
-            {
-              x: webbing.weight,
-              y: webbing.weight,
-            },
-          ],
-        };
-      });
-    })
-    .reduce((a, b) => a.concat(b));
+  return data.webbings.map((webbing, index) => {
+    return {
+      title: webbing.name,
+      color: webbing.colorCode,
+      disabled: webbing.disabled,
+      data: [
+        {
+          x: webbing.name,
+          y: webbing.weight,
+        },
+      ],
+    };
+  });
 }
 
 export function priceSeries(data: IChartData): ISeries {
-  return data.brands
-    .map(brand => {
-      return brand.webbings.map((webbing, index) => {
-        return {
-          title: webbing.name,
-          color: webbing.colorCode,
-          disabled: webbing.disabled,
-          data: [
-            {
-              x: webbing.priceMeter.value,
-              y: webbing.priceMeter.value,
-            },
-          ],
-        };
-      });
-    })
-    .reduce((a, b) => a.concat(b));
+  return data.webbings.map((webbing, index) => {
+    return {
+      title: webbing.name,
+      color: webbing.colorCode,
+      disabled: webbing.disabled,
+      data: [
+        {
+          x: webbing.name,
+          y: webbing.priceMeter.value,
+        },
+      ],
+    };
+  });
 }
