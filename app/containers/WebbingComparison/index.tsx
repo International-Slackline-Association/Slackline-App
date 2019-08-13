@@ -12,6 +12,10 @@ import {
   FlexibleXYPlot,
   HorizontalGridLines,
   VerticalGridLines,
+  VerticalBarSeries,
+  RVTickFormat,
+  XYPlot,
+  XYPlotProps,
 } from 'react-vis';
 import RVStyles from 'react-vis-styles';
 import { Header, HeaderIcon } from './Header';
@@ -24,7 +28,7 @@ import {
 import { Helmet } from 'react-helmet';
 import {
   generateChartData,
-  generateDefaultChartData,
+  generateInitialChartData,
   selectOrDeselectWebbings,
   selectAll,
 } from './chartData';
@@ -32,16 +36,16 @@ import { Legend } from './Legend';
 import { generateChart } from './chartGenerator';
 
 const chartTypes: ChartType[] = ['Stretch', 'Weight', 'Price', 'MBS'];
-const defaultChartData = generateDefaultChartData();
+const initialChartData = generateInitialChartData();
 
 interface Props extends RouteComponentProps {}
 export default function WebbingComparison(props: Props) {
-  const [data, setData] = useState<IChartData>(defaultChartData);
+  const [data, setData] = useState<IChartData>(initialChartData);
   const [legendStatus, setLegendStatus] = useState({
     selected: false,
     hovered: false,
   });
-  const [isChartAnimated, setIsCharAnimated] = useState(true);
+  const [isChartAnimated, setIsChartAnimated] = useState(true);
   const [selectedChartType, setSelectedChartType] = useState<ChartType>(
     'Stretch',
   );
@@ -49,45 +53,32 @@ export default function WebbingComparison(props: Props) {
 
   useEffect(() => {
     generateChartData().then(data => {
-      setIsCharAnimated(true);
+      setIsChartAnimated(true);
       setData(data);
     });
   }, []);
 
   function selectChartType(type: ChartType) {
     return evt => {
-      setIsCharAnimated(true);
+      // setData(initialChartData);
+      setIsChartAnimated(true);
       setSelectedChartType(type);
     };
   }
 
   function webbingsClicked(selectedWebbings: IChartWebbing[]) {
-    setIsCharAnimated(false);
+    setIsChartAnimated(false);
     const disableDeselect = !legendStatus.selected;
     setLegendStatus({ selected: true, hovered: legendStatus.hovered });
     setData(selectOrDeselectWebbings(data, selectedWebbings, false));
   }
   function webbingsHovered(selectedWebbings: IChartWebbing[]) {
-    setIsCharAnimated(false);
+    setIsChartAnimated(false);
     setLegendStatus({ selected: legendStatus.selected, hovered: true });
     if (!legendStatus.selected) {
       setData(selectOrDeselectWebbings(data, selectedWebbings, true, true));
     }
   }
-
-  // function brandClicked(selectedBrand: IChartBrand) {
-  //   setIsCharAnimated(false);
-  //   setLegendStatus({ selected: true, hovered: legendStatus.hovered });
-  //   setData(selectDeselectBrand(data, selectedBrand, false));
-  // }
-
-  // function brandHovered(selectedBrand: IChartBrand) {
-  //   setIsCharAnimated(false);
-  //   setLegendStatus({ selected: legendStatus.selected, hovered: true });
-  //   if (!legendStatus.selected) {
-  //     setData(selectDeselectBrand(data, selectedBrand, true, true));
-  //   }
-  // }
 
   function onLegendMouseExit() {
     if (legendStatus.hovered && !legendStatus.selected) {
@@ -107,6 +98,7 @@ export default function WebbingComparison(props: Props) {
       //  chart.series[index].title;
     };
   }
+
   return (
     <React.Fragment>
       <Helmet>
@@ -138,29 +130,43 @@ export default function WebbingComparison(props: Props) {
               })}
             </ChartTypeItemTextWrapper>
             <ChartContainer>
-              <Chart animation={isChartAnimated}>
+              <Chart
+                // colorType="literal"
+                xType={selectedChartType === 'Stretch' ? 'linear' : 'ordinal'}
+                animation={isChartAnimated}
+              >
                 {/* <HorizontalGridLines />
                 <VerticalGridLines /> */}
-                {chart.series.map((serie, index) => {
-                  return (
-                    <LineMarkSeries
-                      key={serie.title}
-                      opacity={serie.disabled ? 0.1 : 1}
-                      color={serie.color}
-                      strokeStyle={'solid'}
-                      size={3}
-                      curve={'curveCardinal'}
-                      data={serie.data}
-                      onSeriesMouseOver={seriesMouseOverHandler(index)}
-                    />
-                  );
-                })}
 
+                {selectedChartType === 'Stretch' ? (
+                  chart.lineMarkSeries!.map((serie, index) => {
+                    return (
+                      <LineMarkSeries
+                        sizeType="literal"
+                        fillType="literal"
+                        key={serie.title}
+                        opacity={serie.disabled ? 0.1 : 1}
+                        color={serie.color}
+                        curve={'curveCardinal'}
+                        data={serie.data}
+                        onSeriesMouseOver={seriesMouseOverHandler(index)}
+                      />
+                    );
+                  })
+                ) : (
+                  <VerticalBarSeries
+                    colorType="literal"
+                    barWidth={0.8}
+                    data={chart.barSeries!.data}
+                  />
+                )}
                 <XAxis
                   title={chart.xAxisTitle}
                   tickSizeInner={0}
                   tickSizeOuter={8}
                   tickTotal={chart.xAxisTickTotal}
+                  tickLabelAngle={chart.xAxisAngle}
+                  tickPadding={chart.xAxisPadding}
                   animation={false}
                 />
                 <YAxis
@@ -168,15 +174,13 @@ export default function WebbingComparison(props: Props) {
                   tickSizeInner={0}
                   tickSizeOuter={8}
                   tickTotal={chart.yAxisTickTotal}
-                  animation={false}
+                  animation={isChartAnimated}
                 />
               </Chart>
             </ChartContainer>
             <Legends
               onItemsHover={webbingsHovered}
               onItemsClick={webbingsClicked}
-              // onSectionHover={brandHovered}
-              // onSectionClick={brandClicked}
               onMouseExit={onLegendMouseExit}
               data={data}
             />

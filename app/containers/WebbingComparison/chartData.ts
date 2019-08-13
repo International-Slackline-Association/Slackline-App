@@ -2,7 +2,8 @@ import { IChartData, IChartWebbing } from './interface';
 import { rawData } from './data';
 import { convertDolarToEuro } from './currencyConversion';
 
-export function generateDefaultChartData(): IChartData {
+// Initial values for animation only
+export function generateInitialChartData(): IChartData {
   const data = rawData();
   const webbings: IChartWebbing[] = [];
   for (const b of data.brands) {
@@ -15,14 +16,21 @@ export function generateDefaultChartData(): IChartData {
         s.kn = s.kn;
         s.percent = s.kn;
       });
+      webbing.weight = 0;
+      webbing.priceMeter.value = 0;
       webbings.push(webbing);
     }
   }
+  webbings[webbings.length - 1].weight = 3;
+  webbings[webbings.length - 1].priceMeter.value = 1;
+  webbings[webbings.length - 1].breakingStrength = 6;
+
   return { webbings: webbings };
 }
 export async function generateChartData(): Promise<IChartData> {
   const data = rawData();
   const webbings: IChartWebbing[] = [];
+  let forceDelay = true;
   for (const b of data.brands) {
     for (const w of b.webbings) {
       const webbing: IChartWebbing = {
@@ -31,7 +39,11 @@ export async function generateChartData(): Promise<IChartData> {
       };
       if (webbing.priceMeter.currency === 'dolar') {
         webbing.priceMeter.currency = 'euro';
-        webbing.priceMeter.value = await convertDolarToEuro(w.priceMeter.value);
+        webbing.priceMeter.value = await convertDolarToEuro(
+          w.priceMeter.value,
+          forceDelay,
+        );
+        forceDelay = false;
       }
       webbings.push(webbing);
     }
@@ -52,17 +64,6 @@ function clone(data: IChartData): IChartData {
     }),
   };
   return newData;
-}
-
-export function findWebbingAtIndex(index: number) {
-  // for (const b of d.brands) {
-  //   for (const w of b.webbings) {
-  //     if (!Utils.isNil(w.disabled) && w.disabled === false) {
-  //       return true;
-  //     }
-  //   }
-  // }
-  // return false;
 }
 
 // Reducer-like functions (useReducer was way more messy and not readable)

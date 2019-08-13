@@ -229,6 +229,14 @@ declare module 'react-vis' {
   export interface RadarChartPoint extends AbstractSeriesPoint {}
 
   export interface AbstractSeriesProps<T extends AbstractSeriesPoint> {
+    fillType?:
+      | 'linear'
+      | 'ordinal'
+      | 'category'
+      | 'literal'
+      | 'log'
+      | 'time'
+      | 'time-utc';
     _xValue?: T['_x'];
     xDomain?: Array<T['x']>;
     getX?: RVGet<T, 'x'>;
@@ -361,7 +369,9 @@ declare module 'react-vis' {
   > {}
 
   export interface VerticalBarSeriesProps
-    extends AbstractSeriesProps<VerticalBarSeriesPoint> {}
+    extends AbstractSeriesProps<VerticalBarSeriesPoint> {
+    barWidth?: number;
+  }
   export class VerticalBarSeries extends AbstractSeries<
     VerticalBarSeriesProps
   > {}
@@ -1136,6 +1146,22 @@ declare module 'react-vis' {
   export class Sunburst<T = any> extends Component<SunburstProps & T> {}
 
   export interface FlexibleXYPlotProps {
+    colorType?:
+      | 'linear'
+      | 'ordinal'
+      | 'category'
+      | 'literal'
+      | 'log'
+      | 'time'
+      | 'time-utc';
+    xType?:
+      | 'linear'
+      | 'ordinal'
+      | 'category'
+      | 'literal'
+      | 'log'
+      | 'time'
+      | 'time-utc';
     animation?:
       | string
       | {

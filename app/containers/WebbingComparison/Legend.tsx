@@ -3,6 +3,7 @@ import styled from 'styles/styled-components';
 import media from 'styles/media';
 import { IChartData, IChartWebbing } from './interface';
 import { touchableOpacity } from 'styles/mixins';
+import { rawData } from './data';
 
 interface Props {
   className?: string;
@@ -39,8 +40,27 @@ function allWebbingsOfBrand(data: IChartData, brandName: string) {
   }
   return webbings;
 }
+
+function findOriginalIndex(webbing: IChartWebbing): number {
+  const originalData = rawData();
+  let index = 0;
+  for (const b of originalData.brands) {
+    for (const w of b.webbings) {
+      if (webbing.name === w.name) {
+        return index;
+      }
+      index++;
+    }
+  }
+  return -1;
+}
+
 function groupByBrand(data: IChartData): GroupedWebbings {
   const brandsDict: { [key: string]: IBrand } = {};
+  // sort webbings by original raw data indexes
+  data.webbings.sort((a, b) =>
+    findOriginalIndex(a) < findOriginalIndex(b) ? -1 : 1,
+  );
   for (const webbing of data.webbings) {
     let brand = brandsDict[webbing.brandName];
     if (!brand) {

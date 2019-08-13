@@ -1,4 +1,5 @@
 let jsonResponse: any;
+const delayMs = 100;
 
 function fetchWithTimeout(
   url: string,
@@ -12,19 +13,27 @@ function fetchWithTimeout(
     ),
   ]);
 }
-export async function convertDolarToEuro(dolar: number): Promise<number> {
+const delay = t => new Promise(resolve => setTimeout(resolve, t));
+
+export async function convertDolarToEuro(
+  dolar: number,
+  forceDelay = false,
+): Promise<number> {
   if (jsonResponse) {
-    return convert();
+    if (forceDelay) {
+      return delay(delayMs).then(_ => convert(dolar));
+    }
+    return convert(dolar);
   }
   return fetchWithTimeout(
     'https://api.exchangeratesapi.io/latest',
     undefined,
-    1000,
+    delayMs,
   )
     .then(response => response.json())
     .then(json => {
       jsonResponse = json;
-      return convert();
+      return convert(dolar);
     })
     .catch(err => {
       console.log('Using dolar currency as euro');
@@ -32,11 +41,11 @@ export async function convertDolarToEuro(dolar: number): Promise<number> {
     }); // if no internet simply use dolar
 }
 
-function convert() {
+function convert(dolar: number) {
   return (
     jsonResponse &&
     jsonResponse.rates &&
     jsonResponse.rates.USD &&
-    jsonResponse / jsonResponse.rates.USD
+    dolar / jsonResponse.rates.USD
   );
 }
