@@ -3,7 +3,13 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import styled, { css } from 'styles/styled-components';
 import media, { isMobile } from 'styles/media';
 import { RouteComponentProps } from 'react-router';
-import { IChartWebbing, IChartData, ChartType } from './interface';
+import {
+  IChartWebbing,
+  IChartData,
+  ChartType,
+  ISeries,
+  ISeriesData,
+} from './interface';
 
 import {
   XAxis,
@@ -16,6 +22,7 @@ import {
   RVTickFormat,
   XYPlot,
   XYPlotProps,
+  Crosshair,
 } from 'react-vis';
 import RVStyles from 'react-vis-styles';
 import { Header, HeaderIcon } from './Header';
@@ -29,8 +36,7 @@ import { Helmet } from 'react-helmet';
 import {
   generateChartData,
   generateInitialChartData,
-  selectOrDeselectWebbings,
-  selectAll,
+  ChartManager,
 } from './chartData';
 import { Legend } from './Legend';
 import { generateChart } from './chartGenerator';
@@ -49,6 +55,7 @@ export default function WebbingComparison(props: Props) {
   const [selectedChartType, setSelectedChartType] = useState<ChartType>(
     'Stretch',
   );
+  const [focusedWebbing, setFocusedWebbing] = useState<IChartWebbing>();
   const [crosshairValues, setCrosshairValues] = useState();
 
   useEffect(() => {
@@ -59,46 +66,100 @@ export default function WebbingComparison(props: Props) {
   }, []);
 
   function selectChartType(type: ChartType) {
-    return evt => {
-      // setData(initialChartData);
+    return () => {
       setIsChartAnimated(true);
       setSelectedChartType(type);
     };
   }
 
   function webbingsClicked(selectedWebbings: IChartWebbing[]) {
-    setIsChartAnimated(false);
     const disableDeselect = !legendStatus.selected;
     setLegendStatus({ selected: true, hovered: legendStatus.hovered });
-    setData(selectOrDeselectWebbings(data, selectedWebbings, false));
+    setData(toggleSelectWebbings(selectedWebbings, false, disableDeselect));
   }
-  function webbingsHovered(selectedWebbings: IChartWebbing[]) {
-    setIsChartAnimated(false);
+
+  function webbingsHovered(
+    selectedWebbings: IChartWebbing[],
+    isFocused = false,
+  ) {
     setLegendStatus({ selected: legendStatus.selected, hovered: true });
-    if (!legendStatus.selected) {
-      setData(selectOrDeselectWebbings(data, selectedWebbings, true, true));
+    setData(hoverWebbings(selectedWebbings, !legendStatus.selected));
+    if (isFocused) {
+      setFocusedWebbing(selectedWebbings[0]);
     }
   }
 
   function onLegendMouseExit() {
     if (legendStatus.hovered && !legendStatus.selected) {
-      setData(selectAll(data));
+      setIsChartAnimated(true);
+      resetToggles();
     }
+  }
+
+  function toggleSelectWebbings(
+    selectedWebbings: IChartWebbing[],
+    disableOthers = false,
+    onlyToggleOn = false,
+  ): IChartData {
+    setIsChartAnimated(false);
+    return ChartManager.selectOrDeselectWebbings(
+      data,
+      selectedWebbings,
+      disableOthers,
+      onlyToggleOn,
+    );
+  }
+  function hoverWebbings(
+    selectedWebbings: IChartWebbing[],
+    shouldSelect = false,
+  ): IChartData {
+    setIsChartAnimated(false);
+    return ChartManager.hoverWebbings(data, selectedWebbings, shouldSelect);
+  }
+
+  function resetToggles() {
+    setData(ChartManager.selectAll(data));
   }
 
   const chart = generateChart(selectedChartType, data);
 
-  function mouseLeaveHandler() {
+  function chartOnMouseLeave() {
     setCrosshairValues([]);
+    if (legendStatus.hovered && !legendStatus.selected) {
+      resetToggles();
+    }
   }
-  function nearestXYHandler(value, { index }) {}
 
-  function seriesMouseOverHandler(index: number) {
+  function seriesNearestXYHandler(serie: ISeries, index: number) {
+    const webbing = ChartManager.findWebbingAtIndex(data, index);
+    if (webbing === focusedWebbing) {
+      return (value: ISeriesData, { index }: { index: number }) => {
+        // console.log(chart.lineMarkSeries!.filter(s => s.hovered));
+        setCrosshairValues(
+          chart
+            .lineMarkSeries!.filter(s => s.title === webbing.name)
+            .map(s => s.data![index]),
+        );
+      };
+    }
+    return undefined;
+  }
+  function seriesMouseOverHandler(serie: ISeries, index: number) {
     return () => {
-      //  chart.series[index].title;
+      const webbing = ChartManager.findWebbingAtIndex(data, index);
+      // if (!legendStatus.selected) {
+      webbingsHovered([webbing], webbing.selected);
+      // console.log(webbing.name);
+      // }
     };
   }
-
+  function seriesMouseOutHandler(index: number) {
+    return () => {};
+  }
+  // console.log(
+  //   data.webbings.filter(w => w.hovered && w.selected).map(w => w.name),
+  // );
+  console.log(focusedWebbing && focusedWebbing.name);
   return (
     <React.Fragment>
       <Helmet>
@@ -133,10 +194,12 @@ export default function WebbingComparison(props: Props) {
               <Chart
                 // colorType="literal"
                 xType={selectedChartType === 'Stretch' ? 'linear' : 'ordinal'}
+                onMouseLeave={chartOnMouseLeave}
                 animation={isChartAnimated}
               >
                 {/* <HorizontalGridLines />
                 <VerticalGridLines /> */}
+                <Crosshair values={crosshairValues} />
 
                 {selectedChartType === 'Stretch' ? (
                   chart.lineMarkSeries!.map((serie, index) => {
@@ -145,11 +208,13 @@ export default function WebbingComparison(props: Props) {
                         sizeType="literal"
                         fillType="literal"
                         key={serie.title}
-                        opacity={serie.disabled ? 0.1 : 1}
+                        opacity={serie.selected ? 1 : 0.1}
                         color={serie.color}
                         curve={'curveCardinal'}
                         data={serie.data}
-                        onSeriesMouseOver={seriesMouseOverHandler(index)}
+                        onNearestX={seriesNearestXYHandler(serie, index)}
+                        onSeriesMouseOver={seriesMouseOverHandler(serie, index)}
+                        onSeriesMouseOut={seriesMouseOutHandler(index)}
                       />
                     );
                   })

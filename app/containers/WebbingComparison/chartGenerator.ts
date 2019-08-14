@@ -5,6 +5,8 @@ import {
   ChartType,
   ISeries,
 } from './interface';
+const selectedOpacity = 0.8;
+const unSelectedOpacity = 0.05;
 
 export function generateChart(
   selectedChartType: ChartType,
@@ -65,13 +67,14 @@ export function stretchSeries(data: IChartData): ISeriesArray {
     return {
       title: webbing.name,
       color: webbing.colorCode,
-      disabled: webbing.disabled,
+      selected: webbing.selected,
+      hovered: webbing.hovered,
       data: webbing.stretch.map(rate => {
         return {
           x: rate.kn,
           y: rate.percent,
           fill: webbing.colorCode,
-          size: 3,
+          size: webbing.selected ? 3 : 2,
         };
       }),
     };
@@ -86,7 +89,7 @@ export function weightSeries(data: IChartData, dummy = false): ISeries {
         x: dummy ? 0 : webbing.name,
         y: webbing.weight,
         color: webbing.colorCode,
-        opacity: webbing.disabled ? 0.05 : 1,
+        opacity: webbing.selected ? selectedOpacity : unSelectedOpacity,
       };
     });
 
@@ -104,7 +107,7 @@ export function priceSeries(data: IChartData): ISeries {
         x: webbing.name,
         y: webbing.priceMeter.value,
         color: webbing.colorCode,
-        opacity: webbing.disabled ? 0.05 : 1,
+        opacity: webbing.selected ? selectedOpacity : unSelectedOpacity,
       };
     });
 
@@ -122,7 +125,7 @@ export function mbsSeries(data: IChartData): ISeries {
         x: webbing.name,
         y: webbing.breakingStrength,
         color: webbing.colorCode,
-        opacity: webbing.disabled ? 0.05 : 1,
+        opacity: webbing.selected ? selectedOpacity : unSelectedOpacity,
       };
     });
 

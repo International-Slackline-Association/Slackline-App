@@ -2,18 +2,20 @@ import { IWebbing, IBrand } from './data';
 
 export type ISeriesArray = ISeries[];
 
+export interface ISeriesData {
+  x: number | string;
+  y: number;
+  color?: string;
+  size?: number;
+  opacity?: number;
+}
+
 export interface ISeries {
   title: string;
-  disabled?: boolean;
+  selected?: boolean;
+  hovered?: boolean;
   color?: string;
-  data?: Array<{
-    y0?: number;
-    x: number | string;
-    y: number;
-    color?: string;
-    size?: number;
-    opacity?: number;
-  }>;
+  data?: ISeriesData[];
 }
 
 export type ChartType = 'Stretch' | 'Weight' | 'Price' | 'MBS';
@@ -34,6 +36,7 @@ export interface IChartData {
 }
 
 export interface IChartWebbing extends IWebbing {
-  disabled?: boolean;
+  selected: boolean;
+  hovered?: boolean;
   brandName: string;
 }

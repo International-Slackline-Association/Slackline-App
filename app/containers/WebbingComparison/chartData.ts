@@ -11,6 +11,8 @@ export function generateInitialChartData(): IChartData {
       const webbing: IChartWebbing = {
         ...w,
         brandName: b.name,
+        selected: true,
+        hovered: false,
       };
       webbing.stretch.forEach((s, index) => {
         s.kn = s.kn;
@@ -36,6 +38,8 @@ export async function generateChartData(): Promise<IChartData> {
       const webbing: IChartWebbing = {
         ...w,
         brandName: b.name,
+        selected: true,
+        hovered: false,
       };
       if (webbing.priceMeter.currency === 'dolar') {
         webbing.priceMeter.currency = 'euro';
@@ -68,41 +72,70 @@ function clone(data: IChartData): IChartData {
 
 // Reducer-like functions (useReducer was way more messy and not readable)
 // tslint:disable: prefer-conditional-expression
-
-export function selectAll(data: IChartData): IChartData {
-  const d = clone(data);
-  for (const w of d.webbings) {
-    w.disabled = false;
-  }
-  return d;
-}
-
-export function selectOrDeselectWebbings(
-  data: IChartData,
-  webbings: IChartWebbing[],
-  disableElse: boolean,
-  disableDeselect = false,
-): IChartData {
-  const d = clone(data);
-  let shouldDisableAll = false;
-  if (webbings.length > 1) {
-    shouldDisableAll = d.webbings
-      .filter(w => webbings.find(w2 => w2.name === w.name))
-      .some(w => w.disabled === false);
+// tslint:disable-next-line: no-namespace
+export namespace ChartManager {
+  export function findWebbingAtIndex(
+    data: IChartData,
+    index: number,
+  ): IChartWebbing {
+    return data.webbings[index];
   }
 
-  for (const w of d.webbings) {
-    if (webbings.find(w2 => w2.name === w.name)) {
-      if (disableDeselect) {
-        w.disabled = false;
-      } else if (shouldDisableAll) {
-        w.disabled = true;
-      } else {
-        w.disabled = !w.disabled;
-      }
-    } else {
-      w.disabled = disableElse ? true : w.disabled;
+  export function selectAll(data: IChartData): IChartData {
+    const d = clone(data);
+    for (const w of d.webbings) {
+      w.selected = true;
+      w.hovered = false;
     }
+    return d;
   }
-  return d;
+
+  export function selectOrDeselectWebbings(
+    data: IChartData,
+    webbings: IChartWebbing[],
+    disableElse: boolean,
+    disableDeselect = false,
+  ): IChartData {
+    const d = clone(data);
+    let shouldDeselectAll = false;
+    if (webbings.length > 1) {
+      shouldDeselectAll = d.webbings
+        .filter(w => webbings.find(w2 => w2.name === w.name))
+        .some(w => w.selected === true);
+    }
+
+    for (const w of d.webbings) {
+      if (webbings.find(w2 => w2.name === w.name)) {
+        if (disableDeselect) {
+          w.selected = true;
+        } else if (shouldDeselectAll) {
+          w.selected = false;
+        } else {
+          w.selected = !w.selected;
+        }
+      } else {
+        w.selected = disableElse ? false : w.selected;
+      }
+    }
+    return d;
+  }
+
+  export function hoverWebbings(
+    data: IChartData,
+    webbings: IChartWebbing[],
+    shouldSelect = false,
+  ): IChartData {
+    let d = clone(data);
+    if (shouldSelect) {
+      d = selectOrDeselectWebbings(d, webbings, true, true);
+    }
+    for (const w of d.webbings) {
+      if (webbings.find(w2 => w2.name === w.name)) {
+        w.hovered = true;
+      } else {
+        w.hovered = false;
+      }
+    }
+    return d;
+  }
 }

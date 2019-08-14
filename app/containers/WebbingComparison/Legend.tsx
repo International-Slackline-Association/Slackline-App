@@ -18,14 +18,14 @@ interface GroupedWebbings {
 
 interface IBrand {
   name: string;
-  disabled: boolean;
+  selected: boolean;
   webbings: IChartWebbing[];
 }
-function isBrandDisabled(data: IChartData, brandName: string) {
+function isBrandSelected(data: IChartData, brandName: string) {
   let result = true;
   for (const webbing of data.webbings) {
     if (webbing.brandName === brandName) {
-      result = (result && webbing.disabled) || false;
+      result = result && webbing.selected;
     }
   }
   return result;
@@ -67,7 +67,7 @@ function groupByBrand(data: IChartData): GroupedWebbings {
       brand = {
         webbings: [],
         name: webbing.brandName,
-        disabled: isBrandDisabled(data, webbing.brandName),
+        selected: isBrandSelected(data, webbing.brandName),
       };
     }
     brand.webbings.push(webbing);
@@ -123,7 +123,7 @@ function Component(props: Props) {
             <SectionTitle
               onClick={onSectionClick(brand)}
               onMouseOver={onSectionHover(brand)}
-              style={{ opacity: brand.disabled ? 0.2 : 1 }}
+              style={{ opacity: brand.selected ? 1 : 0.2 }}
             >
               {brand.name}
             </SectionTitle>
@@ -134,7 +134,7 @@ function Component(props: Props) {
                     key={webbing.name}
                     onClick={onItemClick(webbing)}
                     onMouseOver={onItemHover(webbing)}
-                    style={{ opacity: webbing.disabled ? 0.2 : 1 }}
+                    style={{ opacity: webbing.selected ? 1 : 0.2 }}
                   >
                     <ColorRectange
                       style={{
