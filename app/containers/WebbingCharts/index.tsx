@@ -40,12 +40,13 @@ import {
 } from './chartData';
 import { Legend } from './Legend';
 import { generateChart } from './chartGenerator';
+import { CrosshairView } from './CrosshairView';
 
 const chartTypes: ChartType[] = ['Stretch', 'Weight', 'Price', 'MBS'];
 const initialChartData = generateInitialChartData();
 
 interface Props extends RouteComponentProps {}
-export default function WebbingComparison(props: Props) {
+export default function WebbingCharts(props: Props) {
   const [data, setData] = useState<IChartData>(initialChartData);
   const [legendStatus, setLegendStatus] = useState({
     selected: false,
@@ -55,8 +56,7 @@ export default function WebbingComparison(props: Props) {
   const [selectedChartType, setSelectedChartType] = useState<ChartType>(
     'Stretch',
   );
-  const [focusedWebbing, setFocusedWebbing] = useState<IChartWebbing>();
-  const [crosshairValues, setCrosshairValues] = useState();
+  const [crosshairValues, setCrosshairValues] = useState<ISeriesData[]>();
 
   useEffect(() => {
     generateChartData().then(data => {
@@ -73,108 +73,98 @@ export default function WebbingComparison(props: Props) {
   }
 
   function webbingsClicked(selectedWebbings: IChartWebbing[]) {
+    setIsChartAnimated(false);
     const disableDeselect = !legendStatus.selected;
     setLegendStatus({ selected: true, hovered: legendStatus.hovered });
-    setData(toggleSelectWebbings(selectedWebbings, false, disableDeselect));
+    setData(
+      ChartManager.selectOrDeselectWebbings(
+        data,
+        selectedWebbings,
+        false,
+        disableDeselect,
+      ),
+    );
   }
 
-  function webbingsHovered(
-    selectedWebbings: IChartWebbing[],
-    isFocused = false,
-  ) {
+  function webbingsHovered(selectedWebbings: IChartWebbing[]) {
+    setIsChartAnimated(false);
     setLegendStatus({ selected: legendStatus.selected, hovered: true });
-    setData(hoverWebbings(selectedWebbings, !legendStatus.selected));
-    if (isFocused) {
-      setFocusedWebbing(selectedWebbings[0]);
-    }
+    setData(
+      ChartManager.hoverWebbings(
+        data,
+        selectedWebbings,
+        !legendStatus.selected,
+      ),
+    );
+  }
+
+  function datapointSelected(webbing: IChartWebbing, index: number) {
+    setData(ChartManager.selectDataPoint(data, webbing, index));
   }
 
   function onLegendMouseExit() {
     if (legendStatus.hovered && !legendStatus.selected) {
-      setIsChartAnimated(true);
       resetToggles();
     }
   }
 
-  function toggleSelectWebbings(
-    selectedWebbings: IChartWebbing[],
-    disableOthers = false,
-    onlyToggleOn = false,
-  ): IChartData {
-    setIsChartAnimated(false);
-    return ChartManager.selectOrDeselectWebbings(
-      data,
-      selectedWebbings,
-      disableOthers,
-      onlyToggleOn,
-    );
-  }
-  function hoverWebbings(
-    selectedWebbings: IChartWebbing[],
-    shouldSelect = false,
-  ): IChartData {
-    setIsChartAnimated(false);
-    return ChartManager.hoverWebbings(data, selectedWebbings, shouldSelect);
+  function resetToggles() {
+    setIsChartAnimated(true);
+    setData(ChartManager.selectAll(data));
   }
 
-  function resetToggles() {
-    setData(ChartManager.selectAll(data));
+  function resetInteractions() {
+    setData(ChartManager.clearHovers(data));
   }
 
   const chart = generateChart(selectedChartType, data);
 
   function chartOnMouseLeave() {
     setCrosshairValues([]);
+    resetInteractions();
     if (legendStatus.hovered && !legendStatus.selected) {
       resetToggles();
     }
   }
 
-  function seriesNearestXYHandler(serie: ISeries, index: number) {
-    const webbing = ChartManager.findWebbingAtIndex(data, index);
-    if (webbing === focusedWebbing) {
+  function seriesNearestXYHandler(serie: ISeries, webbingIndex: number) {
+    if (serie.focused) {
+      const webbing = ChartManager.findWebbingAtIndex(data, webbingIndex);
       return (value: ISeriesData, { index }: { index: number }) => {
-        // console.log(chart.lineMarkSeries!.filter(s => s.hovered));
-        setCrosshairValues(
-          chart
-            .lineMarkSeries!.filter(s => s.title === webbing.name)
-            .map(s => s.data![index]),
-        );
+        datapointSelected(webbing, index);
+        setCrosshairValues([value]);
       };
     }
     return undefined;
   }
-  function seriesMouseOverHandler(serie: ISeries, index: number) {
+  function seriesMouseOverHandler(index: number) {
+    const webbing = ChartManager.findWebbingAtIndex(data, index);
     return () => {
-      const webbing = ChartManager.findWebbingAtIndex(data, index);
-      // if (!legendStatus.selected) {
-      webbingsHovered([webbing], webbing.selected);
-      // console.log(webbing.name);
-      // }
+      webbingsHovered([webbing]);
     };
   }
-  function seriesMouseOutHandler(index: number) {
-    return () => {};
+
+  function barMouseOverHandler(value: ISeriesData) {
+    const webbing = ChartManager.findWebbingWithName(data, value.webbingName);
+    webbingsHovered([webbing]);
+    setCrosshairValues([value]);
   }
-  // console.log(
-  //   data.webbings.filter(w => w.hovered && w.selected).map(w => w.name),
-  // );
-  console.log(focusedWebbing && focusedWebbing.name);
+
   return (
     <React.Fragment>
       <Helmet>
-        <title>Webbing Comparison</title>
+        <title>Webbing Charts</title>
         <meta name="description" content="Compare webbings with charts" />
       </Helmet>
       <AppBackgroundContainer showBackButton>
         <Wrapper>
           <Header>
             <HeaderIcon iconType="stretch_chart" />
-            <span>Webbing Comparison</span>
+            <span>Webbing Charts</span>
           </Header>
           <RVStyles />
           <ChartWrapper>
-            <ChartTypeText>Chart Type</ChartTypeText>
+            {/* <ChartTypeText>Chart Type</ChartTypeText> */}
             <ChartTypeItemTextWrapper>
               {chartTypes.map((type, index) => {
                 return (
@@ -192,38 +182,13 @@ export default function WebbingComparison(props: Props) {
             </ChartTypeItemTextWrapper>
             <ChartContainer>
               <Chart
-                // colorType="literal"
+                // xDomain={[0, chart.lineMarkSeries!.length - 3]}
                 xType={selectedChartType === 'Stretch' ? 'linear' : 'ordinal'}
                 onMouseLeave={chartOnMouseLeave}
                 animation={isChartAnimated}
               >
-                {/* <HorizontalGridLines />
-                <VerticalGridLines /> */}
-                <Crosshair values={crosshairValues} />
-
-                {selectedChartType === 'Stretch' ? (
-                  chart.lineMarkSeries!.map((serie, index) => {
-                    return (
-                      <LineMarkSeries
-                        sizeType="literal"
-                        fillType="literal"
-                        key={serie.title}
-                        opacity={serie.selected ? 1 : 0.1}
-                        color={serie.color}
-                        curve={'curveCardinal'}
-                        data={serie.data}
-                        onNearestX={seriesNearestXYHandler(serie, index)}
-                        onSeriesMouseOver={seriesMouseOverHandler(serie, index)}
-                        onSeriesMouseOut={seriesMouseOutHandler(index)}
-                      />
-                    );
-                  })
-                ) : (
-                  <VerticalBarSeries
-                    colorType="literal"
-                    barWidth={0.8}
-                    data={chart.barSeries!.data}
-                  />
+                {selectedChartType !== 'Stretch' && (
+                  <HorizontalGridLines tickTotal={chart.yAxisTickTotal} />
                 )}
                 <XAxis
                   title={chart.xAxisTitle}
@@ -241,6 +206,38 @@ export default function WebbingComparison(props: Props) {
                   tickTotal={chart.yAxisTickTotal}
                   animation={isChartAnimated}
                 />
+                {selectedChartType === 'Stretch' ? (
+                  chart.lineMarkSeries!.map((serie, index) => {
+                    return (
+                      <LineMarkSeries
+                        sizeType="literal"
+                        fillType="literal"
+                        key={serie.title}
+                        opacity={serie.selected ? 1 : 0.1}
+                        color={serie.color}
+                        curve={'curveCardinal'}
+                        data={serie.data}
+                        onNearestX={seriesNearestXYHandler(serie, index)}
+                        onSeriesMouseOver={seriesMouseOverHandler(index)}
+                      />
+                    );
+                  })
+                ) : (
+                  <VerticalBarSeries
+                    colorType="literal"
+                    barWidth={0.8}
+                    data={chart.barSeries!.data}
+                    onValueMouseOver={barMouseOverHandler}
+                  />
+                )}
+                <Crosshair values={crosshairValues}>
+                  {crosshairValues && crosshairValues[0] && (
+                    <CrosshairView
+                      values={crosshairValues}
+                      chartType={selectedChartType}
+                    />
+                  )}
+                </Crosshair>
               </Chart>
             </ChartContainer>
             <Legends
@@ -259,6 +256,7 @@ export default function WebbingComparison(props: Props) {
 const Chart = styled(FlexibleXYPlot)`
   .rv-xy-plot__grid-lines__line {
     stroke: ${props => props.theme.border};
+    opacity: 0.2;
   }
   display: flex;
   /* .rv-xy-plot__series--line {
@@ -280,7 +278,8 @@ const ChartContainer = styled.div`
   width: 100%;
   height: 20rem;
   flex: 1;
-  margin-left: -10px;
+  /* margin-left: -10px; */
+  flex-direction: column;
   ${media.desktop`
     width: auto;
     height: 30rem;

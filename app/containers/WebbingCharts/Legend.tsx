@@ -127,6 +127,7 @@ function Component(props: Props) {
             >
               {brand.name}
             </SectionTitle>
+            <Divider />
             <SectionItemsWrapper>
               {brand.webbings.map(webbing => {
                 return (
@@ -153,6 +154,16 @@ function Component(props: Props) {
   );
 }
 
+const Divider = styled.div`
+  display: none;
+  height: 1px;
+  width: auto;
+  background-color: ${props => props.theme.border};
+  ${media.desktop`
+    display: flex;
+  `}
+`;
+
 const Section = styled.div`
   display: flex;
   flex-direction: column;
@@ -172,7 +183,7 @@ const SectionTitle = styled.span`
   font-size: 0.7rem;
   ${media.desktop`
     align-self: flex-start;
-    margin: 0rem 0rem;
+    margin: 0.2rem 0rem;
   `}
 `;
 const SectionItemsWrapper = styled.div`

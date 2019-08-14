@@ -47,9 +47,9 @@ export const data: MainPageSection[] = [
     items: [
       {
         icon: 'stretch_chart',
-        path: 'webbing-comparison',
-        title: 'Webbing Comparison',
-        subtitle: 'Compare webbings by stretch ratio, price, weight etc...',
+        path: 'webbing-charts',
+        title: 'Webbing Charts',
+        subtitle: 'Compare webbings by stretch, price, weight and mbs',
         isAvailable: true,
       },
       {

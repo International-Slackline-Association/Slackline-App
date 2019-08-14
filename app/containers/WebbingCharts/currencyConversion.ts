@@ -1,5 +1,5 @@
 let jsonResponse: any;
-const delayMs = 100;
+const delayMs = 600;
 
 function fetchWithTimeout(
   url: string,
@@ -42,10 +42,8 @@ export async function convertDolarToEuro(
 }
 
 function convert(dolar: number) {
-  return (
-    jsonResponse &&
-    jsonResponse.rates &&
-    jsonResponse.rates.USD &&
-    dolar / jsonResponse.rates.USD
-  );
+  if (jsonResponse && jsonResponse.rates && jsonResponse.rates.USD) {
+    return parseFloat((dolar / jsonResponse.rates.USD).toFixed(2));
+  }
+  return dolar;
 }

@@ -10,7 +10,7 @@ const InstructorCertificateExplorer = lazy(() =>
 );
 const UnitConverter = lazy(() => import('../UnitConverter'));
 const TensionCalculator = lazy(() => import('../TensionCalculator'));
-const WebbingComparison = lazy(() => import('../WebbingComparison'));
+const WebbingCharts = lazy(() => import('../WebbingCharts'));
 
 const App: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const App: React.FC = () => {
           path={'/tension-calculator'}
           component={TensionCalculator}
         />
-        <Route path={'/webbing-comparison'} component={WebbingComparison} />
+        <Route path={'/webbing-charts'} component={WebbingCharts} />
         <Route
           path={'/instructor-certificate-explorer'}
           component={InstructorCertificateExplorer}

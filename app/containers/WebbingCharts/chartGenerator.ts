@@ -5,7 +5,7 @@ import {
   ChartType,
   ISeries,
 } from './interface';
-const selectedOpacity = 0.8;
+const selectedOpacity = 0.7;
 const unSelectedOpacity = 0.05;
 
 export function generateChart(
@@ -69,12 +69,20 @@ export function stretchSeries(data: IChartData): ISeriesArray {
       color: webbing.colorCode,
       selected: webbing.selected,
       hovered: webbing.hovered,
-      data: webbing.stretch.map(rate => {
+      focused: webbing.focused,
+      data: webbing.stretch.map((rate, index) => {
         return {
+          webbingName: webbing.name,
           x: rate.kn,
           y: rate.percent,
-          fill: webbing.colorCode,
-          size: webbing.selected ? 3 : 2,
+          fill:
+            webbing.crosshairPointIndex === index ? 'white' : webbing.colorCode,
+          // fill: 'red',
+          size: webbing.selected
+            ? webbing.crosshairPointIndex === index
+              ? 6
+              : 3
+            : 2,
         };
       }),
     };
@@ -86,6 +94,7 @@ export function weightSeries(data: IChartData, dummy = false): ISeries {
     .sort((a, b) => (a.weight < b.weight ? -1 : 1))
     .map((webbing, index) => {
       return {
+        webbingName: webbing.name,
         x: dummy ? 0 : webbing.name,
         y: webbing.weight,
         color: webbing.colorCode,
@@ -104,6 +113,7 @@ export function priceSeries(data: IChartData): ISeries {
     .sort((a, b) => (a.priceMeter.value < b.priceMeter.value ? -1 : 1))
     .map((webbing, index) => {
       return {
+        webbingName: webbing.name,
         x: webbing.name,
         y: webbing.priceMeter.value,
         color: webbing.colorCode,
@@ -122,6 +132,7 @@ export function mbsSeries(data: IChartData): ISeries {
     .sort((a, b) => (a.breakingStrength < b.breakingStrength ? -1 : 1))
     .map((webbing, index) => {
       return {
+        webbingName: webbing.name,
         x: webbing.name,
         y: webbing.breakingStrength,
         color: webbing.colorCode,

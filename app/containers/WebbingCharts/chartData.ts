@@ -18,14 +18,12 @@ export function generateInitialChartData(): IChartData {
         s.kn = s.kn;
         s.percent = s.kn;
       });
-      webbing.weight = 0;
-      webbing.priceMeter.value = 0;
+      webbing.stretch.splice(0, 0, { kn: 0, percent: 0 });
+      // webbing.weight = 0;
+      // webbing.priceMeter.value = 0;
       webbings.push(webbing);
     }
   }
-  webbings[webbings.length - 1].weight = 3;
-  webbings[webbings.length - 1].priceMeter.value = 1;
-  webbings[webbings.length - 1].breakingStrength = 6;
 
   return { webbings: webbings };
 }
@@ -41,6 +39,7 @@ export async function generateChartData(): Promise<IChartData> {
         selected: true,
         hovered: false,
       };
+      webbing.stretch.splice(0, 0, { kn: 0, percent: 0 });
       if (webbing.priceMeter.currency === 'dolar') {
         webbing.priceMeter.currency = 'euro';
         webbing.priceMeter.value = await convertDolarToEuro(
@@ -70,7 +69,7 @@ function clone(data: IChartData): IChartData {
   return newData;
 }
 
-// Reducer-like functions (useReducer was way more messy and not readable)
+// Reducer-like functions (useReducer was way messier and not readable)
 // tslint:disable: prefer-conditional-expression
 // tslint:disable-next-line: no-namespace
 export namespace ChartManager {
@@ -80,12 +79,30 @@ export namespace ChartManager {
   ): IChartWebbing {
     return data.webbings[index];
   }
+  export function findWebbingWithName(
+    data: IChartData,
+    name: string,
+  ): IChartWebbing {
+    return data.webbings.find(w => w.name === name)!;
+  }
 
   export function selectAll(data: IChartData): IChartData {
     const d = clone(data);
     for (const w of d.webbings) {
       w.selected = true;
       w.hovered = false;
+      w.crosshairPointIndex = undefined;
+      w.focused = false;
+    }
+    return d;
+  }
+
+  export function clearHovers(data: IChartData): IChartData {
+    const d = clone(data);
+    for (const w of d.webbings) {
+      w.hovered = false;
+      w.crosshairPointIndex = undefined;
+      w.focused = false;
     }
     return d;
   }
@@ -132,10 +149,36 @@ export namespace ChartManager {
     for (const w of d.webbings) {
       if (webbings.find(w2 => w2.name === w.name)) {
         w.hovered = true;
+        if (w.selected) {
+          clearFocusedWebbings(d);
+          w.focused = true;
+        }
       } else {
         w.hovered = false;
       }
     }
     return d;
+  }
+
+  export function selectDataPoint(
+    data: IChartData,
+    webbing: IChartWebbing,
+    index: number,
+  ): IChartData {
+    const d = clone(data);
+    for (const w of d.webbings) {
+      if (w.name === webbing.name) {
+        w.crosshairPointIndex = index;
+      } else {
+        w.crosshairPointIndex = undefined;
+      }
+    }
+    return d;
+  }
+
+  function clearFocusedWebbings(data: IChartData) {
+    for (const w of data.webbings) {
+      w.focused = false;
+    }
   }
 }

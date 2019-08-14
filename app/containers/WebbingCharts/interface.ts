@@ -8,12 +8,14 @@ export interface ISeriesData {
   color?: string;
   size?: number;
   opacity?: number;
+  webbingName: string;
 }
 
 export interface ISeries {
   title: string;
   selected?: boolean;
   hovered?: boolean;
+  focused?: boolean;
   color?: string;
   data?: ISeriesData[];
 }
@@ -36,7 +38,9 @@ export interface IChartData {
 }
 
 export interface IChartWebbing extends IWebbing {
+  brandName: string;
   selected: boolean;
   hovered?: boolean;
-  brandName: string;
+  focused?: boolean;
+  crosshairPointIndex?: number;
 }
