@@ -126,7 +126,7 @@ export function rawData(): IWebbingData {
             name: 'Y2k',
             shortName: '',
             colorCode: '#07427F',
-            stretch: [{ kn: 10, percent: 0.1 }],
+            stretch: [{ kn: 10, percent: 1}],
             weight: 33.1,
             priceMeter: {
               value: 1.79,
