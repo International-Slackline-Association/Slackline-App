@@ -9,6 +9,7 @@ import { Icon, IconType } from '../Icons/Icon';
 
 interface Props {
   icon: IconType;
+  isIconVertical?: boolean;
   title: string;
   subtitle: string;
   isAvailable: boolean;
@@ -39,8 +40,8 @@ function Item(props: Props) {
           <span>Available Soon...</span>
         </NotAvailableWrapper>
       )}
-      <LeftIcon disabled={!props.isAvailable} iconType={props.icon} />
-      <TitleWrapper disabled={!props.isAvailable} >
+      <LeftIcon vertical={props.isIconVertical} disabled={!props.isAvailable} iconType={props.icon} />
+      <TitleWrapper disabled={!props.isAvailable}>
         <Title>{props.title}</Title>
         <Subtitle>{props.subtitle}</Subtitle>
       </TitleWrapper>
@@ -48,13 +49,12 @@ function Item(props: Props) {
   );
 }
 
-const LeftIcon = styled(Icon)<{ disabled?: boolean }>`
+const LeftIcon = styled(Icon)<{ disabled?: boolean, vertical?: boolean }>`
   display: flex;
-  width: 2rem;
-  height: 2rem;
+  width: ${props => props.vertical ? '2rem' : '2rem'};
+  height: ${props => props.vertical ? '3rem' : '2rem'};
   margin-top: 0.2rem;
   margin-right: 0.5rem;
-  color: red;
   opacity: ${props => (props.disabled ? 0.3 : 1)};
 `;
 
@@ -65,9 +65,11 @@ const NotAvailableWrapper = styled.div`
   align-items: center;
   /* background-color: ${props => props.theme.overlay}; */
   & span {
-    /* background-color: ${props => props.theme.background}; */
-    /* transform: rotate(-45deg); */
-    font-size: 0.8rem;
+    background-color: ${props => props.theme.background};
+    transform: rotate(45deg);
+    position: absolute;
+    right: 0;
+    font-size: 0.5rem;
   }
 `;
 

@@ -56,6 +56,7 @@ export default function HomePage(props: Props) {
                           key={index}
                           onItemClick={onItemClick(item.path)}
                           icon={item.icon}
+                          isIconVertical={item.isIconVertical}
                           title={item.title}
                           subtitle={item.subtitle}
                           isAvailable={item.isAvailable}

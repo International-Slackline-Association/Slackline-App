@@ -5,7 +5,7 @@ import media from 'styles/media';
 import { Icon } from 'components/Icons/Icon';
 import { TextInput } from 'components/TextInput';
 import { LoadableButton } from 'components/LoadableButton';
-import { queryInstructor, InstructorItem } from './spreadsheet';
+import { queryInstructor, InstructorItem } from '../InstructorCertificateExplorer/spreadsheet';
 import { RouteComponentProps } from 'react-router';
 import { Utils } from 'utils/index';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ export default function InstructorCertificateExplorer(props: Props) {
   }
   const [inputValue, setInputValue] = useState(defaultQuery);
   const [isLoading, setIsLoading] = useState(false);
-  const [instructor, setInstructor] = useState<InstructorItem | null>();
+  const [rigger, setRigger] = useState<InstructorItem | null>();
 
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ export default function InstructorCertificateExplorer(props: Props) {
   }, []);
   function updateValue(value: string) {
     setInputValue(value);
-    setInstructor(undefined);
+    setRigger(undefined);
   }
 
   async function checkInstructor() {
@@ -39,7 +39,7 @@ export default function InstructorCertificateExplorer(props: Props) {
       setIsLoading(true);
       const instructor = await queryInstructor(inputValue);
       setIsLoading(false);
-      setInstructor(instructor);
+      setRigger(instructor);
       dispatch(replace({ search: `?query=${inputValue}` }));
     }
   }
@@ -49,12 +49,12 @@ export default function InstructorCertificateExplorer(props: Props) {
     <AppBackgroundContainer hideFooter>
       <Wrapper>
         <Header>
-          <HeaderIcon iconType="instructor_certificate" />
-          <span>Instructor Certificate Explorer</span>
+          <HeaderIcon iconType="rigger_certificate" />
+          <span>Rigger Certificate Explorer</span>
         </Header>
         <Input
           type="text"
-          label="ID or Name of the instructor"
+          label="ID or Name of the rigger"
           onChange={updateValue}
           value={inputValue}
         />
@@ -62,23 +62,23 @@ export default function InstructorCertificateExplorer(props: Props) {
           CHECK
         </CustomLoadableButton>
         {/* <Divider show={instructor !== undefined} /> */}
-        {instructor !== undefined &&
-          (instructor === null || !instructor.level ? (
+        {rigger !== undefined &&
+          (rigger === null || !rigger.rigger ? (
             <InvalidText>
-              Cannot find the instructor &nbsp;
+              Cannot find the rigger &nbsp;
               <b>{inputValue}</b>
             </InvalidText>
           ) : (
             <ValidText>
-              <b>{`${instructor.firstname} ${instructor.name}`}</b>
+              <b>{`${rigger.firstname} ${rigger.name}`}</b>
               <span>&nbsp;has a&nbsp;</span>
-              {instructor.rigger ? (
-                <b>{instructor.level} / Rigger Certificate</b>
+              {rigger.rigger ? (
+                <b>{rigger.level} / Rigger Certificate</b>
               ) : (
-                <b>{instructor.level}Certificate</b>
+                <b>{rigger.level}Certificate</b>
               )}
               <span>&nbsp;valid until&nbsp;</span>
-              <b>{instructor.valid}</b>
+              <b>{rigger.valid}</b>
             </ValidText>
           ))}
       </Wrapper>

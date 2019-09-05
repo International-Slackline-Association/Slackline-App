@@ -1,4 +1,4 @@
-const k = 'AIzaSyBF2ByiWqnfBG5hPbUOyl5hp' + '_' + 'ij87ExD1w';
+const k = 'AIzaSyD1d4S8fcj' + '_' + 'UEcRnxuQqpJypb9slGV9XNw';
 // tslint:disable-next-line: max-line-length
 const url = `https://sheets.googleapis.com/v4/spreadsheets/10fE6gHsAxGc_4p0Dr-1KgTKdB0Cxv_-oeWfonAdrfeE/values/Masterlist?key=${k}`;
 
@@ -13,6 +13,7 @@ export interface InstructorItem {
   name: string;
   firstname: string;
   level: string;
+  rigger: string;
   valid: string;
 }
 
@@ -60,7 +61,8 @@ function parseSheetResponse(resp: SheetResponse): InstructorItem[] {
       name: value[1].trim(),
       firstname: value[2].trim(),
       level: value[6],
-      valid: value[9],
+      rigger: value[7],
+      valid: value[10],
     });
   }
   return items;

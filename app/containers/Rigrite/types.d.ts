@@ -1,19 +1,7 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from './actions';
 import { ApplicationRootState } from 'types';
-import { IconType } from 'components/Icons/Icon';
 
-export interface MainPageSection {
-  title: string;
-  items: Array<{
-    title: string;
-    subtitle: string;
-    icon: IconType;
-    path: string;
-    isAvailable: boolean;
-    isIconVertical?: boolean;
-  }>;
-}
 /* --- STATE --- */
 interface State {
   dflt: string;

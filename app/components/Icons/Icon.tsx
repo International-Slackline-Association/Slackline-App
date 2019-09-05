@@ -20,12 +20,17 @@ import MapsIcon from './svgs/maps.svg';
 import TutorialIcon from './svgs/tutorial.svg';
 import ScatterGraphIcon from './svgs/scatter_graph.svg';
 import MapsDistanceIcon from './svgs/maps_distance.svg';
+import TripodCameraIcon from './svgs/tripod_camera.svg';
+import CellphoneTensionIcon from './svgs/cellphone_tension.svg';
+import CubeIcon from './svgs/cube.svg';
+import SpiritLevelIcon from './svgs/spirit_level.svg';
+import BookIcon from './svgs/book.svg';
 
 export type IconType =
   | 'instructor_certificate'
   | 'gear_certificate'
   | 'rigger_certificate'
-  | 'tension'
+  | 'traditional_tension_calculator'
   | 'unit_converter'
   | 'mass_converter'
   | 'length_converter'
@@ -40,6 +45,11 @@ export type IconType =
   | 'maps'
   | 'scatter_graph'
   | 'maps_distance'
+  | 'length_measurer'
+  | 'tension_calculator'
+  | 'volume_calculator'
+  | 'spirit_level'
+  | 'terminology_cheatsheet'
   | 'default';
 
 interface Props {
@@ -63,7 +73,7 @@ export const Icon = memo((props: Props) => {
     case 'force_converter':
       src = ForceConverterIcon;
       break;
-    case 'tension':
+    case 'traditional_tension_calculator':
       src = TensionIcon;
       break;
     case 'instructor_certificate':
@@ -104,6 +114,21 @@ export const Icon = memo((props: Props) => {
       break;
     case 'maps_distance':
       src = MapsDistanceIcon;
+      break;
+    case 'length_measurer':
+      src = TripodCameraIcon;
+      break;
+    case 'tension_calculator':
+      src = CellphoneTensionIcon;
+      break;
+    case 'volume_calculator':
+      src = CubeIcon;
+      break;
+    case 'spirit_level':
+      src = SpiritLevelIcon;
+      break;
+    case 'terminology_cheatsheet':
+      src = BookIcon;
       break;
     default:
       break;

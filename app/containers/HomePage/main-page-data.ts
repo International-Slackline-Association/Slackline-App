@@ -3,6 +3,33 @@ import { MainPageSection } from './types';
 
 export const data: MainPageSection[] = [
   {
+    title: 'Interactive Tools',
+    items: [
+      {
+        icon: 'tension_calculator',
+        isIconVertical: true,
+        path: 'tension-calculator',
+        title: 'Tension Calculator',
+        subtitle: `Calculate the tension of the line using your device's sensors`,
+        isAvailable: false,
+      },
+      {
+        icon: 'length_measurer',
+        path: '',
+        title: 'Length Measurer',
+        subtitle: `Measure the length of the line using your device's camera`,
+        isAvailable: false,
+      },
+      {
+        icon: 'spirit_level',
+        path: '',
+        title: 'Spirit Level',
+        subtitle: `Level your anchors equally using device's camera`,
+        isAvailable: false,
+      },
+    ],
+  },
+  {
     title: 'Calculators',
     items: [
       {
@@ -13,25 +40,27 @@ export const data: MainPageSection[] = [
         isAvailable: true,
       },
       {
-        icon: 'tension',
-        path: 'tension-calculator',
-        title: 'Tension Calculator',
-        subtitle: 'Calculate the tension of the line',
+        icon: 'traditional_tension_calculator',
+        path: 'traditional-tension-calculator',
+        title: 'Traditional Tension Calculator',
+        subtitle:
+          'Calculate the tension of the line with given the length, weight, sag',
         isAvailable: true,
       },
       {
-        icon: 'stability_calculator',
-        path: '',
-        title: 'Stability Calculator',
-        subtitle: 'Calculate the stability of the anchors',
-        isAvailable: true,
+        icon: 'volume_calculator',
+        path: 'volume-calculator',
+        title: 'Volume Calculator',
+        subtitle:
+          'Calculate the volume, weight and the force that could potentially move the the rock',
+        isAvailable: false,
       },
       {
         icon: 'backup_simulator',
         path: '',
         title: 'Backup Fall Simulator',
         subtitle: 'Simulate the backup fall for your highline',
-        isAvailable: true,
+        isAvailable: false,
       },
       {
         icon: 'maps_distance',
@@ -55,9 +84,9 @@ export const data: MainPageSection[] = [
       {
         icon: 'scatter_graph',
         path: '',
-        title: 'Weblock Comparison',
-        subtitle: 'Compare weblocks by price and weight',
-        isAvailable: true,
+        title: 'Weblock Charts',
+        subtitle: 'Compare weblocks by price, weight, and mbs',
+        isAvailable: false,
       },
     ],
   },
@@ -69,39 +98,39 @@ export const data: MainPageSection[] = [
         path: '',
         title: 'Recommended Articles',
         subtitle: 'Essential Articles & Publications in your pocket',
-        isAvailable: true,
+        isAvailable: false,
       },
       {
-        icon: 'tutorial',
+        icon: 'terminology_cheatsheet',
         path: '',
-        title: 'Tutorials',
-        subtitle: 'Online tutorials for everyone',
+        title: 'Terminology Cheatsheet',
+        subtitle: 'Learn slackline specific words etc...',
         isAvailable: false,
       },
     ],
   },
-  {
-    title: 'Community',
-    items: [
-      {
-        icon: 'maps',
-        path: '',
-        title: 'Slackmap',
-        subtitle: 'Find slackliners, groups and spots on slackmap.com',
-        isAvailable: false,
-      },
-    ],
-  },
-  {
-    title: 'Personal',
-    items: [
-      {
-        icon: 'collection',
-        path: '',
-        title: 'My Bookmarks',
-        subtitle: 'Bookmark your own links, pdfs, posts etc... to access later',
-        isAvailable: false,
-      },
-    ],
-  },
+  // {
+  //   title: 'Community',
+  //   items: [
+  //     {
+  //       icon: 'maps',
+  //       path: '',
+  //       title: 'Slackmap',
+  //       subtitle: 'Find slackliners, groups and spots on slackmap.com',
+  //       isAvailable: false,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: 'Personal',
+  //   items: [
+  //     {
+  //       icon: 'collection',
+  //       path: '',
+  //       title: 'My Bookmarks',
+  //       subtitle: 'Bookmark your own links, pdfs, posts etc... to access later',
+  //       isAvailable: false,
+  //     },
+  //   ],
+  // },
 ];

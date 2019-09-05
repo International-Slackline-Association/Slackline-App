@@ -13,10 +13,10 @@ export const data: MainPageSection[] = [
       },
       {
         icon: 'rigger_certificate',
-        path: '',
+        path: 'rigger-certificate-explorer',
         title: 'Rigger Certificate Explorer',
         subtitle: 'Check the certificate of a rigger',
-        isAvailable: false,
+        isAvailable: true,
       },
       {
         icon: 'gear_certificate',

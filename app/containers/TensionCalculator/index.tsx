@@ -52,10 +52,11 @@ export default function TensionCalculator() {
     setWeight(v);
   }
   function updateSagValue(value: string, switchValue?: boolean) {
-    let v = parseInt(value, 10);
+    let v = parseFloat(parseFloat(value).toFixed(1));
     if (v <= 0) {
       v = 1;
     }
+    console.log(value);
     setSagString(v.toString());
     if (switchValue) {
       v = convertLength(undefined, v)!.meters;
@@ -82,8 +83,8 @@ export default function TensionCalculator() {
       <AppBackgroundContainer showBackButton>
         <Wrapper>
           <Header>
-            <HeaderIcon iconType="tension" />
-            <span>Tension Calculator</span>
+            <HeaderIcon iconType="traditional_tension_calculator" />
+            <span>Traditional Tension Calculator</span>
           </Header>
           <Drawing device={'desktop'} src={DrawingSVG} />
           <Drawing device={'mobile'} src={DrawingMobileSVG} />

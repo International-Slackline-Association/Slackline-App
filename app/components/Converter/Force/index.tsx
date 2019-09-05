@@ -53,7 +53,7 @@ function Component(props: Props) {
     let v = parseFloat(value);
     v = v <= 0 ? 1 : v;
     setLbf(v);
-    calculate(undefined, undefined, v);
+    calculate(undefined, undefined, undefined, v);
   }
 
   return (
