@@ -1,4 +1,14 @@
 /* eslint-disable */
+
+/*
+  This is custom script I build for creating another index.html for specific urls in build folder.
+  It changes the <head> tag so that web scrapers can see the tags specified for a url
+  instead of seeing default index.html file tags. 
+
+  Web apps are not server side rendered. Thats the whole problem. This is a big workaround.
+
+  Redirection rules for that specific url are made with AWS S3 and CloudFront
+*/
 const xml2js = require('xml2js');
 
 const fs = require('fs');
@@ -10,7 +20,7 @@ const tensionCalculator = {
     ['og:description', 'Calculate the tension of the line'],
     [
       'og:image',
-      'https://s3.eu-central-1.amazonaws.com/images.slackline-web-tools/Tension+Calculator+OgImage.png',
+      'https://s3.eu-central-1.amazonaws.com/images.slackline-web-tools/TensionCalculatorOgImage.png',
     ],
     [
       'og:url',
@@ -42,9 +52,6 @@ fs.readFile('./build/index.html', function(err, data) {
       const headSection = xml.match(regex);
       const originalHeadSection = html.match(regex);
       html = html.replace(originalHeadSection, headSection);
-      // console.log(headSection)
-      // console.log(originalHeadSection)
-
       fs.writeFileSync(`./build/${replace.fileName}`, html);
     }
   });
