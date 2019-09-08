@@ -31,18 +31,15 @@ export default function TensionCalculator() {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
   const orientation = useDeviceOrientation();
-  // if (!orientation) {
-  //   setTimeout(() => {
-  //     alert(`Cannot access device's motion sensors `);
-  //   }, 1000);
-  // }
-  // if (!isMobile) {
-  //   setTimeout(() => {
-  //     alert(`Tension Calculator works with mobiles devices only`);
-  //   }, 1000);
-  // }
+
   useEffect(() => {
     setTimeout(() => {
+      if (!orientation) {
+        alert(`Cannot access device's motion sensors `);
+      }
+      if (!isMobile) {
+        alert(`Tension Calculator works with mobiles devices only`);
+      }
       setIsDescriptionOpen(
         getStorageItem(descriptionClickedKey) ? false : true,
       );

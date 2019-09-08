@@ -26,7 +26,7 @@ const theme: IThemeInterface = {
 
   background: rgba(colors.black, 1),
   backgroundTransparent: rgba(colors.white, 0.07),
-  surface: rgba(colors.lightBlack, 1),
+  surface: rgba(colors.lightBlack, 0.5),
   overlay: rgba(colors.black, 0.5),
 
   red: rgba(colors.red, 1),

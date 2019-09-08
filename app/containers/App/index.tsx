@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, memo } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 import GlobalStyles from '../../styles/global-styles';
 
@@ -21,9 +22,12 @@ const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
       <Switch>
-        {/* {isMobile && ( */}
-        <Route path={['/tension-calculator', '/tension-calculator.html']} component={TensionCalculator} />
-        {/* )} */}
+        {isMobile && (
+          <Route
+            path={['/tension-calculator', '/tension-calculator.html']}
+            component={TensionCalculator}
+          />
+        )}
         <Route
           path={'/traditional-tension-calculator'}
           component={TraditionalTensionCalculator}
