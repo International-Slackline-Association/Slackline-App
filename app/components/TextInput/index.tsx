@@ -8,6 +8,7 @@ interface Props {
   type: string;
   switchValues?: string[];
   label: string;
+  description?: string;
   value?: string;
   defaultValue?: string;
   onChange(value: string, switchValue: boolean): void;
@@ -59,6 +60,7 @@ function Component(props: Props) {
         )}
       </InputWrapper>
       <Border focused={isInputFocused} />
+      {props.description && <Description>{props.description}</Description>}
     </Wrapper>
   );
 }
@@ -73,6 +75,14 @@ const Border = styled.div<{ focused?: boolean }>`
 const Switch = styled(ToggleSwitch)`
   display: flex;
   margin-bottom: 0.2rem;
+`;
+
+const Description = styled.span`
+  display: flex;
+  margin-top: 0.5rem;
+  color: ${props => props.theme.textSecondary};
+  font-size: 0.7rem;
+  font-style: italic;
 `;
 
 const Label = styled.span`

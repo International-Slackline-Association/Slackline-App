@@ -26,8 +26,8 @@ const theme: IThemeInterface = {
 
   background: rgba(colors.black, 1),
   backgroundTransparent: rgba(colors.white, 0.07),
-  surface: rgba(colors.lightBlack, 0.5),
-  overlay: rgba(colors.black, 0.7),
+  surface: rgba(colors.lightBlack, 1),
+  overlay: rgba(colors.black, 0.5),
 
   red: rgba(colors.red, 1),
   redSecondary: rgba(colors.red, 0.5),
@@ -39,10 +39,7 @@ const theme: IThemeInterface = {
   // textOnRedTertiary: rgba(lighten(0.08, colors.red), 1),
   // textOnRedQuaternary: rgba(lighten(0.03, colors.red), 1),
 
-  // green: rgba(colors.green, 1),
-  // greenSecondary: rgba(colors.green, 0.58),
-  // greenTertiary: rgba(colors.green, 0.32),
-  // greenQuaternary: rgba(colors.green, 0.16),
+  green: rgba(colors.green, 1),
 
   // textOnGreen: rgba(colors.white, 1),
   // textOnGreenSecondary: rgba(colors.white, 1),

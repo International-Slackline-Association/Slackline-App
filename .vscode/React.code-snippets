@@ -30,6 +30,13 @@
 			"`;"
 		],
 		"description": "Create Wrapper Div"
+	},
+	"UseEffect":{
+		"scope": "typescript, typescriptreact",
+		"prefix": "useEffect",
+		"body": [
+			"useEffect(() => {}, []);"
+		]
 	}
 	
 }

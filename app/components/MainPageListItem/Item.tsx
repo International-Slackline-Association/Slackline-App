@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import styled from '../../styles/styled-components';
-import media from '../../styles/media';
-import icon from './Icons/tools_icon.svg';
 
 import { touchableOpacity } from 'styles/mixins';
 import { cover } from 'polished';
@@ -12,7 +11,8 @@ interface Props {
   isIconVertical?: boolean;
   title: string;
   subtitle: string;
-  isAvailable: boolean;
+  notAvailableStatus?: string;
+  isMobileOnly?: boolean;
   onItemClick(): void;
 }
 
@@ -27,21 +27,28 @@ function Item(props: Props) {
   function handleMouseHover() {
     setIsHoverState(!isHoverState);
   }
-
+  const isAvailable = props.notAvailableStatus === undefined;
   return (
     <Wrapper
       onClick={onItemClick}
       onMouseEnter={handleMouseHover}
       onMouseLeave={handleMouseHover}
-      isAvailable={props.isAvailable}
+      isAvailable={isAvailable}
     >
-      {!props.isAvailable && (
+      {(!isAvailable || props.isMobileOnly) && (
         <NotAvailableWrapper>
-          <span>Available Soon...</span>
+          <span>
+            {(props.isMobileOnly && !isMobile && 'Mobile Only') ||
+              props.notAvailableStatus}
+          </span>
         </NotAvailableWrapper>
       )}
-      <LeftIcon vertical={props.isIconVertical} disabled={!props.isAvailable} iconType={props.icon} />
-      <TitleWrapper disabled={!props.isAvailable}>
+      <LeftIcon
+        vertical={props.isIconVertical}
+        disabled={!isAvailable}
+        iconType={props.icon}
+      />
+      <TitleWrapper disabled={!isAvailable}>
         <Title>{props.title}</Title>
         <Subtitle>{props.subtitle}</Subtitle>
       </TitleWrapper>
@@ -49,10 +56,10 @@ function Item(props: Props) {
   );
 }
 
-const LeftIcon = styled(Icon)<{ disabled?: boolean, vertical?: boolean }>`
+const LeftIcon = styled(Icon)<{ disabled?: boolean; vertical?: boolean }>`
   display: flex;
-  width: ${props => props.vertical ? '2rem' : '2rem'};
-  height: ${props => props.vertical ? '3rem' : '2rem'};
+  width: ${props => (props.vertical ? '2rem' : '2rem')};
+  height: ${props => (props.vertical ? '3rem' : '2rem')};
   margin-top: 0.2rem;
   margin-right: 0.5rem;
   opacity: ${props => (props.disabled ? 0.3 : 1)};

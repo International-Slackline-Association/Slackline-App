@@ -5,14 +5,16 @@ import { IconType } from 'components/Icons/Icon';
 
 export interface MainPageSection {
   title: string;
-  items: Array<{
-    title: string;
-    subtitle: string;
-    icon: IconType;
-    path: string;
-    isAvailable: boolean;
-    isIconVertical?: boolean;
-  }>;
+  items: MainPageSectionItem[];
+}
+export interface MainPageSectionItem {
+  title: string;
+  subtitle: string;
+  icon: IconType;
+  path: string;
+  notAvailableStatus?: string;
+  isIconVertical?: boolean;
+  isMobileOnly?: boolean;
 }
 /* --- STATE --- */
 interface State {

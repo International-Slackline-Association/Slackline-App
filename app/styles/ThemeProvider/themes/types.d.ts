@@ -39,7 +39,7 @@ interface IThemeInterface {
   // textOnRedTertiary: string;
   // textOnRedQuaternary: string;
 
-  // green: string;
+  green: string;
   // greenSecondary: string;
   // greenTertiary: string;
   // greenQuaternary: string;

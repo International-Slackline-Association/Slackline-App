@@ -128,12 +128,13 @@ module.exports = require('./webpack.base.babel')({
 
     new WebpackPwaManifest({
       name: 'Slackline Web Tools',
-      short_name: 'Web Tools',
+      short_name: 'Slackline Tools',
       description: 'Slackline Web Tools',
       background_color: '#232F3E',
       theme_color: '#232F3E',
       inject: true,
       ios: true,
+      orientation: 'omit',
       icons: [
         {
           src: path.resolve('app/images/icon-512x512.png'),

@@ -72,7 +72,7 @@ function clone(data: IChartData): IChartData {
 // Reducer-like functions (useReducer was way messier and not readable)
 // tslint:disable: prefer-conditional-expression
 // tslint:disable-next-line: no-namespace
-export namespace ChartManager {
+export namespace  ChartManager {
   export function findWebbingAtIndex(
     data: IChartData,
     index: number,

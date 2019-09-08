@@ -22,7 +22,8 @@
     "start:prod": "cross-env NODE_ENV=production env-cmd -f .env.production node server",
     "webpack": "webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build": "cross-env NODE_ENV=production env-cmd -f .env.production npm run webpack ",
-    "deploy": "npm run build && env-cmd -f .env.production sh ./internals/deployToS3.sh ",
+    "deploy": "npm run build && node app/indexHtmlBuilder.js && env-cmd -f .env.production sh ./internals/deployToS3.sh ",
+    "deploy:build": "env-cmd -f .env.production sh ./internals/deployToS3.sh",
     "presetup": "npm i chalk shelljs",
     "setup": "node ./internals/scripts/setup.js",
     "clean": "shjs ./internals/scripts/clean.js",
@@ -84,6 +85,7 @@
     "minimist": "1.2.0",
     "polished": "^3.4.1",
     "react": "16.8.6",
+    "react-device-detect": "^1.7.5",
     "react-dom": "16.8.6",
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",
@@ -108,6 +110,7 @@
     "@babel/plugin-transform-react-inline-elements": "7.2.0",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "7.4.0",
     "@types/chai": "^4.1.4",
     "@types/chai-enzyme": "^0.6.1",
@@ -204,6 +207,7 @@
     "tslint-react": "^4.0.0",
     "tslint-react-hooks": "^2.2.1",
     "typescript": "^3.5.1",
+    "typescript-plugin-styled-components": "^1.4.3",
     "url-loader": "1.1.2",
     "webpack": "4.30.0",
     "webpack-cli": "3.3.0",
@@ -211,6 +215,7 @@
     "webpack-hot-middleware": "2.24.3",
     "webpack-pwa-manifest": "4.0.0",
     "webpackbar": "^3.2.0",
-    "whatwg-fetch": "3.0.0"
+    "whatwg-fetch": "3.0.0",
+    "xml2js": "^0.4.22"
   }
 }

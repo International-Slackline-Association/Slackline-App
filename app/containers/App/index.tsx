@@ -12,20 +12,25 @@ const RiggerCertificateExplorer = lazy(() =>
   import('../RiggerCertificateExplorer'),
 );
 const UnitConverter = lazy(() => import('../UnitConverter'));
-const TensionCalculator = lazy(() => import('../TensionCalculator'));
-const WebbingCharts = lazy(() => import('../WebbingCharts'));
-const Rigrite = lazy(() =>
-  import('../Rigrite'),
+const TraditionalTensionCalculator = lazy(() =>
+  import('../TraditionalTensionCalculator'),
 );
+const WebbingCharts = lazy(() => import('../WebbingCharts'));
+const TensionCalculator = lazy(() => import('../TensionCalculator'));
 const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
       <Switch>
-        <Route path={'/Rigrite'} component={Rigrite} />
-
-        <Route path={'/unit-converter'} component={UnitConverter} />
-        <Route path={'/traditional-tension-calculator'} component={TensionCalculator} />
+        {/* {isMobile && ( */}
+        <Route path={['/tension-calculator', '/tension-calculator.html']} component={TensionCalculator} />
+        {/* )} */}
+        <Route
+          path={'/traditional-tension-calculator'}
+          component={TraditionalTensionCalculator}
+        />
         <Route path={'/webbing-charts'} component={WebbingCharts} />
+        <Route path={'/unit-converter'} component={UnitConverter} />
+
         <Route
           path={'/instructor-certificate-explorer'}
           component={InstructorCertificateExplorer}

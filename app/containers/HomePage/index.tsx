@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from '../../styles/styled-components';
 import media from 'styles/media';
 import { MainPageItem } from 'components/MainPageListItem/Item';
-import { MainPageSection } from 'components/MainPageListItem/Section';
 import { data as mainPageData } from './main-page-data';
 import { data as isaPageData } from './isa-page-data';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
@@ -10,6 +9,9 @@ import { RouteComponentProps } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Helmet } from 'react-helmet';
+import { isMobile } from 'react-device-detect';
+import { MainPageSectionItem } from './types';
+import { MainPageSection } from 'components/MainPageListItem/Section';
 
 interface Props extends RouteComponentProps {}
 
@@ -21,9 +23,11 @@ export default function HomePage(props: Props) {
 
   const dispatch = useDispatch();
 
-  function onItemClick(path: string) {
+  function onItemClick(item: MainPageSectionItem) {
     return () => {
-      dispatch(push(path));
+      if (!item.isMobileOnly || isMobile) {
+        dispatch(push(item.path));
+      }
     };
   }
 
@@ -31,10 +35,7 @@ export default function HomePage(props: Props) {
     <AppBackgroundContainer>
       <Helmet>
         <title>Slackline Web Tools</title>
-        <meta
-          name="description"
-          content="Collection of tools and resources"
-        />
+        <meta name="description" content="Collection of tools and resources" />
       </Helmet>
       <Wrapper>
         <TextSection>
@@ -54,12 +55,13 @@ export default function HomePage(props: Props) {
                       <React.Fragment key={index}>
                         <MainPageItem
                           key={index}
-                          onItemClick={onItemClick(item.path)}
+                          onItemClick={onItemClick(item)}
                           icon={item.icon}
                           isIconVertical={item.isIconVertical}
                           title={item.title}
                           subtitle={item.subtitle}
-                          isAvailable={item.isAvailable}
+                          notAvailableStatus={item.notAvailableStatus}
+                          isMobileOnly={item.isMobileOnly}
                         />
                         {index !== section.items.length - 1 && <Divider />}
                       </React.Fragment>
