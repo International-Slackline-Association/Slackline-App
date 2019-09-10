@@ -26,7 +26,7 @@ export const InputsWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
-  background-color: ${props => props.theme.surface};
+  background-color: ${props => props.theme.surfaceTransparent};
   border-radius: 1rem;
   ${media.desktop`
   `};

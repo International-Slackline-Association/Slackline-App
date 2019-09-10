@@ -10,6 +10,7 @@ import { RouteComponentProps } from 'react-router';
 import { Utils } from 'utils/index';
 import { useDispatch } from 'react-redux';
 import { replace } from 'connected-react-router';
+import IsaAppHeader from '../IsaAppHeader';
 
 interface Props extends RouteComponentProps {}
 
@@ -34,7 +35,11 @@ export default function InstructorCertificateExplorer(props: Props) {
     setInstructor(undefined);
   }
 
-  async function checkInstructor() {
+  async function checkInstructor(evt?: any) {
+    if (evt !== undefined && evt.preventDefault) {
+      evt.preventDefault();
+    }
+
     if (inputValue) {
       setIsLoading(true);
       const instructor = await queryInstructor(inputValue);
@@ -44,20 +49,23 @@ export default function InstructorCertificateExplorer(props: Props) {
     }
   }
 
+  const AppHeader = <IsaAppHeader showBackButton />;
   return (
-    // tslint:disable-next-line: jsx-wrap-multiline
-    <AppBackgroundContainer hideFooter>
+    <AppBackgroundContainer hideFooter replaceHeaderWith={AppHeader}>
       <Wrapper>
         <Header>
           <HeaderIcon iconType="instructor_certificate" />
           <span>Instructor Certificate Explorer</span>
         </Header>
-        <Input
-          type="text"
-          label="ID or Name of the instructor"
-          onChange={updateValue}
-          value={inputValue}
-        />
+        <form onSubmit={checkInstructor}>
+          <Input
+            type="text"
+            label="ID or Name of the instructor"
+            onChange={updateValue}
+            value={inputValue}
+          />
+        </form>
+
         <CustomLoadableButton isLoading={isLoading} onClick={checkInstructor}>
           CHECK
         </CustomLoadableButton>
@@ -73,9 +81,12 @@ export default function InstructorCertificateExplorer(props: Props) {
               <b>{`${instructor.firstname} ${instructor.name}`}</b>
               <span>&nbsp;has a&nbsp;</span>
               {instructor.rigger ? (
-                <b>{instructor.level} / Rigger Certificate</b>
+                <b>
+                  {instructor.level && `${instructor.level} / `} Rigger
+                  Certificate
+                </b>
               ) : (
-                <b>{instructor.level}Certificate</b>
+                <b>{instructor.level} Certificate</b>
               )}
               <span>&nbsp;valid until&nbsp;</span>
               <b>{instructor.valid}</b>

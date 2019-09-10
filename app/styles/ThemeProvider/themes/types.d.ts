@@ -26,6 +26,7 @@ interface IThemeInterface {
 
   background: string;
   backgroundTransparent: string;
+  surfaceTransparent: string;
   surface: string;
   overlay: string;
 

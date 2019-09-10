@@ -5,12 +5,12 @@ import { isMobile } from 'react-device-detect';
 import GlobalStyles from '../../styles/global-styles';
 
 const HomePage = lazy(() => import('../HomePage'));
-
+const IsaHomePage = lazy(() => import('../ISA/IsaHomePage'));
 const InstructorCertificateExplorer = lazy(() =>
-  import('../InstructorCertificateExplorer'),
+  import('../ISA/InstructorCertificateExplorer'),
 );
 const RiggerCertificateExplorer = lazy(() =>
-  import('../RiggerCertificateExplorer'),
+  import('../ISA/RiggerCertificateExplorer'),
 );
 const UnitConverter = lazy(() => import('../UnitConverter'));
 const TraditionalTensionCalculator = lazy(() =>
@@ -35,15 +35,16 @@ const App: React.FC = () => {
         <Route path={'/webbing-charts'} component={WebbingCharts} />
         <Route path={'/unit-converter'} component={UnitConverter} />
 
+        <Route exact path={'/isa'} component={IsaHomePage} />
         <Route
-          path={'/instructor-certificate-explorer'}
+          path={'/isa/instructor-certificate-explorer'}
           component={InstructorCertificateExplorer}
         />
         <Route
-          path={'/rigger-certificate-explorer'}
+          path={'/isa/rigger-certificate-explorer'}
           component={RiggerCertificateExplorer}
         />
-        <Route path={['/', '/isa']} component={HomePage} />
+        <Route path={'/'} component={HomePage} />
       </Switch>
       <GlobalStyles />
     </Suspense>

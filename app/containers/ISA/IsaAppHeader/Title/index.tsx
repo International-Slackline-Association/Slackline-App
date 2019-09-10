@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import styled from '../../../styles/styled-components';
-import media from '../../../styles/media';
+import styled from '../../../../styles/styled-components';
+import media from '../../../../styles/media';
 import isaLogo from '../isaLogo.svg';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -12,17 +12,17 @@ function Title() {
   const dispatch = useDispatch();
 
   function goMainPage() {
-    dispatch(push(''));
+    dispatch(push('/isa'));
   }
   return (
     <Wrapper>
       <Text onClick={goMainPage}>
-        Slackline <Linebreak />
-        Web Tools
+        ISA <Linebreak />
+        Certificates
       </Text>
       <ByWrapper>
         <Divider />
-        <span>by</span>
+        <span>from</span>
         <Divider />
       </ByWrapper>
       <Logo href={'//www.slacklineinternational.org'} target="_blank">
@@ -84,7 +84,7 @@ const Text = styled.a`
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-
+  word-break: keep-all;
   ${media.desktop`
     font-size: 2.5rem;
     text-align: left;

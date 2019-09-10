@@ -55,7 +55,7 @@ const TextArea = styled.div<{ isOpen: boolean, height: number }>`
   margin: 0.5rem 0 0.5rem 0;
   border-radius: 0.5rem;
   overflow: ${props => (props.isOpen ? 'scroll' : 'hidden')};
-  background-color: ${props => props.theme.surface};
+  background-color: ${props => props.theme.surfaceTransparent};
 `;
 
 const TitleWrapper = styled.div<{ isOpen: boolean }>`
@@ -64,7 +64,7 @@ const TitleWrapper = styled.div<{ isOpen: boolean }>`
   align-self: center;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  background-color: ${props => !props.isOpen && props.theme.surface};
+  background-color: ${props => !props.isOpen && props.theme.surfaceTransparent};
   ${touchableOpacity}
   & span {
     margin-left: 0.5rem;

@@ -20,8 +20,10 @@ const InnerWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   flex-grow: 1;
+  height: 100%;
+  width: 100%;
 `;
 const ClippedZone = styled.div`
   display: flex;

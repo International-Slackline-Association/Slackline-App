@@ -1,9 +1,7 @@
 import React, { memo, ReactNode } from 'react';
-import styled, { css } from '../../styles/styled-components';
+import styled from '../../styles/styled-components';
 import media from '../../styles/media';
-import AppHeader from 'containers/AppHeader';
-import backgroundSvg from './background.svg?file';
-import { cover } from 'polished';
+import AppHeader from 'components/AppHeader';
 import { BackgroundPattern } from './BackgroundPattern';
 import AppFooter from 'components/AppFooter';
 
@@ -11,6 +9,7 @@ interface Props {
   children?: ReactNode;
   hideFooter?: boolean;
   showBackButton?: boolean;
+  replaceHeaderWith?: ReactNode;
 }
 
 function AppBackgroundContainer(props: Props) {
@@ -18,7 +17,11 @@ function AppBackgroundContainer(props: Props) {
     <React.Fragment>
       <BackgroundImage />
       <Wrapper>
-        <AppHeader showBackButton={props.showBackButton} />
+        {props.replaceHeaderWith ? (
+          props.replaceHeaderWith
+        ) : (
+          <AppHeader showBackButton={props.showBackButton} />
+        )}
         <ContentSection>{props.children}</ContentSection>
         {!props.hideFooter && <AppFooter />}
       </Wrapper>

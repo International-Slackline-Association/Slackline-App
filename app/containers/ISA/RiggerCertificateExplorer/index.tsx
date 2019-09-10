@@ -5,11 +5,15 @@ import media from 'styles/media';
 import { Icon } from 'components/Icons/Icon';
 import { TextInput } from 'components/TextInput';
 import { LoadableButton } from 'components/LoadableButton';
-import { queryInstructor, InstructorItem } from '../InstructorCertificateExplorer/spreadsheet';
+import {
+  queryInstructor,
+  InstructorItem,
+} from '../InstructorCertificateExplorer/spreadsheet';
 import { RouteComponentProps } from 'react-router';
 import { Utils } from 'utils/index';
 import { useDispatch } from 'react-redux';
 import { replace } from 'connected-react-router';
+import IsaAppHeader from '../IsaAppHeader';
 
 interface Props extends RouteComponentProps {}
 
@@ -34,7 +38,10 @@ export default function InstructorCertificateExplorer(props: Props) {
     setRigger(undefined);
   }
 
-  async function checkInstructor() {
+  async function checkInstructor(evt?: any) {
+    if (evt !== undefined && evt.preventDefault) {
+      evt.preventDefault();
+    }
     if (inputValue) {
       setIsLoading(true);
       const instructor = await queryInstructor(inputValue);
@@ -43,21 +50,22 @@ export default function InstructorCertificateExplorer(props: Props) {
       dispatch(replace({ search: `?query=${inputValue}` }));
     }
   }
-
+  const AppHeader = <IsaAppHeader showBackButton />;
   return (
-    // tslint:disable-next-line: jsx-wrap-multiline
-    <AppBackgroundContainer hideFooter>
+    <AppBackgroundContainer hideFooter replaceHeaderWith={AppHeader}>
       <Wrapper>
         <Header>
           <HeaderIcon iconType="rigger_certificate" />
           <span>Rigger Certificate Explorer</span>
         </Header>
-        <Input
-          type="text"
-          label="ID or Name of the rigger"
-          onChange={updateValue}
-          value={inputValue}
-        />
+        <form onSubmit={checkInstructor}>
+          <Input
+            type="text"
+            label="ID or Name of the rigger"
+            onChange={updateValue}
+            value={inputValue}
+          />
+        </form>
         <CustomLoadableButton isLoading={isLoading} onClick={checkInstructor}>
           CHECK
         </CustomLoadableButton>
@@ -73,9 +81,11 @@ export default function InstructorCertificateExplorer(props: Props) {
               <b>{`${rigger.firstname} ${rigger.name}`}</b>
               <span>&nbsp;has a&nbsp;</span>
               {rigger.rigger ? (
-                <b>{rigger.level} / Rigger Certificate</b>
+                <b>
+                  {rigger.level && `${rigger.level} / `} Rigger Certificate
+                </b>
               ) : (
-                <b>{rigger.level}Certificate</b>
+                <b>{rigger.level} Certificate</b>
               )}
               <span>&nbsp;valid until&nbsp;</span>
               <b>{rigger.valid}</b>
