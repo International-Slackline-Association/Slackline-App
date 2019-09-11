@@ -15,6 +15,8 @@ export interface IWebbing {
   weight: number;
   priceMeter: { value: number; currency: 'dolar' | 'euro' };
   breakingStrength: number;
+  materialType?: 'pes' | 'nylon' | 'dyneema';
+  isDiscontinued?: boolean;
 }
 
 export function rawData(): IWebbingData {
@@ -55,6 +57,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 23.6,
+            materialType: 'nylon',
           },
           {
             name: 'Redtube',
@@ -88,6 +91,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 36,
+            materialType: 'nylon',
           },
           {
             name: 'Half Marathon',
@@ -121,18 +125,20 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 28,
+            materialType: 'pes',
           },
           {
             name: 'Y2k',
             shortName: '',
             colorCode: '#07427F',
-            stretch: [{ kn: 10, percent: 1}],
+            stretch: [{ kn: 10, percent: 1 }],
             weight: 33.1,
             priceMeter: {
               value: 1.79,
               currency: 'euro',
             },
             breakingStrength: 34,
+            materialType: 'dyneema',
           },
         ],
       },
@@ -171,6 +177,7 @@ export function rawData(): IWebbingData {
               currency: 'dolar',
             },
             breakingStrength: 29,
+            materialType: 'pes',
           },
           {
             name: 'Feather',
@@ -194,6 +201,7 @@ export function rawData(): IWebbingData {
               currency: 'dolar',
             },
             breakingStrength: 20,
+            materialType: 'pes',
           },
           {
             name: 'Mantra MK4',
@@ -227,6 +235,7 @@ export function rawData(): IWebbingData {
               currency: 'dolar',
             },
             breakingStrength: 42,
+            materialType: 'pes',
           },
           {
             name: 'Lift',
@@ -260,6 +269,7 @@ export function rawData(): IWebbingData {
               currency: 'dolar',
             },
             breakingStrength: 28,
+            materialType: 'pes',
           },
         ],
       },
@@ -298,6 +308,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 27,
+            materialType: 'nylon',
           },
           {
             name: 'Rainbow',
@@ -327,6 +338,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 36,
+            materialType: 'pes',
           },
           {
             name: 'Helium',
@@ -360,6 +372,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 24,
+            materialType: 'pes',
           },
           {
             name: 'Parsec',
@@ -393,6 +406,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 33,
+            materialType: 'pes',
           },
         ],
       },
@@ -420,6 +434,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 35,
+            materialType: 'nylon',
           },
           {
             name: 'Unicorn',
@@ -442,6 +457,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 32,
+            materialType: 'pes',
           },
           {
             name: 'Voyage',
@@ -464,6 +480,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 33,
+            materialType: 'pes',
           },
           {
             name: 'White Magic',
@@ -486,6 +503,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 34,
+            materialType: 'pes',
           },
         ],
       },
@@ -508,6 +526,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 31,
+            materialType: 'pes',
           },
           {
             name: 'Element',
@@ -525,6 +544,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 20,
+            materialType: 'nylon',
           },
           {
             name: 'Fresh',
@@ -542,6 +562,7 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 32,
+            materialType: 'nylon',
           },
         ],
       },
@@ -563,6 +584,8 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 31,
+            materialType: 'nylon',
+            isDiscontinued: true,
           },
           {
             name: 'Moonwalk',
@@ -580,6 +603,8 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 35,
+            materialType: 'dyneema',
+            isDiscontinued: true,
           },
         ],
       },
@@ -618,6 +643,8 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 30,
+            materialType: 'pes',
+            isDiscontinued: true,
           },
           {
             name: 'Passion',
@@ -641,6 +668,8 @@ export function rawData(): IWebbingData {
               currency: 'euro',
             },
             breakingStrength: 33,
+            materialType: 'nylon',
+            isDiscontinued: true,
           },
         ],
       },
