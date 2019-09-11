@@ -15,7 +15,7 @@ export interface IWebbing {
   weight: number;
   priceMeter: { value: number; currency: 'dolar' | 'euro' };
   breakingStrength: number;
-  materialType?: 'pes' | 'nylon' | 'dyneema';
+  materialType: 'pes' | 'nylon' | 'dyneema';
   isDiscontinued?: boolean;
 }
 
