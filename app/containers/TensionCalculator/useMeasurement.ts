@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { math } from 'polished';
-import { useDeviceOrientation } from './useDeviceOrientation';
+import { useDeviceOrientation } from 'utils/hooks/useDeviceOrientation';
 
 interface Orientation {
   alpha?: number;
@@ -13,7 +13,7 @@ function toRadians(angle: number) {
 }
 
 export function useMeasurement(weight: number) {
-  const orientation = useDeviceOrientation();
+  const [orientation] = useDeviceOrientation();
 
   let beta: number | undefined;
   let tilt: number | undefined;

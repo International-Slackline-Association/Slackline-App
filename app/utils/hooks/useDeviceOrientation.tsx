@@ -6,14 +6,25 @@ interface Orientation {
   beta?: number;
   gamma?: number;
 }
+
+type ScreenOrientationType = 'portrait' | 'landscape';
+
 declare interface IWindow extends Window {
   DeviceOrientationEvent: boolean;
 }
 declare const window: IWindow;
-export function useDeviceOrientation() {
+export function useDeviceOrientation(): [
+  Orientation | undefined,
+  ScreenOrientationType
+] {
+  const isClient = typeof window === 'object';
+
   const [deviceOrientation, setDeviceOrientation] = useState<
     Orientation | undefined
   >({});
+  const [screenOrientation, setScreenOrientation] = useState<
+    ScreenOrientationType
+  >(getOrientation());
 
   function handleDeviceOrientation(event) {
     setDeviceOrientation({
@@ -22,37 +33,42 @@ export function useDeviceOrientation() {
       gamma: event.gamma,
     });
   }
+  function getOrientation(): ScreenOrientationType {
+    return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+  }
+  function handleResize() {
+    setScreenOrientation(getOrientation());
+  }
 
   useEffect(() => {
+    if (!isClient) {
+      return () => {};
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      setTimeout(() => {
+        console.log('fire');
+        handleDeviceOrientation({ beta: 150, gamma: 75 });
+      }, 1000);
+    }
     if (window.DeviceOrientationEvent) {
       window.addEventListener(
         'deviceorientation',
         handleDeviceOrientation,
         true,
       );
-      // setTimeout(() => {
-      //   handleDeviceOrientation({ beta: 10, gamma: 60 });
-      // }, 500);
-      // setTimeout(() => {
-      //   handleDeviceOrientation({ beta: 10, gamma: -40 });
-      // }, 1000);
-      // setTimeout(() => {
-      //   handleDeviceOrientation({ beta: 10, gamma: 20});
-      // }, 2000);
-      // setTimeout(() => {
-      //   handleDeviceOrientation({ beta: 10, gamma: 1});
-      // }, 2500);
+      window.addEventListener('resize', handleResize);
+
       return () => {
         window.removeEventListener(
           'deviceorientation',
           handleDeviceOrientation,
         );
+        window.removeEventListener('resize', handleResize);
       };
     }
     setDeviceOrientation(undefined);
-
     return () => {};
   }, []);
 
-  return deviceOrientation;
+  return [deviceOrientation, screenOrientation];
 }

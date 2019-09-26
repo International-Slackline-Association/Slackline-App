@@ -27,7 +27,7 @@ export default function HomePage(props: Props) {
   }
   const AppHeader = <IsaAppHeader showBackButton />;
   return (
-    <AppBackgroundContainer hideFooter replaceHeaderWith={AppHeader}>
+    <React.Fragment>
       <Helmet>
         <title>ISA Certificates</title>
         <meta
@@ -65,7 +65,7 @@ export default function HomePage(props: Props) {
           })}
         </ItemsWrapper>
       </Wrapper>
-    </AppBackgroundContainer>
+    </React.Fragment>
   );
 }
 
@@ -116,9 +116,5 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  ${media.desktop`
-    margin-top: 5em;
-    margin-bottom: 2em;
-    align-items: flex-start;
-  `};
+  margin: 1rem;
 `;

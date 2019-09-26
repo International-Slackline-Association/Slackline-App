@@ -12,12 +12,15 @@ const InstructorCertificateExplorer = lazy(() =>
 const RiggerCertificateExplorer = lazy(() =>
   import('../ISA/RiggerCertificateExplorer'),
 );
-const UnitConverter = lazy(() => import('../UnitConverter'));
+const UnitConverter = lazy(() => import('../UnitConverter/Loadable'));
 const TraditionalTensionCalculator = lazy(() =>
   import('../TraditionalTensionCalculator'),
 );
-const WebbingCharts = lazy(() => import('../WebbingCharts'));
-const TensionCalculator = lazy(() => import('../TensionCalculator'));
+const SpiritLevel = lazy(() => import('../SpiritLevel/Loadable'));
+const Gyro = lazy(() => import('../Gyro'));
+
+const WebbingCharts = lazy(() => import('../WebbingCharts/Loadable'));
+const TensionCalculator = lazy(() => import('../TensionCalculator/Loadable'));
 const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
@@ -32,8 +35,11 @@ const App: React.FC = () => {
           path={'/traditional-tension-calculator'}
           component={TraditionalTensionCalculator}
         />
+        <Route path={'/spirit-level'} component={SpiritLevel} />
+
         <Route path={'/webbing-charts'} component={WebbingCharts} />
         <Route path={'/unit-converter'} component={UnitConverter} />
+        <Route path={'/gyro'} component={Gyro} />
 
         <Route exact path={'/isa'} component={IsaHomePage} />
         <Route

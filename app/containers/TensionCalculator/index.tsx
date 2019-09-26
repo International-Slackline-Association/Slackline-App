@@ -16,9 +16,9 @@ import { Description } from './Description';
 import { Button } from 'components/Button';
 import Portal from 'components/Modal';
 import { Measure } from './Measure';
-import { useDeviceOrientation } from './useDeviceOrientation';
 import { getStorageItem, setStorageItem } from 'utils/storage';
 import { isMobile } from 'react-device-detect';
+import { useDeviceOrientation } from 'utils/hooks/useDeviceOrientation';
 
 const descriptionClickedKey = 'tension-calculator-description-closed';
 const weightKey = 'tension-calculator-weight';
@@ -30,7 +30,7 @@ export default function TensionCalculator() {
   const [isMeasuringActive, setIsMeasuringActive] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
-  const orientation = useDeviceOrientation();
+  const [orientation] = useDeviceOrientation();
 
   useEffect(() => {
     setTimeout(() => {

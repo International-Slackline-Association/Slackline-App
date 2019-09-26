@@ -5,7 +5,6 @@ import { touchableOpacity, elevatedShadow } from 'styles/mixins';
 import IllustrationIcon2 from './tension_illustration2.svg';
 import { ProgressBar } from 'components/LoadingBar';
 import { Button } from 'components/Button';
-import { useDeviceOrientation } from './useDeviceOrientation';
 import { LoadingIndicator, Spinner } from 'components/LoadingIndicator';
 import { useMeasurement } from './useMeasurement';
 import { cover, mix } from 'polished';
