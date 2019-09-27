@@ -7,12 +7,13 @@ import { elevatedShadow, touchableOpacity } from 'styles/mixins';
 import CancelIcon from 'components/svg/cancel.svg';
 import { cover, mix } from 'polished';
 import { Button } from 'components/Button';
+import { Spinner } from 'components/LoadingIndicator';
 
 interface Props {
   closeClicked(): void;
 }
 
-const marginAngleLimit = 150;
+const marginAngleLimit = window.innerHeight / 2;
 
 function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
@@ -22,7 +23,7 @@ function Component(props: Props) {
   if (orientation) {
     if (screenOrientation === 'landscape' && orientation.gamma) {
       const absAngle = 90 - Math.abs(orientation.gamma);
-      angle = orientation.gamma < 0 ? -absAngle : absAngle;
+      angle = orientation.gamma < 0 ? absAngle : -absAngle;
     }
     if (screenOrientation === 'portrait' && orientation.beta) {
       const absAngle = 90 - orientation.beta;
@@ -30,17 +31,14 @@ function Component(props: Props) {
     }
   }
 
-  let marginAngle = -angle * 2;
+  angle = parseInt(angle.toFixed(0), 10);
+
+  let marginAngle = -angle * 3;
   if (marginAngle < -marginAngleLimit || marginAngle > marginAngleLimit) {
     marginAngle =
       marginAngle < -marginAngleLimit ? -marginAngleLimit : marginAngleLimit;
   }
 
-  let textColor = themeContext.brand;
-  if (angle) {
-    const weight = (Math.abs(marginAngle) * 100) / 45 / 100;
-    textColor = mix(weight, themeContext.red, themeContext.brand);
-  }
   const videoConstraints = {
     facingMode: 'environment',
   };
@@ -48,11 +46,16 @@ function Component(props: Props) {
   function takePhotoClicked() {}
   return (
     <Wrapper>
-      {/* <StyledCamera
+      <WarningText>
+        Loading Camera
+        <Loading />
+      </WarningText>
+      <StyledCamera
         audio={false}
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
-      /> */}
+      />
+
       <CloseButton onClick={props.closeClicked} />
 
       <CenterWrapper>
@@ -62,7 +65,9 @@ function Component(props: Props) {
           }}
         >
           <ColorArea
+            position="top"
             style={{
+              visibility: angle > 0 ? 'visible' : 'hidden',
               opacity: Math.abs(angle) / 45,
               justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
               background: `radial-gradient(50% 100%, ${
@@ -74,18 +79,18 @@ function Component(props: Props) {
             <DottedLine />
             <AngleText>{angle} º</AngleText>
           </LineWrapper>
-          <Text>KEEP CENTERED</Text>
+          {/* <Text>KEEP CENTERED</Text> */}
           <ColorArea
+            position="bottom"
             style={{
-              opacity: Math.abs(angle) / 45,
+              visibility: angle < 0 ? 'visible' : 'hidden',
+              opacity: Math.abs(angle) / 60,
               justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
               background: `radial-gradient(50% 100%, ${
                 themeContext.red
               } 50%, transparent 100%)`,
             }}
-          >
-            <div />
-          </ColorArea>
+          />
         </LineAreaWrapper>
 
         {/* <CustomButton onClick={takePhotoClicked}>Freeze</CustomButton> */}
@@ -94,12 +99,15 @@ function Component(props: Props) {
   );
 }
 
-const ColorArea = styled.div`
+const ColorArea = styled.div<{ position: 'bottom' | 'top' }>`
   display: flex;
   flex-direction: column;
   width: 80%;
   height: 3rem;
-
+  clip-path: ${props =>
+    `inset(${props.position === 'bottom' ? '50%' : '0'} 0 ${
+      props.position === 'top' ? '50%' : '0'
+    } 0)`};
   & div {
     display: flex;
     width: 100%;
@@ -174,7 +182,7 @@ const StyledCamera = styled(Webcam)`
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -1;
+  /* z-index: 0; */
   overflow: hidden;
 `;
 
@@ -184,6 +192,25 @@ const CloseButton = styled.img.attrs({ src: CancelIcon })`
   top: 1rem;
   width: 1.2rem;
   ${touchableOpacity}
+`;
+
+const Loading = styled(Spinner)`
+  width: 2rem;
+  height: 2rem;
+  margin-top: 1rem;
+`;
+
+const WarningText = styled.span`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
 `;
 
 const Wrapper = styled.div`

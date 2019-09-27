@@ -23,10 +23,10 @@ export const data: MainPageSection[] = [
       },
       {
         icon: 'spirit_level',
-        path: '',
+        path: 'spirit-level',
         title: 'Spirit Level',
         subtitle: `Level your anchors equally using device's camera`,
-        notAvailableStatus: 'Available Soon',
+        // notAvailableStatus: 'Available Soon',
         isMobileOnly: true,
       },
     ],

@@ -2,8 +2,7 @@ import * as React from 'react';
 import styled from '../../styles/styled-components';
 import media from 'styles/media';
 import { MainPageItem } from 'components/MainPageListItem/Item';
-import { data as mainPageData } from './main-page-data';
-import { data as isaPageData } from './isa-page-data';
+import { data } from './main-page-data';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import { RouteComponentProps } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -16,11 +15,6 @@ import { MainPageSection } from 'components/MainPageListItem/Section';
 interface Props extends RouteComponentProps {}
 
 export default function HomePage(props: Props) {
-  let data = mainPageData;
-  if (props.location.pathname === '/isa') {
-    data = isaPageData;
-  }
-
   const dispatch = useDispatch();
 
   function onItemClick(item: MainPageSectionItem) {

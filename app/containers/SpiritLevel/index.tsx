@@ -12,15 +12,18 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import { Description } from './Description';
 import Portal from 'components/Modal';
 import { Camera } from './Camera';
+import { useDispatch } from 'react-redux';
+import { goBack } from 'connected-react-router';
 
 const descriptionClickedKey = 'spirit-level-description-closed';
 interface Props {}
 
 export default function SpiritLevel(props: Props) {
-  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [isCameraActive, setIsCameraActive] = useState(true);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
   const [orientation] = useDeviceOrientation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,6 +45,7 @@ export default function SpiritLevel(props: Props) {
 
   function cancelCamera() {
     setIsCameraActive(false);
+    dispatch(goBack());
   }
 
   function descriptionToggled(open: boolean) {
@@ -53,13 +57,14 @@ export default function SpiritLevel(props: Props) {
         <title>Spirit Level</title>
         <meta name="description" content="Level your anchors" />
       </Helmet>
-      <AppBackgroundContainer showBackButton>
+      <Camera closeClicked={cancelCamera} />
+      {/* <AppBackgroundContainer showBackButton>
         <Wrapper>
           <Header>
             <HeaderIcon iconType="spirit_level" />
             <span>Spirit Level</span>
           </Header>
-          <CustomExpandableTextArea
+           <CustomExpandableTextArea
             height={500}
             isOpen={isDescriptionOpen}
             toggled={descriptionToggled}
@@ -77,7 +82,7 @@ export default function SpiritLevel(props: Props) {
             </Portal>
           )}
         </Wrapper>
-      </AppBackgroundContainer>
+      </AppBackgroundContainer> */}
     </React.Fragment>
   );
 }

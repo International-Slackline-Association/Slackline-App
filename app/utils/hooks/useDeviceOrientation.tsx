@@ -46,7 +46,7 @@ export function useDeviceOrientation(): [
     }
     if (process.env.NODE_ENV !== 'production') {
       setTimeout(() => {
-        handleDeviceOrientation({ beta: 150, gamma: 75 });
+        handleDeviceOrientation({ beta: 160.234, gamma: 75 });
       }, 1000);
     }
     if (window.DeviceOrientationEvent) {
