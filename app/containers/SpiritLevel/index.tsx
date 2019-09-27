@@ -13,12 +13,13 @@ import { Description } from './Description';
 import Portal from 'components/Modal';
 import { Camera } from './Camera';
 import { useDispatch } from 'react-redux';
-import { goBack } from 'connected-react-router';
+import { goBack, ConnectedRouterProps, push } from 'connected-react-router';
 
 const descriptionClickedKey = 'spirit-level-description-closed';
-interface Props {}
+interface Props extends ConnectedRouterProps {}
 
 export default function SpiritLevel(props: Props) {
+  console.log(props);
   const [isCameraActive, setIsCameraActive] = useState(true);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
@@ -45,7 +46,11 @@ export default function SpiritLevel(props: Props) {
 
   function cancelCamera() {
     setIsCameraActive(false);
-    dispatch(goBack());
+    if (props.history.action === 'POP') {
+      dispatch(push('/'));
+    } else {
+      dispatch(goBack());
+    }
   }
 
   function descriptionToggled(open: boolean) {
