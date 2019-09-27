@@ -46,7 +46,6 @@ export function useDeviceOrientation(): [
     }
     if (process.env.NODE_ENV !== 'production') {
       setTimeout(() => {
-        console.log('fire');
         handleDeviceOrientation({ beta: 150, gamma: 75 });
       }, 1000);
     }

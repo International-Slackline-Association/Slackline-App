@@ -26,13 +26,14 @@ function Component(props: Props) {
     }
     if (screenOrientation === 'portrait' && orientation.beta) {
       const absAngle = 90 - orientation.beta;
-      angle = orientation.beta < 90 ? -absAngle : absAngle;
+      angle = absAngle;
     }
   }
 
   let marginAngle = -angle * 2;
   if (marginAngle < -marginAngleLimit || marginAngle > marginAngleLimit) {
-    marginAngle = marginAngle < -marginAngleLimit ? -marginAngleLimit : marginAngleLimit;
+    marginAngle =
+      marginAngle < -marginAngleLimit ? -marginAngleLimit : marginAngleLimit;
   }
 
   let textColor = themeContext.brand;
@@ -47,20 +48,44 @@ function Component(props: Props) {
   function takePhotoClicked() {}
   return (
     <Wrapper>
-      <StyledCamera
+      {/* <StyledCamera
         audio={false}
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
-      />
+      /> */}
       <CloseButton onClick={props.closeClicked} />
 
       <CenterWrapper>
-        <LineAreaWrapper style={{ marginTop: marginAngle }}>
+        <LineAreaWrapper
+          style={{
+            transform: `translateY(${marginAngle}px`,
+          }}
+        >
+          <ColorArea
+            style={{
+              opacity: Math.abs(angle) / 45,
+              justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
+              background: `radial-gradient(50% 100%, ${
+                themeContext.red
+              } 50%, transparent 100%)`,
+            }}
+          />
           <LineWrapper>
             <DottedLine />
             <AngleText>{angle} º</AngleText>
           </LineWrapper>
           <Text>KEEP CENTERED</Text>
+          <ColorArea
+            style={{
+              opacity: Math.abs(angle) / 45,
+              justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
+              background: `radial-gradient(50% 100%, ${
+                themeContext.red
+              } 50%, transparent 100%)`,
+            }}
+          >
+            <div />
+          </ColorArea>
         </LineAreaWrapper>
 
         {/* <CustomButton onClick={takePhotoClicked}>Freeze</CustomButton> */}
@@ -68,6 +93,21 @@ function Component(props: Props) {
     </Wrapper>
   );
 }
+
+const ColorArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 3rem;
+
+  & div {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    background-color: ${props => props.theme.surface};
+  }
+`;
+
 const AngleText = styled.span`
   margin: 0 0.5rem;
   font-weight: bold;
@@ -96,7 +136,7 @@ const CenterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: calc(50% + 3rem + 1.5rem / 2);
   margin-top: auto;
   justify-content: space-between;
 `;
