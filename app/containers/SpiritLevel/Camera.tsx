@@ -8,36 +8,65 @@ import CancelIcon from 'components/svg/cancel.svg';
 import { cover, mix } from 'polished';
 import { Button } from 'components/Button';
 import { Spinner } from 'components/LoadingIndicator';
+import { Utils } from 'utils/index';
+import Portal from 'components/Modal';
+import { RotateDeviceModal } from './RotateDeviceModal';
 
 interface Props {
   closeClicked(): void;
 }
 
-const marginAngleLimit = window.innerHeight / 2;
 
 function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
   const themeContext = useContext(ThemeContext);
 
   let angle = 0;
+  let tiltAngle = 0;
   if (orientation) {
-    if (screenOrientation === 'landscape' && orientation.gamma) {
+    if (
+      screenOrientation === 'landscape' &&
+      orientation.gamma &&
+      orientation.beta
+    ) {
       const absAngle = 90 - Math.abs(orientation.gamma);
-      angle = orientation.gamma < 0 ? absAngle : -absAngle;
-    }
-    if (screenOrientation === 'portrait' && orientation.beta) {
-      const absAngle = 90 - orientation.beta;
-      angle = absAngle;
+      angle = orientation.gamma < 0 ? -absAngle : absAngle;
+      if (orientation.gamma > 0) {
+        orientation.beta < 0
+          ? (tiltAngle = -(180 + orientation.beta))
+          : (tiltAngle = 180 - orientation.beta);
+      } else {
+        tiltAngle = orientation.beta;
+      }
     }
   }
 
   angle = parseInt(angle.toFixed(0), 10);
+  tiltAngle = parseInt(tiltAngle.toFixed(0), 10);
 
-  let marginAngle = -angle * 3;
+  const marginAngleLimit = window.innerHeight / 2 - 100;
+
+  // EasoutQuint effect
+  let t = Utils.projectValue(Math.abs(angle), 90, 1);
+  const easeoutFactor = --t * t * t + 1;
+  let marginAngle = Utils.projectValue(easeoutFactor, 1, marginAngleLimit);
+  if (angle < 0) {
+    marginAngle = -marginAngle;
+  }
+
+  const radiantColorFactor = Utils.projectValue(easeoutFactor, 1, 100);
+
   if (marginAngle < -marginAngleLimit || marginAngle > marginAngleLimit) {
     marginAngle =
       marginAngle < -marginAngleLimit ? -marginAngleLimit : marginAngleLimit;
   }
+
+  const lineAreaWidthReduction = Utils.projectValue(
+    Math.abs(tiltAngle),
+    90,
+    window.innerHeight,
+  );
+  console.log(lineAreaWidthReduction);
 
   const videoConstraints = {
     facingMode: 'environment',
@@ -46,10 +75,10 @@ function Component(props: Props) {
   function takePhotoClicked() {}
   return (
     <Wrapper>
-      <WarningText>
+      <LoadingText>
         Loading Camera
         <Loading />
-      </WarningText>
+      </LoadingText>
       <StyledCamera
         audio={false}
         screenshotFormat="image/jpeg"
@@ -57,44 +86,55 @@ function Component(props: Props) {
       />
 
       <CloseButton onClick={props.closeClicked} />
-
-      <CenterWrapper>
-        <LineAreaWrapper
-          style={{
-            transform: `translateY(${marginAngle}px`,
-          }}
-        >
-          <ColorArea
-            position="top"
+      {screenOrientation === 'landscape' ? (
+        <CenterWrapper>
+          <LineAreaWrapper
             style={{
-              visibility: angle > 0 ? 'visible' : 'hidden',
-              opacity: Math.abs(angle) / 45,
-              justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
-              background: `radial-gradient(50% 100%, ${
-                themeContext.red
-              } 50%, transparent 100%)`,
+              transform: `translateY(${marginAngle}px `,
             }}
-          />
-          <LineWrapper>
-            <DottedLine />
-            <AngleText>{angle} º</AngleText>
-          </LineWrapper>
-          {/* <Text>KEEP CENTERED</Text> */}
-          <ColorArea
-            position="bottom"
-            style={{
-              visibility: angle < 0 ? 'visible' : 'hidden',
-              opacity: Math.abs(angle) / 60,
-              justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
-              background: `radial-gradient(50% 100%, ${
-                themeContext.red
-              } 50%, transparent 100%)`,
-            }}
-          />
-        </LineAreaWrapper>
+          >
+            <ColorArea
+              position="top"
+              style={{
+                visibility: angle < 0 ? 'visible' : 'hidden',
+                opacity: easeoutFactor,
+                justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
+                background: `radial-gradient(50% 50%, ${
+                  themeContext.red
+                } 50%, transparent ${radiantColorFactor}%)`,
+              }}
+            />
+            <LineWrapper>
+              <DottedLine>
+                <div
+                  style={{
+                    transform: `rotate(${-tiltAngle}deg) `,
+                  }}
+                />
+              </DottedLine>
+              <AngleText>{angle} º</AngleText>
+            </LineWrapper>
+            {/* <Text>KEEP CENTERED</Text> */}
+            <ColorArea
+              position="bottom"
+              style={{
+                visibility: angle > 0 ? 'visible' : 'hidden',
+                opacity: easeoutFactor,
+                justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
+                background: `radial-gradient(50% 50%, ${
+                  themeContext.red
+                } 50%, transparent ${radiantColorFactor}%)`,
+              }}
+            />
+          </LineAreaWrapper>
 
-        {/* <CustomButton onClick={takePhotoClicked}>Freeze</CustomButton> */}
-      </CenterWrapper>
+          {/* <CustomButton onClick={takePhotoClicked}>Freeze</CustomButton> */}
+        </CenterWrapper>
+      ) : (
+        <Portal isTransparentBackground={true} allowEvents={true} z={999}>
+          <RotateDeviceModal />
+        </Portal>
+      )}
     </Wrapper>
   );
 }
@@ -108,12 +148,6 @@ const ColorArea = styled.div<{ position: 'bottom' | 'top' }>`
     `inset(${props.position === 'bottom' ? '50%' : '0'} 0 ${
       props.position === 'top' ? '50%' : '0'
     } 0)`};
-  & div {
-    display: flex;
-    width: 100%;
-    height: 50%;
-    background-color: ${props => props.theme.surface};
-  }
 `;
 
 const AngleText = styled.span`
@@ -164,12 +198,22 @@ const Text = styled.span`
 `;
 
 const DottedLine = styled.div`
+  position: relative;
   border-top: 2px dashed ${props => props.theme.text};
-  /* border-width: 2px; */
   height: 1px;
   width: 50%;
-  /* opacity: 0.5; */
   margin-left: 12.5%;
+  transform-origin: center;
+
+  & div {
+    ${cover()}
+    top: unset;
+    border-top: 2px dashed ${props => props.theme.text};
+    /* height: 0px; */
+    opacity: 1;
+    transform-origin: center;
+    border-color: ${props => props.theme.brand}
+  }
 `;
 
 const StyledCamera = styled(Webcam)`
@@ -200,11 +244,13 @@ const Loading = styled(Spinner)`
   margin-top: 1rem;
 `;
 
-const WarningText = styled.span`
+const LoadingText = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
+  word-break: keep-all;
+  line-break: strict;
   left: 25%;
   right: 25%;
   top: 2rem;

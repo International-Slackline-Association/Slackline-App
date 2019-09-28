@@ -3,9 +3,7 @@ import styled from 'styles/styled-components';
 import { TextInput } from 'components/TextInput';
 import { useDeviceOrientation } from 'utils/hooks/useDeviceOrientation';
 
-
 export default function Gyro() {
-
   const [orientation, screenOrientation] = useDeviceOrientation();
 
   return (
@@ -15,11 +13,23 @@ export default function Gyro() {
       ) : (
         <React.Fragment>
           <p>-</p>
-          <p>Alpha: {orientation && orientation.alpha}</p>
-          <p>Beta: {orientation && orientation.beta}</p>
-          <p>Gamma: {orientation && orientation.gamma}</p>
+          <p>
+            Absolute:
+            {orientation && orientation.absolute && orientation.absolute}
+          </p>
+          <p>
+            Alpha:
+            {orientation && orientation.alpha && orientation.alpha.toFixed(0)}
+          </p>
+          <p>
+            Beta:
+            {orientation && orientation.beta && orientation.beta.toFixed(0)}
+          </p>
+          <p>
+            Gamma:
+            {orientation && orientation.gamma && orientation.gamma.toFixed(0)}
+          </p>
           <p>orientation: {screenOrientation}</p>
-
         </React.Fragment>
       )}
     </div>

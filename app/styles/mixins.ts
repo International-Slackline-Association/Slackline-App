@@ -44,3 +44,12 @@ export const touchableColor = (
     color: ${touch};
   }
 `;
+
+export const flexCoverCenter = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;

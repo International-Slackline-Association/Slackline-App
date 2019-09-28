@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { math } from 'polished';
 
 interface Orientation {
+  absolute?: boolean;
   alpha?: number;
   beta?: number;
   gamma?: number;
@@ -31,6 +32,7 @@ export function useDeviceOrientation(): [
       alpha: event.alpha,
       beta: event.beta,
       gamma: event.gamma,
+      absolute: event.absolute,
     });
   }
   function getOrientation(): ScreenOrientationType {
@@ -46,8 +48,23 @@ export function useDeviceOrientation(): [
     }
     if (process.env.NODE_ENV !== 'production') {
       setTimeout(() => {
-        handleDeviceOrientation({ beta: 160.234, gamma: 75 });
+        handleDeviceOrientation({ beta: -170, gamma: 80 });
       }, 1000);
+      setTimeout(() => {
+        handleDeviceOrientation({ beta: 170, gamma: 80 });
+      }, 2000);
+      setTimeout(() => {
+        handleDeviceOrientation({ beta: -10, gamma: -85 });
+      }, 3000);
+      setTimeout(() => {
+        handleDeviceOrientation({ beta: 20, gamma: -70 });
+      }, 4000);
+      setTimeout(() => {
+        handleDeviceOrientation({ beta: 20, gamma: -20 });
+      }, 5000);
+      setTimeout(() => {
+        handleDeviceOrientation({ beta: 20, gamma: 150 });
+      }, 5000);
     }
     if (window.DeviceOrientationEvent) {
       window.addEventListener(

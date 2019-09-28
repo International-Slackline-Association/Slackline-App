@@ -1,7 +1,6 @@
 import React, { memo, useContext } from 'react';
 import styled, { ThemeContext } from 'styles/styled-components';
 import media from 'styles/media';
-// import IllustrationIcon1 from './tension_illustration.svg';
 
 interface Props {}
 
@@ -11,67 +10,43 @@ function Component(props: Props) {
     <Wrapper>
       <Text>
         <p>
-          <strong>Tension Calculator </strong>is a tool for calculating the
-          tension of the line using device's{' '}
-          <span style={{ color: themeContext.brand }}>angle sensor</span>. It
-          uses as mathematical formula that need:&nbsp;
-        </p>
-        <p>
+          <strong>
+            <span style={{ color: themeContext.brand }}>Spirit Level</span>
+            &nbsp;
+          </strong>
+          is a tool to level your anchors equally using your camera. <br />
           <br />
-          <strong>1)</strong>{' '}
-          <span style={{ color: themeContext.brand }}>
-            <em>Weight</em>
-          </span>{' '}
-          of the person standing still in the middle of the line
+          <strong>*</strong> It only works the device is in{' '}
+          <strong>
+            <span style={{ color: themeContext.brand }}>
+              landscape orientation
+            </span>
+          </strong>{' '}
+          (rotated to left)
         </p>
         <p>
-          <strong>2)</strong>{' '}
+          <span>
+            <span>
+              <strong>*</strong>
+            </span>
+            &nbsp;
+            <strong style={{ color: themeContext.brand }}>Optionally</strong>
+          </span>
+          , to calculate the{' '}
           <span style={{ color: themeContext.brand }}>
             <em>
-              <span style={{ color: themeContext.brand }}>Angle</span>
+              <strong>height difference</strong>
             </em>
           </span>{' '}
-          in webbing (which is automatically detected by the device)
-          <br />
-          <br />
-          Simply enter the weight of the person in the middle (include line
-          weight too for better accuracy, for longer lines)
-          <br />
-          <br />
-        </p>
-        <h3>Assumptions:</h3>
-        <p>
-          <br />
-          <strong>1 -</strong> Your device should be completly sticking to the
-          webbing as shown in the image below. In short, the device must have
-          the same angle with the webbing. Phone cases etc fiils the space
-          between the phone and the line, hence, causing a incorrect angle
-          detection and incorrect calculation.&nbsp;
-        </p>
-        <p>
-          <strong>2-</strong> Your device's&nbsp;bottom must be facing down to
-          the middle of the line.&nbsp;
-        </p>
-        <p>
-          <strong>3 -</strong> Your device is held completly flat face upwards
-          from the ground.
+          of the far anchor(<em>off-level</em>) enter the length below
         </p>
       </Text>
-      <Illustration1 />
     </Wrapper>
   );
 }
 const Text = styled.span`
   font-size: 0.8rem;
   font-weight: normal;
-`;
-const Illustration1 = styled.img.attrs({
-  // src: IllustrationIcon1,
-})`
-  display: flex;
-  max-width: 100%;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
 `;
 
 const Wrapper = styled.div`

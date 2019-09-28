@@ -24,4 +24,12 @@ export namespace Utils {
   function is_value_nil(v: any) {
     return v === null || v === undefined;
   }
+
+  export function projectValue(
+    value: number,
+    valueRange: number,
+    convertIntoRange: number,
+  ) {
+    return (value * convertIntoRange) / valueRange;
+  }
 }

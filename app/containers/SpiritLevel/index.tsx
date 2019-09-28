@@ -16,15 +16,13 @@ import { useDispatch } from 'react-redux';
 import { goBack, ConnectedRouterProps, push } from 'connected-react-router';
 
 const descriptionClickedKey = 'spirit-level-description-closed';
-interface Props extends ConnectedRouterProps {}
+interface Props {}
 
 export default function SpiritLevel(props: Props) {
-  console.log(props);
-  const [isCameraActive, setIsCameraActive] = useState(true);
+  const [isCameraActive, setIsCameraActive] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
   const [orientation] = useDeviceOrientation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,11 +44,6 @@ export default function SpiritLevel(props: Props) {
 
   function cancelCamera() {
     setIsCameraActive(false);
-    if (props.history.action === 'POP') {
-      dispatch(push('/'));
-    } else {
-      dispatch(goBack());
-    }
   }
 
   function descriptionToggled(open: boolean) {
@@ -62,8 +55,7 @@ export default function SpiritLevel(props: Props) {
         <title>Spirit Level</title>
         <meta name="description" content="Level your anchors" />
       </Helmet>
-      <Camera closeClicked={cancelCamera} />
-      {/* <AppBackgroundContainer showBackButton>
+      <AppBackgroundContainer showBackButton>
         <Wrapper>
           <Header>
             <HeaderIcon iconType="spirit_level" />
@@ -87,7 +79,7 @@ export default function SpiritLevel(props: Props) {
             </Portal>
           )}
         </Wrapper>
-      </AppBackgroundContainer> */}
+      </AppBackgroundContainer>
     </React.Fragment>
   );
 }
