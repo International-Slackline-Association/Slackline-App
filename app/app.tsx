@@ -15,7 +15,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
-import FontFaceObserver from 'fontfaceobserver';
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 // Import root app
 import App from 'containers/App';
@@ -41,9 +41,9 @@ const render = (messages: any, Component = App) => {
     // tslint:disable-next-line:jsx-wrap-multiline
     <Provider store={store}>
       <ThemeProvider>
-          <ConnectedRouter history={history}>
-            <Component />
-          </ConnectedRouter>
+        <ConnectedRouter history={history}>
+          <Component />
+        </ConnectedRouter>
       </ThemeProvider>
     </Provider>,
     MOUNT_NODE,
@@ -82,5 +82,10 @@ if (!(window as any).Intl) {
 // it's not most important operation and if main code fails,
 // we do not want it installed
 if (process.env.NODE_ENV === 'production') {
-  require('offline-plugin/runtime').install();
+  OfflinePluginRuntime.install({
+    onUpdateReady: () => {
+      // Tells to new SW to take control immediately
+      OfflinePluginRuntime.applyUpdate();
+    },
+  });
 }
