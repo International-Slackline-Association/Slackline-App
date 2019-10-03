@@ -10,12 +10,12 @@ import { Button } from 'components/Button';
 import { Spinner } from 'components/LoadingIndicator';
 import { Utils } from 'utils/index';
 import Portal from 'components/Modal';
-import { RotateDeviceModal } from './RotateDeviceModal';
+import { RotateDeviceModal } from 'components/RotateDeviceModal';
 
 interface Props {
   closeClicked(): void;
+  length?: number;
 }
-
 
 function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
@@ -23,6 +23,8 @@ function Component(props: Props) {
 
   let angle = 0;
   let tiltAngle = 0;
+  let offLevel: number | undefined;
+
   if (orientation) {
     if (
       screenOrientation === 'landscape' &&
@@ -41,8 +43,13 @@ function Component(props: Props) {
     }
   }
 
-  angle = parseInt(angle.toFixed(0), 10);
-  tiltAngle = parseInt(tiltAngle.toFixed(0), 10);
+  angle = Math.round(angle);
+  tiltAngle = Math.round(tiltAngle);
+  offLevel =
+    props.length &&
+    Math.round(
+      props.length * Math.tan(Utils.degreesToRadians(Math.abs(angle))),
+    );
 
   const marginAngleLimit = window.innerHeight / 2 - 100;
 
@@ -66,7 +73,6 @@ function Component(props: Props) {
     90,
     window.innerHeight,
   );
-  console.log(lineAreaWidthReduction);
 
   const videoConstraints = {
     facingMode: 'environment',
@@ -114,7 +120,11 @@ function Component(props: Props) {
               </DottedLine>
               <AngleText>{angle} º</AngleText>
             </LineWrapper>
-            {/* <Text>KEEP CENTERED</Text> */}
+            {!Utils.isNil(offLevel) && (
+              <Text>
+                OFF LEVEL: <span>{offLevel}</span>m
+              </Text>
+            )}
             <ColorArea
               position="bottom"
               style={{
@@ -192,9 +202,13 @@ const CustomButton = styled(Button)`
 const Text = styled.span`
   margin-top: 0.5rem;
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-align: center;
   /* opacity: 0.5; */
+  & span {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
 `;
 
 const DottedLine = styled.div`
@@ -212,7 +226,7 @@ const DottedLine = styled.div`
     /* height: 0px; */
     opacity: 1;
     transform-origin: center;
-    border-color: ${props => props.theme.brand}
+    border-color: ${props => props.theme.brand};
   }
 `;
 

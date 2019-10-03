@@ -56,7 +56,6 @@ export default function TraditionalTensionCalculator() {
     if (v <= 0) {
       v = 1;
     }
-    console.log(value);
     setSagString(v.toString());
     if (switchValue) {
       v = convertLength(undefined, v)!.meters;

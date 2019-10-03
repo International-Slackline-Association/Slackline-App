@@ -12,27 +12,31 @@ import AppBackgroundContainer from 'components/AppBackgroundContainer';
 import { Description } from './Description';
 import Portal from 'components/Modal';
 import { Camera } from './Camera';
-import { useDispatch } from 'react-redux';
-import { goBack, ConnectedRouterProps, push } from 'connected-react-router';
-import { SpiritLevelHelmet } from 'components/DocumentHeaders/SpiritLevelHelmet';
+import { LengthMeasurerHelmet } from 'components/DocumentHeaders/LengthMeasurerHelmet';
 import { TextInput } from 'components/TextInput';
 import { useInput } from 'utils/hooks/useInput';
 
-const descriptionClickedKey = 'spirit-level-description-closed';
-const storageKey = 'spirit-level-length';
+const descriptionClickedKey = 'length-measurer-description-closed';
+const storageKey = 'length-measurer-length';
 
 interface Props {}
 
-export default function SpiritLevel(props: Props) {
+export default function LengthMeasurer(props: Props) {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+
+  const [orientation] = useDeviceOrientation();
+
   const {
     value: length,
     valueString: lengthString,
     updateValue: updateLengthValue,
-  } = useInput(storageKey, 'length');
-
-  const [orientation] = useDeviceOrientation();
+  } = useInput(
+    storageKey,
+    'length',
+    { type: 'float', decimalLimit: 1 },
+    { initial: 2, min: 0 },
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,14 +63,15 @@ export default function SpiritLevel(props: Props) {
   function descriptionToggled(open: boolean) {
     setStorageItem(descriptionClickedKey, 'true');
   }
+
   return (
     <React.Fragment>
-      <SpiritLevelHelmet />
+      <LengthMeasurerHelmet />
       <AppBackgroundContainer showBackButton>
         <Wrapper>
           <Header>
-            <HeaderIcon iconType="spirit_level" />
-            <span>Spirit Level</span>
+            <HeaderIcon iconType="length_measurer" />
+            <span>Length Measurer</span>
           </Header>
           <CustomExpandableTextArea
             height={500}
@@ -79,18 +84,21 @@ export default function SpiritLevel(props: Props) {
           <Input
             switchValues={['meters', 'feet']}
             type="number"
-            label="Length (Optional)"
-            description={'The length of the gap'}
+            label="Distance to the close anchor"
+            description={'Distance must be perpendicular to the line'}
             onChange={updateLengthValue}
             value={lengthString}
           />
-          <CustomButton disabled={!orientation} onClick={cameraClicked}>
+          <CustomButton
+            disabled={!orientation || !length || length <= 0}
+            onClick={cameraClicked}
+          >
             Open Camera
           </CustomButton>
 
           {isCameraActive && (
             <Portal isTransparentBackground={false}>
-              <Camera closeClicked={cancelCamera} length={length} />
+              <Camera closeClicked={cancelCamera} knownDistance={length!} />
             </Portal>
           )}
         </Wrapper>

@@ -32,4 +32,12 @@ export namespace Utils {
   ) {
     return (value * convertIntoRange) / valueRange;
   }
+
+  export function degreesToRadians(angle: number) {
+    return angle * (Math.PI / 180);
+  }
+
+  export function trimToDecimals(value: number, decimals: number) {
+    return parseFloat(value.toFixed(decimals));
+  }
 }

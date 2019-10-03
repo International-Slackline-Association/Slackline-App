@@ -15,10 +15,10 @@ export const data: MainPageSection[] = [
       },
       {
         icon: 'length_measurer',
-        path: '',
+        path: 'length-measurer',
         title: 'Length Measurer',
         subtitle: `Measure the length of the line using your device's camera`,
-        notAvailableStatus: 'Available Soon',
+        // notAvailableStatus: 'Available Soon',
         isMobileOnly: true,
       },
       {

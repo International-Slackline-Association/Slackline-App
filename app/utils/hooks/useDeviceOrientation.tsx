@@ -48,10 +48,10 @@ export function useDeviceOrientation(): [
     }
     if (process.env.NODE_ENV !== 'production') {
       setTimeout(() => {
-        handleDeviceOrientation({ beta: -170, gamma: 80 });
+        handleDeviceOrientation({ alpha: 120, beta: -170, gamma: 80 });
       }, 1000);
       setTimeout(() => {
-        handleDeviceOrientation({ beta: 170, gamma: 80 });
+        handleDeviceOrientation({ alpha: 120, beta: 170, gamma: 80 });
       }, 2000);
       setTimeout(() => {
         handleDeviceOrientation({ beta: -10, gamma: -85 });
