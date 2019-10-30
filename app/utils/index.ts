@@ -40,4 +40,11 @@ export namespace Utils {
   export function trimToDecimals(value: number, decimals: number) {
     return parseFloat(value.toFixed(decimals));
   }
+
+  export function angleDiff(a1: number, a2: number) {
+    const phi = Math.abs(a1 - a2) % 360; // This is either the distance or 360 - distance
+    const distance = phi > 180 ? 360 - phi : phi;
+    return distance;
+  }
+
 }

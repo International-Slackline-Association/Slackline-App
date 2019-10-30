@@ -28,7 +28,6 @@ export function useInput(
 
   const [value, setValue] = useState(defaultValue);
   const [valueString, setValueString] = useState(!Utils.isNil(value) ? value!.toString() : '');
-  console.log(value);
 
   // useEffect(() => {}, []);
 

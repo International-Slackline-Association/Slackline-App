@@ -48,23 +48,23 @@ export function useDeviceOrientation(): [
     }
     if (process.env.NODE_ENV !== 'production') {
       setTimeout(() => {
-        handleDeviceOrientation({ alpha: 120, beta: -170, gamma: 80 });
-      }, 1000);
-      setTimeout(() => {
-        handleDeviceOrientation({ alpha: 120, beta: 170, gamma: 80 });
+        handleDeviceOrientation({ alpha: 70, beta: -170, gamma: -70 });
       }, 2000);
       setTimeout(() => {
-        handleDeviceOrientation({ beta: -10, gamma: -85 });
-      }, 3000);
-      setTimeout(() => {
-        handleDeviceOrientation({ beta: 20, gamma: -70 });
+        handleDeviceOrientation({ alpha: 350, beta: -170, gamma: -70 });
       }, 4000);
       setTimeout(() => {
-        handleDeviceOrientation({ beta: 20, gamma: -20 });
-      }, 5000);
-      setTimeout(() => {
-        handleDeviceOrientation({ beta: 20, gamma: 150 });
-      }, 5000);
+        handleDeviceOrientation({ alpha: 50, beta: -170, gamma: -70 });
+      }, 6000);
+      // setTimeout(() => {
+      //   handleDeviceOrientation({ beta: 20, gamma: -70 });
+      // }, 4000);
+      // setTimeout(() => {
+      //   handleDeviceOrientation({ beta: 20, gamma: -20 });
+      // }, 5000);
+      // setTimeout(() => {
+      //   handleDeviceOrientation({ beta: 20, gamma: 150 });
+      // }, 5000);
     }
     if (window.DeviceOrientationEvent) {
       window.addEventListener(

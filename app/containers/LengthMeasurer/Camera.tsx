@@ -18,11 +18,17 @@ interface Props {
   knownDistance: number;
 }
 
-let markedAlpha = 0;
+enum MeasuringState {
+  started = 0,
+  farAnchorMarked = 1,
+  closeAnchorMarked = 2,
+}
+let farAnchorAlpha = 0;
+let closeAnchorAlpha = 0;
 
 function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
-  const [isAnchorMarked, setIsAnchorMarked] = useState(false);
+  const [measuringState, setMeasuringState] = useState(MeasuringState.started);
 
   let currentAlpha = 0;
   if (orientation) {
@@ -38,27 +44,50 @@ function Component(props: Props) {
     }
   }
 
-  let distance: number | undefined;
-
-  if (isAnchorMarked && markedAlpha) {
-    const angle = Math.abs(currentAlpha - markedAlpha);
-    distance = Math.tan(Utils.degreesToRadians(angle)) * props.knownDistance;
-    distance = Utils.trimToDecimals(distance, 1);
-  }
-
   const videoConstraints = {
     facingMode: 'environment',
   };
 
+  function farAnchorAngle() {
+    if (farAnchorAlpha && currentAlpha) {
+      return Utils.angleDiff(farAnchorAlpha, currentAlpha);
+    }
+    return undefined;
+  }
+  function knownDistanceAngle() {
+    if (closeAnchorAlpha && currentAlpha) {
+      return Utils.angleDiff(closeAnchorAlpha, currentAlpha);
+    }
+    return undefined;
+  }
+
+  function distance() {
+    const angleC = farAnchorAngle();
+    const angleA = knownDistanceAngle();
+    const lengthC = props.knownDistance;
+    if (angleA && angleC && lengthC) {
+      const distance =
+        (lengthC * Math.sin(Utils.degreesToRadians(angleA))) /
+        Math.sin(Utils.degreesToRadians(angleC));
+      return Utils.trimToDecimals(distance, 1);
+    }
+    return undefined;
+  }
+
   function buttonClicked() {
-    if (isAnchorMarked) {
-      markedAlpha = 0;
-      setIsAnchorMarked(false);
-    } else {
-      markedAlpha = currentAlpha;
-      setIsAnchorMarked(true);
+    if (measuringState === MeasuringState.started) {
+      farAnchorAlpha = currentAlpha;
+      setMeasuringState(MeasuringState.farAnchorMarked);
+    } else if (measuringState === MeasuringState.farAnchorMarked) {
+      closeAnchorAlpha = currentAlpha;
+      setMeasuringState(MeasuringState.closeAnchorMarked);
+    } else if (measuringState === MeasuringState.closeAnchorMarked) {
+      farAnchorAlpha = 0;
+      closeAnchorAlpha = 0;
+      setMeasuringState(MeasuringState.started);
     }
   }
+
   return (
     <Wrapper>
       <LoadingText>
@@ -76,24 +105,52 @@ function Component(props: Props) {
         <React.Fragment>
           <Crosshair />
           <CenterWrapper>
-            {isAnchorMarked ? (
-              !Utils.isNil(distance) && distance! >= 0 ? (
-                <Text>
-                  <span>{distance}</span> m
-                </Text>
-              ) : (
-                <Text>️Invalid distance ⚠️</Text>
-              )
-            ) : (
-              <Text>Point to the close anchor, then press Start</Text>
-            )}
-            {isAnchorMarked ? (
-              <CustomButton onClick={buttonClicked}>Measure Again</CustomButton>
-            ) : (
-              <CustomButton key="keyforrenderingagain" onClick={buttonClicked}>
-                Start Measuring
-              </CustomButton>
-            )}
+            {
+              {
+                0: (
+                  <Text>
+                    Stand on the close anchor, then point to the far anchor,
+                    then press Mark
+                  </Text>
+                ),
+                1: (
+                  <Text>
+                    Stand on your measured spot, then point to the close anchor,
+                    then press Mark
+                  </Text>
+                ),
+                2:
+                  !Utils.isNil(distance()) && distance()! >= 0 ? (
+                    <Text>
+                      <span>{distance()}</span> m
+                    </Text>
+                  ) : (
+                    <Text>️Invalid distance ⚠️</Text>
+                  ),
+              }[measuringState]
+            }
+
+            {
+              {
+                0: <CustomButton onClick={buttonClicked}>Mark</CustomButton>,
+                1: (
+                  <CustomButton
+                    key="keyforrenderingagain"
+                    onClick={buttonClicked}
+                  >
+                    Mark
+                  </CustomButton>
+                ),
+                2: (
+                  <CustomButton
+                    key="keyforrenderingagain2"
+                    onClick={buttonClicked}
+                  >
+                    Measure Again
+                  </CustomButton>
+                ),
+              }[measuringState]
+            }
           </CenterWrapper>
         </React.Fragment>
       ) : (
