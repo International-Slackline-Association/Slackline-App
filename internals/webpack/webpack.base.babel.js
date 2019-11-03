@@ -128,7 +128,10 @@ module.exports = options => ({
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      IDENTITY_POOL_ID: JSON.stringify(process.env.IDENTITY_POOL_ID),
+      PINPOINT_APP_ID: JSON.stringify(process.env.PINPOINT_APP_ID),
+      REGION: JSON.stringify(process.env.REGION),
     }),
     new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
     new WebpackBar(),

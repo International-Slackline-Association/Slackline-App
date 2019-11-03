@@ -11,11 +11,13 @@ import { Helmet } from 'react-helmet';
 import { isMobile } from 'react-device-detect';
 import { MainPageSectionItem } from './types';
 import { MainPageSection } from 'components/MainPageListItem/Section';
+import { useVisitAnalytics } from 'utils/hooks/analytics';
 
 interface Props extends RouteComponentProps {}
 
 export default function HomePage(props: Props) {
   const dispatch = useDispatch();
+  useVisitAnalytics('main_page_visit');
 
   function onItemClick(item: MainPageSectionItem) {
     return () => {

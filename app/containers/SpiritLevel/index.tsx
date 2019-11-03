@@ -17,6 +17,7 @@ import { goBack, ConnectedRouterProps, push } from 'connected-react-router';
 import { SpiritLevelHelmet } from 'components/DocumentHeaders/SpiritLevelHelmet';
 import { TextInput } from 'components/TextInput';
 import { useInput } from 'utils/hooks/useInput';
+import { useVisitAnalytics } from 'utils/hooks/analytics';
 
 const descriptionClickedKey = 'spirit-level-description-closed';
 const storageKey = 'spirit-level-length';
@@ -24,6 +25,8 @@ const storageKey = 'spirit-level-length';
 interface Props {}
 
 export default function SpiritLevel(props: Props) {
+  useVisitAnalytics('spirit_level_visit');
+
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const {
