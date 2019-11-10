@@ -31,15 +31,23 @@ function Component(props: Props) {
   const [measuringState, setMeasuringState] = useState(MeasuringState.started);
 
   let currentAlpha = 0;
+  let tiltAngle = 0;
+
   if (orientation) {
     if (
       screenOrientation === 'landscape' &&
       orientation.alpha &&
-      orientation.gamma
+      orientation.gamma &&
+      orientation.beta
     ) {
       currentAlpha = orientation.alpha;
       if (orientation.gamma > 0) {
         currentAlpha = (180 + orientation.alpha) % 360;
+        orientation.beta < 0
+          ? (tiltAngle = -(180 + orientation.beta))
+          : (tiltAngle = 180 - orientation.beta);
+      } else {
+        tiltAngle = orientation.beta;
       }
     }
   }
@@ -104,6 +112,13 @@ function Component(props: Props) {
       {screenOrientation === 'landscape' ? (
         <React.Fragment>
           <Crosshair />
+          <DottedLine>
+            <div
+              style={{
+                transform: `rotate(${-tiltAngle}deg) `,
+              }}
+            />
+          </DottedLine>
           <CenterWrapper>
             {
               {
@@ -129,6 +144,11 @@ function Component(props: Props) {
                   ),
               }[measuringState]
             }
+            <Text>
+              Far: {(farAnchorAlpha || 0).toFixed(0) + ' '} Close:
+              {(closeAnchorAlpha || 0).toFixed(0) + ' '}
+              Current: {(currentAlpha || 0).toFixed(0) + ' '}
+            </Text>
 
             {
               {
@@ -161,6 +181,26 @@ function Component(props: Props) {
     </Wrapper>
   );
 }
+
+const DottedLine = styled.div`
+  position: absolute;
+  border-top: 2px dashed ${props => props.theme.text};
+  height: 1px;
+  width: 50%;
+  margin: auto;
+  /* margin-left: 12.5%; */
+  transform-origin: center;
+
+  & div {
+    ${cover()}
+    top: unset;
+    border-top: 2px dashed ${props => props.theme.text};
+    /* height: 0px; */
+    opacity: 1;
+    transform-origin: center;
+    border-color: ${props => props.theme.brand};
+  }
+`;
 
 const Crosshair = styled.img.attrs({
   src: CrosshairIcon,
