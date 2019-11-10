@@ -14,15 +14,15 @@ function Component(props: Props) {
             <span style={{ color: themeContext.brand }}>Spirit Level</span>
             &nbsp;
           </strong>
-          is a tool to level your anchors equally using your camera. <br />
+          is a tool which lets you level your anchors with a camera.<br />
           <br />
-          <strong>*</strong> It only works the device is in{' '}
+          <strong>*</strong> It only works with the device in the {' '}
           <strong>
             <span style={{ color: themeContext.brand }}>
               landscape orientation
             </span>
           </strong>{' '}
-          (rotated to left)
+          (rotated to the left)
         </p>
         <p>
           <span>
@@ -32,13 +32,13 @@ function Component(props: Props) {
             &nbsp;
             <strong style={{ color: themeContext.brand }}>Optionally</strong>
           </span>
-          , to calculate the{' '}
+          , you can find the{' '}
           <span style={{ color: themeContext.brand }}>
             <em>
-              <strong>height difference</strong>
+              <strong>difference between anchor heights</strong>
             </em>
           </span>{' '}
-          of the far anchor(<em>off-level</em>) enter the length below
+          (<em>how off-level they are</em>). To do that enter the line length below
         </p>
       </Text>
     </Wrapper>

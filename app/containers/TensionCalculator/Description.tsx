@@ -14,7 +14,7 @@ function Component(props: Props) {
           <strong>Tension Calculator </strong>is a tool for calculating the
           tension of the line using device's{' '}
           <span style={{ color: themeContext.brand }}>angle sensor</span>. It
-          uses as mathematical formula that need:&nbsp;
+          uses a mathematical formula which needs:&nbsp;
         </p>
         <p>
           <br />
@@ -31,26 +31,25 @@ function Component(props: Props) {
               <span style={{ color: themeContext.brand }}>Angle</span>
             </em>
           </span>{' '}
-          in webbing (which is automatically detected by the device)
+          of the webbing (determined by your device)
           <br />
           <br />
           Simply enter the weight of the person in the middle (include line
-          weight too for better accuracy, for longer lines)
+          weight for better accuracy on longer lines)
           <br />
           <br />
         </p>
         <h3>Assumptions:</h3>
         <p>
           <br />
-          <strong>1 -</strong> Your device should be completly sticking to the
-          webbing as shown in the image below. In short, the device must have
-          the same angle with the webbing. Phone cases etc fiils the space
-          between the phone and the line, hence, causing a incorrect angle
-          detection and incorrect calculation.&nbsp;
+          <strong>1 -</strong> Your device must lay completely flat on the
+          webbing (see the illustration). You might have to remove your phone case
+          for an accurate measurement.&nbsp;
         </p>
         <p>
-          <strong>2-</strong> Your device's&nbsp;bottom must be facing down to
-          the middle of the line.&nbsp;
+          <strong>2-</strong> Make sure your device is laying face up, with the
+          bottom side pointing to the slackliner in the middle of the
+          line.&nbsp;
         </p>
         <p>
           <strong>3 -</strong> Your device is held completly flat face upwards
