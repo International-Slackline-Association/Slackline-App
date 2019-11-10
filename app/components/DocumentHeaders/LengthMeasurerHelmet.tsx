@@ -17,11 +17,11 @@ function Component(props: Props) {
       />
       <meta
         property="og:image"
-        content="https://tools.slacklineinternational.org/images/LengthMeasurerOgImage.png"
+        content="https://slackline.app/images/LengthMeasurerOgImage.png"
       />
       <meta
         property="og:url"
-        content="https://tools.slacklineinternational.org/length-measurer"
+        content="https://slackline.app/length-measurer"
       />
     </Helmet>
   );

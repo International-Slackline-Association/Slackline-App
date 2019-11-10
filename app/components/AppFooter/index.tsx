@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   align-self: flex-end;
   flex-direction: column;
   width: 100%;
-  height: 135px;
+  height: 155px;
   flex: 0 0 auto;
   justify-content: flex-end;
   clip-path: polygon(0 16%, 33% 0, 100% 16%, 100% 100%, 0 100%);

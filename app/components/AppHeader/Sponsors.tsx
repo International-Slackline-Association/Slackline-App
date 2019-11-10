@@ -3,47 +3,67 @@ import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
 import turkishSlacklineIcon from '../Logos/svg/turkish_slackline.svg';
 import swissSlacklineIcon from '../Logos/svg/swiss_slackline.svg';
+import { touchableOpacity } from 'styles/mixins';
 
 interface Props {}
 
 function Sponsors(props: Props) {
   return (
     <Wrapper>
-      <span>Supported by</span>
+      <SupportedByText>Supported by</SupportedByText>
       <LogoWrapper>
         <Logo
-          style={{ marginRight: '0rem' }}
+          // style={{ marginRight: '0rem' }}
           href={'//www.slackline.org.tr'}
           target="_blank"
         >
           <img
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '100%'}}
             src={turkishSlacklineIcon}
           />
         </Logo>
         <Logo href={'//www.swiss-slackline.ch'} target="_blank">
           <img
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '100%'}}
             src={swissSlacklineIcon}
           />
         </Logo>
       </LogoWrapper>
+      <AuthorText>
+        Designed & Developed by{' '}
+        <a href={'//github.com/Can-Sahin'} target="_blank">
+          Can Sahin
+        </a>
+      </AuthorText>
     </Wrapper>
   );
 }
 
+const AuthorText = styled.span`
+  font-size: 0.6rem;
+  & a {
+    color: ${props => props.theme.textSecondary};
+    text-decoration: underline;
+    ${touchableOpacity}
+  }
+`;
+
+const SupportedByText = styled.span`
+  font-size: 1rem;
+  margin: 0.5rem 0rem;
+`;
+
 const Logo = styled.a`
   display: flex;
-  align-self: center;
-  width: 25%;
-  height: 50%;
-  margin: 0rem 0.8rem 0.8rem 0rem;
+  height: 3rem;
+  margin: 1rem 1rem 1rem 0rem;
 `;
 const LogoWrapper = styled.div`
   display: flex;
-  margin-top: 1rem;
   justify-content: flex-start;
+  align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -58,8 +78,6 @@ const Wrapper = styled.div`
   `};
   & span {
     color: ${props => props.theme.textSecondary};
-    font-size: 1rem;
-    margin: 0.5rem 0rem;
   }
 `;
 

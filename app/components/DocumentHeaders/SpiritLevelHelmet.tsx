@@ -14,11 +14,11 @@ function Component(props: Props) {
       <meta property="og:description" content="Level your anchors using your camera." />
       <meta
         property="og:image"
-        content="https://tools.slacklineinternational.org/images/SpiritLevelOgImage.png"
+        content="https://slackline.app/images/SpiritLevelOgImage.png"
       />
       <meta
         property="og:url"
-        content="https://tools.slacklineinternational.org/spirit-level"
+        content="https://slackline.app/spirit-level"
       />
     </Helmet>
   );
