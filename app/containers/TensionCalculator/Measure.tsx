@@ -26,10 +26,6 @@ function Component(props: Props) {
     startMeasuring();
   }, []);
 
-  if (failed) {
-    alert(`Cannot access device's motion sensors `);
-  }
-
   if (
     isMeasuring &&
     tension &&
@@ -54,7 +50,7 @@ function Component(props: Props) {
   }
 
   function isGammaValid() {
-    return tilt && (tilt < 0.3 && tilt > -0.3);
+    return tilt && tilt < 0.3 && tilt > -0.3;
   }
 
   function startMeasuring() {
@@ -64,6 +60,35 @@ function Component(props: Props) {
 
   function stopMeasuring() {
     setIsMeasuring(false);
+  }
+
+  function accuracyIndicator() {
+    let text = '';
+    let color = '';
+
+    if (averageTension) {
+      if (averageTension > 0) {
+        text = 'Very High';
+        color = 'green';
+      }
+      if (averageTension > 1.5) {
+        text = 'High';
+        color = 'green';
+      }
+      if (averageTension > 4) {
+        text = 'Moderate';
+        color = '';
+      }
+      if (averageTension > 5) {
+        text = 'Low';
+        color = 'red';
+      }
+      if (averageTension > 7) {
+        text = 'Very Low';
+        color = '#951212';
+      }
+    }
+    return { text, color };
   }
 
   function measureAgainClicked() {
@@ -80,9 +105,7 @@ function Component(props: Props) {
         />
         <Circle
           style={{
-            background: `radial-gradient(circle at 0.5rem 0.5rem, ${
-              themeContext.text
-            }, ${circleColor})`,
+            background: `radial-gradient(circle at 0.5rem 0.5rem, ${themeContext.text}, ${circleColor})`,
             marginRight: (tilt && tilt * 2) || 0,
           }}
         />
@@ -108,6 +131,9 @@ function Component(props: Props) {
           <ResultsWrapper>
             <span>Tension</span>
             <span className={'big'}>{averageTension.toFixed(2)} KN</span>
+            <AccuracyText color={accuracyIndicator().color}>
+              Accuracy: <span>{accuracyIndicator().text}</span>
+            </AccuracyText>
             <CustomButton onClick={measureAgainClicked}>
               Measure Again
             </CustomButton>
@@ -117,6 +143,19 @@ function Component(props: Props) {
     </Wrapper>
   );
 }
+
+const AccuracyText = styled.span<{ color: string }>`
+  /* display: flex; */
+  text-align: center;
+  font-size: 0.6rem;
+  & span {
+    font-weight: bold;
+    margin-left: 0.2rem;
+    font-size: 0.6rem;
+    color: ${props => props.color};
+  }
+`;
+
 const Circle = styled.div`
   display: block;
   border-radius: 50%;

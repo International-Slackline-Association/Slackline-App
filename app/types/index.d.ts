@@ -1,10 +1,11 @@
 import { Reducer, Store } from 'redux';
 import { RouterState } from 'connected-react-router';
+import { Saga } from 'redux-saga';
 
 export interface LifeStore extends Store {
   injectedReducers: any;
   injectedSagas: any;
-  runSaga(saga: (() => IterableIterator<any>) | undefined, args: any | undefined): any;
+  runSaga(saga: Saga<any[]> | undefined, args: any | undefined): any;
 }
 
 export interface InjectReducerParams {

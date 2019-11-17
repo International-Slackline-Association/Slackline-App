@@ -16,6 +16,8 @@ import { LengthMeasurerHelmet } from 'components/DocumentHeaders/LengthMeasurerH
 import { TextInput } from 'components/TextInput';
 import { useInput } from 'utils/hooks/useInput';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
+import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation';
+import { Utils } from 'utils/index';
 
 const descriptionClickedKey = 'length-measurer-description-closed';
 const storageKey = 'length-measurer-length';
@@ -28,6 +30,7 @@ export default function LengthMeasurer(props: Props) {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
+  useCheckDeviceOrientation();
   const [orientation] = useDeviceOrientation();
 
   const {
@@ -43,9 +46,6 @@ export default function LengthMeasurer(props: Props) {
 
   useEffect(() => {
     setTimeout(() => {
-      if (!orientation) {
-        alert(`Cannot access device's motion sensors `);
-      }
       if (!isMobile) {
         alert(`Spirit Level works with mobiles devices only`);
       }
@@ -56,6 +56,12 @@ export default function LengthMeasurer(props: Props) {
   }, []);
 
   function cameraClicked() {
+    Utils.requestMotionEventPermission().then(granted => {
+      if (granted !== undefined && granted) {
+        alert('You have disabled motion and orientation access!');
+      }
+    });
+
     setIsCameraActive(true);
   }
 
@@ -77,7 +83,7 @@ export default function LengthMeasurer(props: Props) {
             <span>Length Measurer</span>
           </Header>
           <CustomExpandableTextArea
-            height={500}
+            height={750}
             isOpen={isDescriptionOpen}
             toggled={descriptionToggled}
             title={'Description & Instructions'}
@@ -88,12 +94,11 @@ export default function LengthMeasurer(props: Props) {
             switchValues={['meters', 'feet']}
             type="number"
             label="Distance to the close anchor"
-            description={'Distance must be perpendicular to the line'}
             onChange={updateLengthValue}
             value={lengthString}
           />
           <CustomButton
-            disabled={!orientation || !length || length <= 0}
+            disabled={!length || length <= 0}
             onClick={cameraClicked}
           >
             Open Camera

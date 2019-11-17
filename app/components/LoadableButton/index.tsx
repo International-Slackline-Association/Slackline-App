@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react';
 import styled, { css, keyframes } from '../../styles/styled-components';
 import media from '../../styles/media';
 import { lighten, rgba } from 'polished';
+import { StyledProps } from 'styled-components';
 
 interface Props {
   isLoading: boolean;
@@ -29,7 +30,8 @@ export const LoadableButton = styled.button<Props>`
   ${props =>
     props.isLoading &&
     css`
-      background-color: ${p => `${lighten(0.05, p.theme.brand)} !important`};
+      background-color: ${(p: StyledProps<Props>) =>
+        `${lighten(0.05, p.theme.brand)} !important`};
       color: rgba(0, 0, 0, 0) !important;
 
       &::after {
@@ -38,8 +40,7 @@ export const LoadableButton = styled.button<Props>`
         content: '';
         width: 1em;
         height: 1em;
-        border: 2px solid
-          ${p => p.theme.text && rgba(p.theme.text, 0.1)};
+        border: 2px solid ${p => rgba(p.theme.text, 0.1)};
         border-top-color: ${p => p.theme.text};
         border-left-color: ${p => p.theme.text};
         border-radius: 50%;

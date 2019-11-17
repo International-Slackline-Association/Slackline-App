@@ -54,5 +54,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 1rem;
   width: 100%;
+  height: 100%;
 `;
 export const Description = memo(Component);

@@ -47,4 +47,35 @@ export namespace Utils {
     return distance;
   }
 
+  export function isRequestPermissionAvailable() {
+    return (
+      typeof (window.DeviceOrientationEvent as any)?.requestPermission ===
+      'function'
+    );
+  }
+
+  export function requestMotionEventPermission() {
+    if (
+      typeof (window.DeviceOrientationEvent as any)?.requestPermission ===
+      'function'
+    ) {
+      return requestPermission();
+    }
+    return Promise.resolve(undefined);
+  }
+
+  async function requestPermission() {
+    return (window.DeviceOrientationEvent as any)
+      .requestPermission()
+      .then((permissionState: string) => {
+        if (permissionState === 'granted') {
+          return true;
+        }
+        return false;
+      })
+      .catch(err => {
+        console.error(err);
+        return false;
+      });
+  }
 }

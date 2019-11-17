@@ -2,27 +2,21 @@ import { useState, useEffect } from 'react';
 import { math } from 'polished';
 
 interface Orientation {
-  absolute?: boolean;
-  alpha?: number;
-  beta?: number;
-  gamma?: number;
+  absolute: boolean;
+  alpha: number;
+  beta: number;
+  gamma: number;
 }
 
 type ScreenOrientationType = 'portrait' | 'landscape';
 
-declare interface IWindow extends Window {
-  DeviceOrientationEvent: boolean;
-}
-declare const window: IWindow;
 export function useDeviceOrientation(): [
   Orientation | undefined,
-  ScreenOrientationType
+  ScreenOrientationType,
 ] {
   const isClient = typeof window === 'object';
 
-  const [deviceOrientation, setDeviceOrientation] = useState<
-    Orientation | undefined
-  >({});
+  const [deviceOrientation, setDeviceOrientation] = useState<Orientation>();
   const [screenOrientation, setScreenOrientation] = useState<
     ScreenOrientationType
   >(getOrientation());
@@ -47,15 +41,15 @@ export function useDeviceOrientation(): [
       return () => {};
     }
     if (process.env.NODE_ENV !== 'production') {
-      setTimeout(() => {
-        handleDeviceOrientation({ alpha: 70, beta: -170, gamma: -70 });
-      }, 2000);
-      setTimeout(() => {
-        handleDeviceOrientation({ alpha: 350, beta: -170, gamma: -70 });
-      }, 4000);
-      setTimeout(() => {
-        handleDeviceOrientation({ alpha: 50, beta: -170, gamma: -70 });
-      }, 6000);
+      // setTimeout(() => {
+      //   handleDeviceOrientation({ alpha: 70, beta: -170, gamma: -70 });
+      // }, 500);
+      // setTimeout(() => {
+      //   handleDeviceOrientation({ alpha: 350, beta: -170, gamma: -70 });
+      // }, 4000);
+      // setTimeout(() => {
+      //   handleDeviceOrientation({ alpha: 50, beta: -170, gamma: -70 });
+      // }, 6000);
       // setTimeout(() => {
       //   handleDeviceOrientation({ beta: 20, gamma: -70 });
       // }, 4000);
@@ -81,9 +75,10 @@ export function useDeviceOrientation(): [
         );
         window.removeEventListener('resize', handleResize);
       };
+    } else {
+      setDeviceOrientation(undefined);
+      return () => {};
     }
-    setDeviceOrientation(undefined);
-    return () => {};
   }, []);
 
   return [deviceOrientation, screenOrientation];

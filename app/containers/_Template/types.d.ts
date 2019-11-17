@@ -4,7 +4,7 @@ import { ApplicationRootState } from 'types';
 
 /* --- STATE --- */
 interface State {
-  dflt: string;
+  dflt?: string;
 }
 /* --- ACTIONS --- */
 type Actions = ActionType<typeof actions>;

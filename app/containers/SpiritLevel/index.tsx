@@ -18,6 +18,9 @@ import { SpiritLevelHelmet } from 'components/DocumentHeaders/SpiritLevelHelmet'
 import { TextInput } from 'components/TextInput';
 import { useInput } from 'utils/hooks/useInput';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
+import { Utils } from 'utils/index';
+import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation';
+// import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation';
 
 const descriptionClickedKey = 'spirit-level-description-closed';
 const storageKey = 'spirit-level-length';
@@ -35,15 +38,13 @@ export default function SpiritLevel(props: Props) {
     updateValue: updateLengthValue,
   } = useInput(storageKey, 'length');
 
+  useCheckDeviceOrientation();
   const [orientation] = useDeviceOrientation();
 
   useEffect(() => {
     setTimeout(() => {
-      if (!orientation) {
-        alert(`Cannot access device's motion sensors `);
-      }
       if (!isMobile) {
-        alert(`Spirit Level works with mobiles devices only`);
+        alert(`Spirit Level works only on mobiles devices`);
       }
       setIsDescriptionOpen(
         getStorageItem(descriptionClickedKey) ? false : true,
@@ -52,6 +53,11 @@ export default function SpiritLevel(props: Props) {
   }, []);
 
   function cameraClicked() {
+    Utils.requestMotionEventPermission().then(granted => {
+      if (granted !== undefined && granted) {
+        alert('You have disabled motion and orientation access!');
+      }
+    });
     setIsCameraActive(true);
   }
 
@@ -87,7 +93,7 @@ export default function SpiritLevel(props: Props) {
             onChange={updateLengthValue}
             value={lengthString}
           />
-          <CustomButton disabled={!orientation} onClick={cameraClicked}>
+          <CustomButton onClick={cameraClicked}>
             Open Camera
           </CustomButton>
 

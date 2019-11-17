@@ -21,6 +21,8 @@ function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
   const themeContext = useContext(ThemeContext);
 
+  console.log(screenOrientation);
+
   let angle = 0;
   let tiltAngle = 0;
   let offLevel: number | undefined;
@@ -105,9 +107,7 @@ function Component(props: Props) {
                 visibility: angle < 0 ? 'visible' : 'hidden',
                 opacity: easeoutFactor,
                 justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
-                background: `radial-gradient(50% 50%, ${
-                  themeContext.red
-                } 50%, transparent ${radiantColorFactor}%)`,
+                background: `radial-gradient(50% 50%, ${themeContext.red} 50%, transparent ${radiantColorFactor}%)`,
               }}
             />
             <LineWrapper>
@@ -131,9 +131,7 @@ function Component(props: Props) {
                 visibility: angle > 0 ? 'visible' : 'hidden',
                 opacity: easeoutFactor,
                 justifyContent: angle < 0 ? 'flex-start' : 'flex-end',
-                background: `radial-gradient(50% 50%, ${
-                  themeContext.red
-                } 50%, transparent ${radiantColorFactor}%)`,
+                background: `radial-gradient(50% 50%, ${themeContext.red} 50%, transparent ${radiantColorFactor}%)`,
               }}
             />
           </LineAreaWrapper>

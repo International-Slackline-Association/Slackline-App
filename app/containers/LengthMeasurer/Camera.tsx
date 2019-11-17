@@ -23,6 +23,7 @@ enum MeasuringState {
   farAnchorMarked = 1,
   closeAnchorMarked = 2,
 }
+
 let farAnchorAlpha = 0;
 let closeAnchorAlpha = 0;
 
@@ -82,6 +83,36 @@ function Component(props: Props) {
     return undefined;
   }
 
+  function accuracyIndicator() {
+    const angle = farAnchorAngle();
+    let text = '';
+    let color = '';
+
+    if (angle) {
+      if (angle > 0) {
+        text = 'Very low';
+        color = '#951212';
+      }
+      if (angle > 5) {
+        text = 'Low';
+        color = 'red';
+      }
+      if (angle > 8) {
+        text = 'Moderate';
+        color = '';
+      }
+      if (angle > 10) {
+        text = 'High';
+        color = 'green';
+      }
+      if (angle > 15) {
+        text = 'Very High';
+        color = 'green';
+      }
+    }
+    return { text, color };
+  }
+
   function buttonClicked() {
     if (measuringState === MeasuringState.started) {
       farAnchorAlpha = currentAlpha;
@@ -112,53 +143,52 @@ function Component(props: Props) {
       {screenOrientation === 'landscape' ? (
         <React.Fragment>
           <Crosshair />
-          <DottedLine>
-            <div
-              style={{
-                transform: `rotate(${-tiltAngle}deg) `,
-              }}
-            />
-          </DottedLine>
           <CenterWrapper>
             {
               {
                 0: (
                   <Text>
-                    Stand on the close anchor, then point to the far anchor,
-                    then press Mark
+                    FAR ANCHOR
+                    <span>(Stand on the anchor and mark the far anchor)</span>
                   </Text>
                 ),
                 1: (
                   <Text>
-                    Stand on your measured spot, then point to the close anchor,
-                    then press Mark
+                    CLOSE ANCHOR
+                    <span>
+                      (Stand on the measured spot and mark the close anchor)
+                    </span>
                   </Text>
                 ),
                 2:
                   !Utils.isNil(distance()) && distance()! >= 0 ? (
-                    <Text>
-                      <span>{distance()}</span> m
-                    </Text>
+                    <DistanceWrapper>
+                      <DistanceText>
+                        <span>{distance()}</span>m
+                      </DistanceText>
+                      <AccuracyText color={accuracyIndicator().color}>
+                        Accuracy: <span>{accuracyIndicator().text}</span>
+                      </AccuracyText>
+                    </DistanceWrapper>
                   ) : (
                     <Text>️Invalid distance ⚠️</Text>
                   ),
               }[measuringState]
             }
-            <Text>
-              Far: {(farAnchorAlpha || 0).toFixed(0) + ' '} Close:
-              {(closeAnchorAlpha || 0).toFixed(0) + ' '}
-              Current: {(currentAlpha || 0).toFixed(0) + ' '}
-            </Text>
 
             {
               {
-                0: <CustomButton onClick={buttonClicked}>Mark</CustomButton>,
+                0: (
+                  <CustomButton onClick={buttonClicked}>
+                    Mark Far Anchor
+                  </CustomButton>
+                ),
                 1: (
                   <CustomButton
                     key="keyforrenderingagain"
                     onClick={buttonClicked}
                   >
-                    Mark
+                    Mark Close Anchor
                   </CustomButton>
                 ),
                 2: (
@@ -182,26 +212,6 @@ function Component(props: Props) {
   );
 }
 
-const DottedLine = styled.div`
-  position: absolute;
-  border-top: 2px dashed ${props => props.theme.text};
-  height: 1px;
-  width: 50%;
-  margin: auto;
-  /* margin-left: 12.5%; */
-  transform-origin: center;
-
-  & div {
-    ${cover()}
-    top: unset;
-    border-top: 2px dashed ${props => props.theme.text};
-    /* height: 0px; */
-    opacity: 1;
-    transform-origin: center;
-    border-color: ${props => props.theme.brand};
-  }
-`;
-
 const Crosshair = styled.img.attrs({
   src: CrosshairIcon,
 })`
@@ -212,29 +222,64 @@ const Crosshair = styled.img.attrs({
   height: 3rem;
 `;
 
+const DistanceWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const CenterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: 100%;
   margin-top: auto;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `;
 
 const CustomButton = styled(Button)`
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   font-size: 0.8rem;
   border-radius: 2rem;
 `;
 
-const Text = styled.span`
-  margin-top: 2.5rem;
-  font-weight: bold;
-  font-size: 0.8rem;
+const AccuracyText = styled.span<{ color: string }>`
+  /* display: flex; */
   text-align: center;
+  font-size: 0.6rem;
   & span {
+    font-weight: bold;
+    margin-left: 0.2rem;
+    font-size: 0.6rem;
+    color: ${props => props.color};
+  }
+`;
+
+const DistanceText = styled.span`
+  /* display: flex; */
+  text-align: center;
+  font-size: 0.8rem;
+  & span {
+    font-weight: bold;
+    margin-right: 0.5rem;
     font-size: 2rem;
+  }
+`;
+
+const Text = styled.span`
+  display: flex;
+  /* margin-top: 2.5rem; */
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  & span {
+    font-weight: normal;
+    color: ${props => props.theme.textSecondary};
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
   }
 `;
 

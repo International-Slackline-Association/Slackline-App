@@ -20,6 +20,8 @@ import { getStorageItem, setStorageItem } from 'utils/storage';
 import { isMobile } from 'react-device-detect';
 import { useDeviceOrientation } from 'utils/hooks/useDeviceOrientation';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
+import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation';
+import { Utils } from 'utils/index';
 
 const descriptionClickedKey = 'tension-calculator-description-closed';
 const weightKey = 'tension-calculator-weight';
@@ -33,15 +35,13 @@ export default function TensionCalculator() {
   const [isMeasuringActive, setIsMeasuringActive] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
+  useCheckDeviceOrientation();
   const [orientation] = useDeviceOrientation();
 
   useEffect(() => {
     setTimeout(() => {
-      if (!orientation) {
-        alert(`Cannot access device's motion sensors `);
-      }
       if (!isMobile) {
-        alert(`Tension Calculator works with mobiles devices only`);
+        alert(`Tension Calculator works only on mobiles devices`);
       }
       setIsDescriptionOpen(
         getStorageItem(descriptionClickedKey) ? false : true,
@@ -62,6 +62,11 @@ export default function TensionCalculator() {
     setStorageItem(weightKey, v.toString());
   }
   function measureClicked() {
+    Utils.requestMotionEventPermission().then(granted => {
+      if (granted !== undefined && granted) {
+        alert('You have disabled motion and orientation access!');
+      }
+    });
     setIsMeasuringActive(true);
   }
 
@@ -106,9 +111,7 @@ export default function TensionCalculator() {
             onChange={updateWeightValue}
             value={weightString}
           />
-          <CustomButton disabled={!orientation} onClick={measureClicked}>
-            Measure Tension
-          </CustomButton>
+          <CustomButton onClick={measureClicked}>Measure Tension</CustomButton>
 
           {isMeasuringActive && (
             <Portal isTransparentBackground={true}>
