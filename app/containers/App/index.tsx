@@ -39,7 +39,7 @@ const App: React.FC = () => {
         <Route path={'/spirit-level'} component={SpiritLevel} />
         <Route path={'/length-measurer'} component={LengthMeasurer} />
 
-        <Route path={'/webbing-charts'} component={WebbingCharts} />
+        {/* <Route path={'/webbing-charts'} component={WebbingCharts} /> */}
         <Route path={'/unit-converter'} component={UnitConverter} />
         <Route path={'/gyro'} component={Gyro} />
 

@@ -130,9 +130,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'Slackline Web Tools',
-      short_name: 'Slackline Tools',
-      description: 'Slackline Web Tools',
+      name: 'Slackline App',
+      short_name: 'Slackline App',
+      description: 'Slackline App',
       background_color: '#232F3E',
       theme_color: '#232F3E',
       inject: true,

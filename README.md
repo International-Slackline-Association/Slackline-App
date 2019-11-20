@@ -1,4 +1,4 @@
-# Slackline Web Tools
+# Slackline App
 
 Collection of slackline tools and resources
 

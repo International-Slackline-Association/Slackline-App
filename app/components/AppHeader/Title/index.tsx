@@ -18,7 +18,7 @@ function Title() {
     <Wrapper>
       <Text onClick={goMainPage}>
         Slackline <Linebreak />
-        Web Tools
+        App
       </Text>
       <ByWrapper>
         <Divider />

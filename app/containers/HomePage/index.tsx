@@ -30,7 +30,7 @@ export default function HomePage(props: Props) {
   return (
     <AppBackgroundContainer>
       <Helmet>
-        <title>Slackline Web Tools</title>
+        <title>Slackline App</title>
         <meta name="description" content="Collection of tools and resources" />
       </Helmet>
       <Wrapper>

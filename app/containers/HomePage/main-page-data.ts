@@ -76,9 +76,10 @@ export const data: MainPageSection[] = [
     items: [
       {
         icon: 'stretch_chart',
-        path: 'webbing-charts',
+        path: '',
         title: 'Webbing Charts',
         subtitle: 'Compare webbing by stretch, price, weight and MBS',
+        notAvailableStatus: 'Available Soon',
       },
       {
         icon: 'scatter_graph',

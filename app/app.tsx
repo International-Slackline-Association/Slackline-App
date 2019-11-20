@@ -82,10 +82,5 @@ if (!(window as any).Intl) {
 // it's not most important operation and if main code fails,
 // we do not want it installed
 if (process.env.NODE_ENV === 'production') {
-  OfflinePluginRuntime.install({
-    onUpdateReady: () => {
-      // Tells to new SW to take control immediately
-      OfflinePluginRuntime.applyUpdate();
-    },
-  });
+  OfflinePluginRuntime.install();
 }
