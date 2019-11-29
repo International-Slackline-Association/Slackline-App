@@ -47,7 +47,7 @@ export default function LengthMeasurer(props: Props) {
   useEffect(() => {
     setTimeout(() => {
       if (!isMobile) {
-        alert(`Spirit Level works with mobiles devices only`);
+        alert(`Length Measurer works with mobiles devices only`);
       }
       setIsDescriptionOpen(
         getStorageItem(descriptionClickedKey) ? false : true,

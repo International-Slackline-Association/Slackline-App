@@ -24,7 +24,7 @@ export const data: MainPageSection[] = [
       {
         icon: 'spirit_level',
         path: 'spirit-level',
-        title: 'Spirit Level',
+        title: 'Horizontal Leveling',
         subtitle: `Level your anchors perfectly with a camera`,
         // notAvailableStatus: 'Available Soon',
         isMobileOnly: true,
@@ -47,21 +47,21 @@ export const data: MainPageSection[] = [
         subtitle:
           'Calculate the tension of the line with a known length, weight and sag',
       },
-      {
-        icon: 'volume_calculator',
-        path: 'volume-calculator',
-        title: 'Volume Calculator',
-        subtitle:
-          'Calculate the volume, weight and the force needed to move a boulder',
-        notAvailableStatus: 'Available Soon',
-      },
-      {
-        icon: 'backup_simulator',
-        path: '',
-        title: 'Backup Fall Simulator',
-        subtitle: 'Calculate the predicted forces and fall height in a backup fall',
-        notAvailableStatus: 'Future Plan',
-      },
+      // {
+      //   icon: 'volume_calculator',
+      //   path: 'volume-calculator',
+      //   title: 'Volume Calculator',
+      //   subtitle:
+      //     'Calculate the volume, weight and the force needed to move a boulder',
+      //   notAvailableStatus: 'Available Soon',
+      // },
+      // {
+      //   icon: 'backup_simulator',
+      //   path: '',
+      //   title: 'Backup Fall Simulator',
+      //   subtitle: 'Calculate the predicted forces and fall height in a backup fall',
+      //   notAvailableStatus: 'Future Plan',
+      // },
       {
         icon: 'maps_distance',
         path: '',
@@ -100,13 +100,13 @@ export const data: MainPageSection[] = [
         subtitle: 'Essential articles and publications in your pocket',
         notAvailableStatus: 'Future Plan',
       },
-      {
-        icon: 'terminology_cheatsheet',
-        path: '',
-        title: 'Terminology Cheatsheet',
-        subtitle: 'Slackline specific terms explained/Technical terms explained',
-        notAvailableStatus: 'Future Plan',
-      },
+      // {
+      //   icon: 'terminology_cheatsheet',
+      //   path: '',
+      //   title: 'Terminology Cheatsheet',
+      //   subtitle: 'Slackline specific terms explained/Technical terms explained',
+      //   notAvailableStatus: 'Future Plan',
+      // },
     ],
   },
 ];

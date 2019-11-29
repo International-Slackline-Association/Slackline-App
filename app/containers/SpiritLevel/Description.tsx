@@ -11,7 +11,7 @@ function Component(props: Props) {
       <Text>
         <p>
           <strong>
-            <span style={{ color: themeContext.brand }}>Spirit Level</span>
+            <span style={{ color: themeContext.brand }}>Horizontal Leveling</span>
             &nbsp;
           </strong>
           is a tool which lets you level your anchors with a camera.<br />

@@ -26,12 +26,7 @@ const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
       <Switch>
-        {isMobile && (
-          <Route
-            path={['/tension-calculator', '/tension-calculator.html']}
-            component={TensionCalculator}
-          />
-        )}
+        <Route path={'/tension-calculator'} component={TensionCalculator} />
         <Route
           path={'/traditional-tension-calculator'}
           component={TraditionalTensionCalculator}

@@ -22,6 +22,7 @@ import { useDeviceOrientation } from 'utils/hooks/useDeviceOrientation';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
 import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation';
 import { Utils } from 'utils/index';
+import { TensionCalculatorHelmet } from 'components/DocumentHeaders/TensionCalculatorHelmet';
 
 const descriptionClickedKey = 'tension-calculator-description-closed';
 const weightKey = 'tension-calculator-weight';
@@ -80,13 +81,7 @@ export default function TensionCalculator() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>Tension Calculator</title>
-        <meta
-          name="description"
-          content="Calculate the tension(force) of the line"
-        />
-      </Helmet>
+      <TensionCalculatorHelmet />
       <AppBackgroundContainer showBackButton>
         <Wrapper>
           <Header>

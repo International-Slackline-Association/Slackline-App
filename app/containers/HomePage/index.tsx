@@ -36,7 +36,7 @@ export default function HomePage(props: Props) {
       <Wrapper>
         <TextSection>
           <Text>
-            Tools and resources you need <br />
+            Tools and resources for slackliners <br />
             <Text style={{ fontWeight: 'bold' }}>ACCESS OFFLINE</Text>
           </Text>
         </TextSection>

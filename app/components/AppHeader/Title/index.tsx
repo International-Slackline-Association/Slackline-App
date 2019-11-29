@@ -18,7 +18,7 @@ function Title() {
     <Wrapper>
       <Text onClick={goMainPage}>
         Slackline <Linebreak />
-        App
+        App <span>(Beta)</span>
       </Text>
       <ByWrapper>
         <Divider />
@@ -80,7 +80,7 @@ const ByWrapper = styled.div`
 const Text = styled.a`
   ${touchableOpacity}
 
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
@@ -89,6 +89,12 @@ const Text = styled.a`
     font-size: 2.5rem;
     text-align: left;
   `};
+
+  & span {
+    font-size: 1rem;
+    font-weight: normal;
+    font-style: italic;
+  }
 `;
 
 const Wrapper = styled.div`

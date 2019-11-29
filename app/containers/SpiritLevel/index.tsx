@@ -44,7 +44,7 @@ export default function SpiritLevel(props: Props) {
   useEffect(() => {
     setTimeout(() => {
       if (!isMobile) {
-        alert(`Spirit Level works only on mobiles devices`);
+        alert(`Hozitontal Leveling works only on mobiles devices`);
       }
       setIsDescriptionOpen(
         getStorageItem(descriptionClickedKey) ? false : true,
@@ -75,7 +75,7 @@ export default function SpiritLevel(props: Props) {
         <Wrapper>
           <Header>
             <HeaderIcon iconType="spirit_level" />
-            <span>Spirit Level</span>
+            <span>Horizontal Leveling</span>
           </Header>
           <CustomExpandableTextArea
             height={500}
