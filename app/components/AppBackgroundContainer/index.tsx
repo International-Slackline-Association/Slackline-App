@@ -36,6 +36,7 @@ const ContentSection = styled.div`
   align-items: center;
   flex: 1;
   overflow-y: scroll;
+  overflow-x: visible;
   ${media.desktop`
     align-items: flex-start;
     padding: 2rem 2rem 0rem 3em;
@@ -51,8 +52,6 @@ const Wrapper = styled.div`
     flex-direction: row;
     min-height: auto;
     max-height: 100vh;
-
-    /* overflow: hidden; */
   `}
 `;
 

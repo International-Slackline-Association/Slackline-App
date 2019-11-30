@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import styled, { css } from '../../styles/styled-components';
 import media from '../../styles/media';
+import { AddHomeButtonToolTip } from 'components/Tooltips/AddHomeButtonTooltip';
 
 interface Props {}
 
@@ -8,8 +9,11 @@ function Description(props: Props) {
   return (
     <Wrapper>
       <Span>
-        Collection of the tools and resources you need |
-        <BoldSpan> access offline</BoldSpan>
+        Tools and resources for slackliners |
+        <BoldSpan>
+          {' '}
+          access offline <AddHomeButtonToolTip />
+        </BoldSpan>
       </Span>
     </Wrapper>
   );

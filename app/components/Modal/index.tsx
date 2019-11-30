@@ -10,6 +10,7 @@ interface Props {
   isTransparentBackground?: boolean;
   allowEvents?: boolean;
   z?: number;
+  backgroundClicked?: () => void;
   children: React.ReactNode;
 }
 const Portal = (props: Props) => {
@@ -17,12 +18,17 @@ const Portal = (props: Props) => {
   let render = props.children;
   if (props.isTransparentBackground) {
     render = (
-      <Background allowEvents={props.allowEvents} z={props.z}>
+      <Background onClick={toggle} allowEvents={props.allowEvents} z={props.z}>
         {props.children}
       </Background>
     );
   }
 
+  function toggle(e: any) {
+    if (props.backgroundClicked) {
+      props.backgroundClicked();
+    }
+  }
   return createPortal(render, target);
 };
 

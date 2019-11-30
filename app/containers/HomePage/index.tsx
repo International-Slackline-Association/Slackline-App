@@ -12,6 +12,7 @@ import { isMobile } from 'react-device-detect';
 import { MainPageSectionItem } from './types';
 import { MainPageSection } from 'components/MainPageListItem/Section';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
+import { AddHomeButtonToolTip } from 'components/Tooltips/AddHomeButtonTooltip';
 
 interface Props extends RouteComponentProps {}
 
@@ -37,7 +38,9 @@ export default function HomePage(props: Props) {
         <TextSection>
           <Text>
             Tools and resources for slackliners <br />
-            <Text style={{ fontWeight: 'bold' }}>ACCESS OFFLINE</Text>
+            <Text style={{ fontWeight: 'bold' }}>
+              ACCESS OFFLINE <AddHomeButtonToolTip />
+            </Text>
           </Text>
         </TextSection>
         <ItemsWrapper>
