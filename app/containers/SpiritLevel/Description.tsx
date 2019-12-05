@@ -11,20 +11,26 @@ function Component(props: Props) {
       <Text>
         <p>
           <strong>
-            <span style={{ color: themeContext.brand }}>Horizontal Leveling</span>
+            <span style={{ color: themeContext.brand }}>
+              Horizontal Leveling
+            </span>
             &nbsp;
           </strong>
-          is a tool which lets you level your anchors with a camera.<br />
+          uses your device's camera to level your anchors.
           <br />
-          <strong>*</strong> It only works with the device in the {' '}
+          <br />
+        </p>
+        <h3>Disclaimer</h3>
+        <p>
+          <strong>*</strong> It only works with device in the{' '}
           <strong>
             <span style={{ color: themeContext.brand }}>
               landscape orientation
             </span>
           </strong>{' '}
           (rotated to the left)
-        </p>
-        <p>
+          <br />
+          <br />
           <span>
             <span>
               <strong>*</strong>
@@ -32,13 +38,13 @@ function Component(props: Props) {
             &nbsp;
             <strong style={{ color: themeContext.brand }}>Optionally</strong>
           </span>
-          , you can find the{' '}
+          , you can determine{' '}
           <span style={{ color: themeContext.brand }}>
             <em>
-              <strong>difference between anchor heights</strong>
+              <strong>the height difference</strong>
             </em>
           </span>{' '}
-          (<em>how off-level they are</em>). To do that enter the line length below
+          of your anchors (<em>how off-level they are</em>); add the length of the line below to do so
         </p>
       </Text>
     </Wrapper>

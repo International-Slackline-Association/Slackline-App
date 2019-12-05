@@ -27,8 +27,7 @@ export function TooltipContent(props: Props) {
         <CloseButton onClick={props.onClose} />
         <Text>Add to Home Screen</Text>
         <SubText>
-          Adding this application to your homescreen as illustrated below will
-          make it work like a mobile app without the internet connection
+          Add this application to your phone as shown below to be able to use it offline"
         </SubText>
         <Img />
       </Wrapper>

@@ -102,7 +102,7 @@ export default function TensionCalculator() {
             type="number"
             label="Weight"
             // tslint:disable-next-line: max-line-length
-            description="* The weight of the person in the middle of the line (include the line weight for the longer lines)"
+            description="* Weight of the person in the middle of the line (include the weight of the webbing for the longer lines)"
             onChange={updateWeightValue}
             value={weightString}
           />

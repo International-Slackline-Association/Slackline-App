@@ -93,19 +93,19 @@ function Component(props: Props) {
         text = 'Very low';
         color = '#951212';
       }
-      if (angle > 5) {
+      if (angle > 4) {
         text = 'Low';
         color = 'red';
       }
-      if (angle > 8) {
+      if (angle > 6) {
         text = 'Moderate';
         color = '';
       }
-      if (angle > 10) {
+      if (angle > 8) {
         text = 'High';
         color = 'green';
       }
-      if (angle > 15) {
+      if (angle > 12) {
         text = 'Very High';
         color = 'green';
       }

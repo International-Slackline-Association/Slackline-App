@@ -12,8 +12,8 @@ function Component(props: Props) {
     <Wrapper>
       <Text>
         <p>
-          <strong>Length Measurer </strong> is a tool for measuring horizontal
-          length of a line with a{' '}
+          <strong>The Length Measurer </strong> is a tool for determining the horizontal
+          length of a line using a{' '}
           <HighlightedText>known short distance.</HighlightedText>
           <br />
         </p>
@@ -33,7 +33,7 @@ function Component(props: Props) {
         <Illustration3 />
         <span>
           Start measuring the length. The angles will be calculated based on
-          your input to form the triangle
+          your input
         </span>
       </IllustrationWrapper>
       <Text>
@@ -43,20 +43,14 @@ function Component(props: Props) {
           <HighlightedText>known distance </HighlightedText>increases
         </p>
         <p>
-          <strong>-</strong> You can achieve higher accuracy when you are 90°
-          degrees (perpendicular to the line axis) as shown in the illustrations
+          <strong>-</strong> You get the highest degree of accuracy when you are 90°
+          degrees (perpendicular to the line) as shown in the illustrations
         </p>
-        <h3>Assumptions</h3>
+        <h3>Disclaimer</h3>
         <p>
           <strong>1 -</strong> Your known length must be{' '}
-          <HighlightedText>very accurate</HighlightedText>. The calculation
-          margins are very small, due to this even 10cm errors can cause an
-          incorrect measurement
-        </p>
-        <p>
-          <strong>2-</strong> Your known length should be{' '}
-          <HighlightedText>at least 15%</HighlightedText> of the gap length you
-          are measuring for accurate measurement.
+          <HighlightedText>accurate</HighlightedText>. The margins of calculation
+          are very small, errors as small as 10cm can cause incorrect measurements
         </p>
       </Text>
     </Wrapper>
