@@ -4,6 +4,7 @@ import media from '../../styles/media';
 import AppHeader from 'components/AppHeader';
 import { BackgroundPattern } from './BackgroundPattern';
 import AppFooter from 'components/AppFooter';
+import { hideScrollBar } from 'styles/mixins';
 
 interface Props {
   children?: ReactNode;
@@ -37,6 +38,7 @@ const ContentSection = styled.div`
   flex: 1;
   overflow-y: scroll;
   overflow-x: visible;
+  ${hideScrollBar};
   ${media.desktop`
     align-items: flex-start;
     padding: 2rem 2rem 0rem 3em;

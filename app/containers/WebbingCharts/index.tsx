@@ -41,6 +41,7 @@ import {
 import { Legend } from './Legend';
 import { generateChart } from './chartGenerator';
 import { CrosshairView } from './CrosshairView';
+import { hideScrollBar } from 'styles/mixins';
 
 const chartTypes: ChartType[] = ['Stretch', 'Weight', 'Price', 'MBS'];
 const initialChartData = generateInitialChartData();
@@ -297,6 +298,7 @@ const ChartWrapper = styled.div`
   justify-content: flex-start;
   width: 100%;
   overflow: scroll;
+  ${hideScrollBar};
   ${media.desktop`
     flex-direction: row;
   `};

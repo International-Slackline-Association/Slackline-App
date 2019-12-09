@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from 'react';
 import styled from 'styles/styled-components';
 import media from 'styles/media';
 import CaretIcon from '../svg/caret.svg';
-import { touchableOpacity } from 'styles/mixins';
+import { touchableOpacity, hideScrollBar } from 'styles/mixins';
 
 interface Props {
   className?: string;
@@ -55,6 +55,7 @@ const TextArea = styled.div<{ isOpen: boolean, height: number }>`
   margin: 0.5rem 0 0.5rem 0;
   border-radius: 0.5rem;
   overflow: ${props => (props.isOpen ? 'scroll' : 'hidden')};
+  ${hideScrollBar};
   background-color: ${props => props.theme.surfaceTransparent};
 `;
 

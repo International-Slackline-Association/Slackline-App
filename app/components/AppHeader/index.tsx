@@ -50,6 +50,7 @@ const InnerWrapper = styled.div`
   flex-direction: column;
   flex-grow: 1;
   position: relative;
+  overflow-y: hidden;
   ${media.desktop`
     padding: 2rem 0rem 2rem 4rem;
   `};

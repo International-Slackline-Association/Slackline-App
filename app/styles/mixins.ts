@@ -1,5 +1,6 @@
 import { css } from './styled-components';
 import { transitions } from 'polished';
+import media from './media';
 
 export const fontFamily = css`
   font-family: 'metropolis', Arial, Helvetica, sans-serif;
@@ -52,4 +53,12 @@ export const flexCoverCenter = css`
   align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+export const hideScrollBar = css`
+  ${media.desktop`
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }`};
 `;
