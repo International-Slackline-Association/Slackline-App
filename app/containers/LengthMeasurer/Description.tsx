@@ -12,8 +12,8 @@ function Component(props: Props) {
     <Wrapper>
       <Text>
         <p>
-          <strong>The Length Measurer </strong> is a tool for determining the horizontal
-          length of a line using a{' '}
+          <strong>The Length Measurer </strong> is a tool for determining the
+          horizontal length of a line using a{' '}
           <HighlightedText>known short distance.</HighlightedText>
           <br />
         </p>
@@ -23,34 +23,41 @@ function Component(props: Props) {
       </Text>
       <IllustrationWrapper>
         <Illustration1 />
-        <span>Stand on the close anchor and mark the far anchor</span>
+        <span>
+          Stand on the close anchor and point your phone to the far anchor and
+          press the 'mark' button on the screen
+        </span>
       </IllustrationWrapper>
       <IllustrationWrapper>
         <Illustration2 />
-        <span>Stand on the measured point and mark the close anchor</span>
+        <span>
+          Walk away from the close anchor to the defined length using a
+          rope/sling and now point your phone to the close anchor and press
+          'mark'
+        </span>
       </IllustrationWrapper>
       <IllustrationWrapper>
         <Illustration3 />
         <span>
-          Start measuring the length. The angles will be calculated based on
-          your input
+          Now, measuring will be started. Point your phone to the far anchor to
+          measure the length
         </span>
       </IllustrationWrapper>
       <Text>
-        <h3>Tips</h3>
+        <h3>Tips & Disclaimer</h3>
         <p>
           <strong>-</strong> Accuracy increases as the{' '}
           <HighlightedText>known distance </HighlightedText>increases
         </p>
         <p>
-          <strong>-</strong> You get the highest degree of accuracy when you are 90°
-          degrees (perpendicular to the line) as shown in the illustrations
+          <strong>-</strong> You get the highest degree of accuracy when you are
+          90° degrees (perpendicular to the line) as shown in the illustrations
         </p>
-        <h3>Disclaimer</h3>
         <p>
-          <strong>1 -</strong> Your known length must be{' '}
-          <HighlightedText>accurate</HighlightedText>. The margins of calculation
-          are very small, errors as small as 10cm can cause incorrect measurements
+          <strong>-</strong> Your known length must be{' '}
+          <HighlightedText>accurate</HighlightedText>. The margins of
+          calculation are very small, errors as small as 10cm can cause
+          incorrect measurements
         </p>
       </Text>
     </Wrapper>

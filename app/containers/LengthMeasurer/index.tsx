@@ -93,7 +93,7 @@ export default function LengthMeasurer(props: Props) {
           <Input
             switchValues={['meters', 'feet']}
             type="number"
-            label="Distance to the close anchor"
+            label="Length of defined rope/sling"
             onChange={updateLengthValue}
             value={lengthString}
           />

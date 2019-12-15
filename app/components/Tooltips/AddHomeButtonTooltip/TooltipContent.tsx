@@ -5,7 +5,11 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import CancelIcon from 'components/svg/cancel.svg';
 import Image from './AddHomeScreenIllustration.png';
-import { touchableOpacity, elevatedShadow, flexCoverCenter } from 'styles/mixins';
+import {
+  touchableOpacity,
+  elevatedShadow,
+  flexCoverCenter,
+} from 'styles/mixins';
 
 interface Props {
   onClose: () => void;
@@ -27,9 +31,13 @@ export function TooltipContent(props: Props) {
         <CloseButton onClick={props.onClose} />
         <Text>Add to Home Screen</Text>
         <SubText>
-          Add this application to your phone as shown below to be able to use it offline"
+          Add this application to your phone as shown below to be able to use it
+          offline
         </SubText>
         <Img />
+        <SubTextSmall>
+         * Due to the iOS limitation, iPhone's camera DOES NOT work in home screen apps. Use Safari in this case.
+        </SubTextSmall>
       </Wrapper>
     </CSSTransition>
   );
@@ -45,6 +53,13 @@ const Text = styled.span`
 
 const SubText = styled.span`
   font-size: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+`;
+
+const SubTextSmall = styled.span`
+  font-size: 0.8rem;
+  font-style: italic;
   margin-top: 2rem;
   text-align: center;
 `;

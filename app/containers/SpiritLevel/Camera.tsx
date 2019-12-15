@@ -49,8 +49,9 @@ function Component(props: Props) {
   tiltAngle = Math.round(tiltAngle);
   offLevel =
     props.length &&
-    Math.round(
+    Utils.trimToDecimals(
       props.length * Math.tan(Utils.degreesToRadians(Math.abs(angle))),
+      1,
     );
 
   const marginAngleLimit = window.innerHeight / 2 - 100;

@@ -51,7 +51,7 @@ function Component(props: Props) {
           lower part of the device pointing to the slackliner.&nbsp;
         </p>
         <p>
-          <strong>3 -</strong> Your device is only titlted in one direction.
+          <strong>3 -</strong> Your device is only tilted in one direction.
         </p>
       </Text>
       <Illustration1 />

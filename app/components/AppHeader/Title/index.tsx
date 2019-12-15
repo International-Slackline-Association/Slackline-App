@@ -16,9 +16,12 @@ function Title() {
   }
   return (
     <Wrapper>
-      <Text onClick={goMainPage}>
+      <Text display={'desktop'} onClick={goMainPage}>
         Slackline <Linebreak />
         App <span>(Beta)</span>
+      </Text>
+      <Text display={'mobile'} onClick={goMainPage}>
+        Slackline.App <span>(Beta)</span>
       </Text>
       <ByWrapper>
         <Divider />
@@ -77,15 +80,16 @@ const ByWrapper = styled.div`
   }
 `;
 
-const Text = styled.a`
+const Text = styled.a<{ display: 'mobile' | 'desktop' }>`
   ${touchableOpacity}
-
+  display: ${props => (props.display === 'mobile' ? 'unset' : 'none')};
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   word-break: keep-all;
   ${media.desktop`
+    display: ${props => (props.display === 'desktop' ? 'unset' : 'none')};
     font-size: 2.5rem;
     text-align: left;
   `};

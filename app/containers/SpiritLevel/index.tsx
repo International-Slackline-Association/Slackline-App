@@ -36,7 +36,7 @@ export default function SpiritLevel(props: Props) {
     value: length,
     valueString: lengthString,
     updateValue: updateLengthValue,
-  } = useInput(storageKey, 'length');
+  } = useInput(storageKey, 'length', { type: 'float', decimalLimit: 1 });
 
   useCheckDeviceOrientation();
   const [orientation] = useDeviceOrientation();
@@ -89,13 +89,11 @@ export default function SpiritLevel(props: Props) {
             switchValues={['meters', 'feet']}
             type="number"
             label="Length (Optional)"
-            description={'The length of the gap'}
+            description={'The length of the slackline or the gap'}
             onChange={updateLengthValue}
             value={lengthString}
           />
-          <CustomButton onClick={cameraClicked}>
-            Open Camera
-          </CustomButton>
+          <CustomButton onClick={cameraClicked}>Open Camera</CustomButton>
 
           {isCameraActive && (
             <Portal isTransparentBackground={false}>
