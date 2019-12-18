@@ -22,6 +22,8 @@ const LengthMeasurer = lazy(() => import('../LengthMeasurer/Loadable'));
 
 const WebbingCharts = lazy(() => import('../WebbingCharts/Loadable'));
 const TensionCalculator = lazy(() => import('../TensionCalculator/Loadable'));
+const DistanceMeasurer = lazy(() => import('../DistanceMeasurer/Loadable'));
+
 const App: React.FC = () => {
   return (
     <Suspense fallback={null}>
@@ -36,6 +38,8 @@ const App: React.FC = () => {
 
         {/* <Route path={'/webbing-charts'} component={WebbingCharts} /> */}
         <Route path={'/unit-converter'} component={UnitConverter} />
+        <Route path={'/distance-measurer'} component={DistanceMeasurer} />
+
         <Route path={'/gyro'} component={Gyro} />
 
         <Route exact path={'/isa'} component={IsaHomePage} />

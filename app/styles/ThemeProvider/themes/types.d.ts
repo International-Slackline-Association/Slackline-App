@@ -8,6 +8,7 @@ interface IThemeInterface {
   text: string;
   textSecondary: string;
   textTertiary: string;
+  textInverted: string;
 
   // fill: string;
   // fillSecondary: string;
@@ -41,6 +42,7 @@ interface IThemeInterface {
   // textOnRedQuaternary: string;
 
   green: string;
+  grey: string;
   // greenSecondary: string;
   // greenTertiary: string;
   // greenQuaternary: string;

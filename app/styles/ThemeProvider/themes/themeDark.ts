@@ -8,6 +8,7 @@ const theme: IThemeInterface = {
   text: rgba(colors.white, 1),
   textSecondary: rgba(colors.white, 0.5),
   textTertiary: rgba(colors.white, 0.3),
+  textInverted: rgba(colors.black, 1),
 
   // fill: rgba(lighten(0.03, colors.primary), 1),
   // fillSecondary: rgba(lighten(0.03, colors.primary), 0.45),
@@ -41,6 +42,7 @@ const theme: IThemeInterface = {
   // textOnRedQuaternary: rgba(lighten(0.03, colors.red), 1),
 
   green: rgba(colors.green, 1),
+  grey: rgba(colors.grey, 1),
 
   // textOnGreen: rgba(colors.white, 1),
   // textOnGreenSecondary: rgba(colors.white, 1),

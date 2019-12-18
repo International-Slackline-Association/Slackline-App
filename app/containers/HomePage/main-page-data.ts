@@ -64,10 +64,10 @@ export const data: MainPageSection[] = [
       // },
       {
         icon: 'maps_distance',
-        path: '',
+        path: 'distance-measurer',
         title: 'Distance Measurer',
         subtitle: 'Measure distances between points using maps',
-        notAvailableStatus: 'Future Plan',
+        // notAvailableStatus: 'Future Plan',
       },
     ],
   },

@@ -131,6 +131,7 @@ module.exports = options => ({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       IDENTITY_POOL_ID: JSON.stringify(process.env.IDENTITY_POOL_ID),
       PINPOINT_APP_ID: JSON.stringify(process.env.PINPOINT_APP_ID),
+      MAPTILER_KEY: JSON.stringify(process.env.MAPTILER_KEY),
       REGION: JSON.stringify(process.env.REGION),
     }),
     new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
