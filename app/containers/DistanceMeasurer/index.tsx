@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AppBackgroundContainer from 'components/AppBackgroundContainer';
-import styled from 'styles/styled-components';
+import styled, { ThemeContext } from 'styles/styled-components';
 import media from 'styles/media';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
 import { DistanceMeasurerHelmet } from 'components/DocumentHeaders/DistanceMeasurerHelmet';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import turfLineString from 'turf-linestring';
+import turfLength from '@turf/length';
+
 import SVGLogo from './gps.svg?file';
-import CrosshairLogo from './crosshair_square.svg';
+import CrosshairLogo from './measure_crosshair.svg';
 
 import CancelIcon from 'components/svg/cancel.svg';
 
@@ -22,6 +25,7 @@ import { touchableOpacity, elevatedShadow } from 'styles/mixins';
 import { useDispatch } from 'react-redux';
 import { goBack } from 'connected-react-router';
 import { Button } from 'components/Button';
+import { Utils } from 'utils/index';
 
 const viewportStorageKey = 'distance-measurer-viewport';
 
@@ -50,6 +54,7 @@ export default function DistanceMeasurer() {
   const [selectedPointFrom, setSelectedPointFrom] = useState<SelectedPoint>();
 
   const dispatch = useDispatch();
+  const theme = useContext(ThemeContext);
 
   function onCancelClick() {
     dispatch(goBack());
@@ -82,6 +87,18 @@ export default function DistanceMeasurer() {
     );
   }
 
+  function measureDistance() {
+    if (selectedPointFrom) {
+      const line = turfLineString([
+        [selectedPointFrom?.longitude, selectedPointFrom?.latitude],
+        [viewport.longitude, viewport.latitude],
+      ]);
+      const length = turfLength(line, { units: 'meters' });
+      return length;
+    }
+    return undefined;
+  }
+
   const geojson = {
     type: 'FeatureCollection',
     features: [
@@ -90,26 +107,33 @@ export default function DistanceMeasurer() {
         geometry: {
           type: 'LineString',
           coordinates: [
-            [selectedPointFrom?.latitude, selectedPointFrom?.longitude],
-            [viewport.latitude, viewport.longitude],
+            [selectedPointFrom?.longitude, selectedPointFrom?.latitude],
+            [viewport.longitude, viewport.latitude],
           ],
         },
       },
     ],
   };
 
-  const CrosshairMarker = React.memo((data: { point: SelectedPoint }) => {
-    return (
-      <Marker
-        latitude={data.point.latitude}
-        longitude={data.point.longitude}
-        offsetLeft={-20}
-        offsetTop={-20}
-      >
-        <Crosshair />
-      </Marker>
-    );
-  });
+  const CrosshairMarker = React.memo(
+    (data: { point: SelectedPoint; length?: number }) => {
+      return (
+        <Marker
+          latitude={data.point.latitude}
+          longitude={data.point.longitude}
+          offsetLeft={-10}
+          offsetTop={-10}
+        >
+          <CrosshairWrapper>
+            {(data.length ?? 0) > 0 && (
+              <span>{Utils.trimToDecimals(data.length!, 0)} m</span>
+            )}
+            <Crosshair />
+          </CrosshairWrapper>
+        </Marker>
+      );
+    },
+  );
 
   return (
     <React.Fragment>
@@ -122,6 +146,12 @@ export default function DistanceMeasurer() {
           {...viewport}
           onViewportChange={onViewporChange}
         >
+          <CrosshairMarker
+            point={{
+              latitude: selectedPointFrom?.latitude || viewport.latitude,
+              longitude: selectedPointFrom?.longitude || viewport.longitude,
+            }}
+          />
           <ButtonWrapper>
             <TabButton
               onClick={onTabButtonClick(SelectedTab.From)}
@@ -136,15 +166,10 @@ export default function DistanceMeasurer() {
               To
             </TabButton>
           </ButtonWrapper>
+
           <GPSControl
             positionOptions={{ enableHighAccuracy: false }}
             trackUserLocation={true}
-          />
-          <CrosshairMarker
-            point={{
-              latitude: selectedPointFrom?.latitude || viewport.latitude,
-              longitude: selectedPointFrom?.longitude || viewport.longitude,
-            }}
           />
 
           {selectedTab === SelectedTab.To && (
@@ -154,13 +179,20 @@ export default function DistanceMeasurer() {
                   latitude: viewport.latitude,
                   longitude: viewport.longitude,
                 }}
+                length={measureDistance()}
               />
-              <Source id="my-data" type="geojson" data={geojson}>
+              <Source type="geojson" data={geojson}>
                 <Layer
                   id="LineString"
-                  type="LineString"
+                  type="line"
+                  layout={{
+                    'line-join': 'round',
+                    'line-cap': 'round',
+                  }}
                   paint={{
-                    'fill-color': '#007cbf',
+                    'line-color': theme.text,
+                    'line-width': 2,
+                    'line-dasharray': [2, 2],
                   }}
                 />
               </Source>
@@ -173,8 +205,26 @@ export default function DistanceMeasurer() {
 }
 
 const Crosshair = styled.img.attrs({ src: CrosshairLogo })`
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
+`;
+
+const CrosshairWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  overflow: visible;
+
+  & span {
+    font-weight: bold;
+    position: absolute;
+    /* top: -10px; */
+    bottom: 25px;
+    word-break: keep-all;
+    white-space: nowrap;
+    margin: auto;
+  }
 `;
 
 const ButtonWrapper = styled.div`

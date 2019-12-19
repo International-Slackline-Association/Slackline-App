@@ -71,6 +71,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
+    "@turf/length": "6.0.2",
     "aws-amplify": "^1.2.4",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
@@ -103,6 +104,7 @@
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
     "styled-components": "4.4.1",
+    "turf-linestring": "1.0.2",
     "typesafe-actions": "4.2.0"
   },
   "devDependencies": {
