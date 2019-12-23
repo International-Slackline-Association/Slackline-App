@@ -24,7 +24,6 @@ import { getStorageItem, setStorageItem } from 'utils/storage';
 import { touchableOpacity, elevatedShadow } from 'styles/mixins';
 import { useDispatch } from 'react-redux';
 import { goBack } from 'connected-react-router';
-import { Button } from 'components/Button';
 import { Utils } from 'utils/index';
 
 const viewportStorageKey = 'distance-measurer-viewport';
@@ -122,7 +121,7 @@ export default function DistanceMeasurer() {
           latitude={data.point.latitude}
           longitude={data.point.longitude}
           offsetLeft={-10}
-          offsetTop={-10}
+          offsetTop={-20}
         >
           <CrosshairWrapper>
             {(data.length ?? 0) > 0 && (
