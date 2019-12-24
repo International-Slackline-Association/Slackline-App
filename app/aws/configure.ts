@@ -7,7 +7,6 @@ const amplifyConfig = {
     region: process.env.REGION,
   },
 };
-Auth.configure(amplifyConfig);
 
 const analyticsConfig = {
   // OPTIONAL - disable Analytics if true
@@ -34,4 +33,7 @@ const analyticsConfig = {
   },
 };
 
-Analytics.configure(analyticsConfig);
+if (process.env.APP_ENV === 'production') {
+  Auth.configure(amplifyConfig);
+  Analytics.configure(analyticsConfig);
+}

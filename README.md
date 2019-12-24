@@ -10,7 +10,9 @@ Collection of slackline tools and resources
 
 # Getting Started
 
-### Running on local
+There are two environment: `test` and `production`. You should have either `.env.test` or `.env.production` file depending on the environment you want to run. Check `.env.example` file and fill it with the credentials and rename the file to the either of the environments mentioned above. 
+
+### Running on local (dev environment)
 
 Install dependencies
 

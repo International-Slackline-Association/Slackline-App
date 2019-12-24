@@ -129,6 +129,8 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      APP_ENV: JSON.stringify(process.env.APP_ENV),
+      RUN_ENV: JSON.stringify(process.env.RUN_ENV),
       IDENTITY_POOL_ID: JSON.stringify(process.env.IDENTITY_POOL_ID),
       PINPOINT_APP_ID: JSON.stringify(process.env.PINPOINT_APP_ID),
       MAPTILER_KEY: JSON.stringify(process.env.MAPTILER_KEY),
