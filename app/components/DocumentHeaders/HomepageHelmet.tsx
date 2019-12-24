@@ -27,7 +27,11 @@ function Component(props: Props) {
         property="og:image"
         content="https://slackline.app/images/OgImage.png"
       />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content="https://slackline.app" />
+      <meta property="og:image:secure_url" content="https://slackline.app" />
     </Helmet>
   );
 }

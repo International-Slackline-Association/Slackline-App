@@ -18,7 +18,6 @@ export const data: MainPageSection[] = [
         path: 'length-measurer',
         title: 'Length Measurer',
         subtitle: `Measure the length of the line with your camera`,
-        // notAvailableStatus: 'Available Soon',
         isMobileOnly: true,
       },
       {
@@ -26,7 +25,6 @@ export const data: MainPageSection[] = [
         path: 'spirit-level',
         title: 'Horizontal Leveling',
         subtitle: `Use your camera to level your anchors`,
-        // notAvailableStatus: 'Available Soon',
         isMobileOnly: true,
       },
     ],
@@ -67,7 +65,6 @@ export const data: MainPageSection[] = [
         path: 'distance-measurer',
         title: 'Distance Measurer',
         subtitle: 'Measure distances between points using maps',
-        // notAvailableStatus: 'Future Plan',
       },
     ],
   },
@@ -99,6 +96,13 @@ export const data: MainPageSection[] = [
         title: 'Recommended Articles',
         subtitle: 'Essential articles and publications in your pocket',
         notAvailableStatus: 'Future Plan',
+      },
+      {
+        icon: 'tutorial',
+        path: '',
+        title: 'Animated Tutorials',
+        subtitle: 'Simple animated tutorials for beginners',
+        notAvailableStatus: 'Available Soon',
       },
       // {
       //   icon: 'terminology_cheatsheet',
