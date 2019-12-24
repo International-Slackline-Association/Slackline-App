@@ -18,10 +18,10 @@ function Title() {
     <Wrapper>
       <Text display={'desktop'} onClick={goMainPage}>
         Slackline <Linebreak />
-        App <span>(Beta)</span>
+        App
       </Text>
       <Text display={'mobile'} onClick={goMainPage}>
-        Slackline.App <span>(Beta)</span>
+        Slackline.App
       </Text>
       <ByWrapper>
         <Divider />

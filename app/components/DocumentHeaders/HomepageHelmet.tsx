@@ -32,4 +32,4 @@ function Component(props: Props) {
   );
 }
 
-export const TensionCalculatorHelmet = memo(Component);
+export const HomepageHelmet = memo(Component);

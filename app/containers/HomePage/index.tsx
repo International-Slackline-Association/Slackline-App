@@ -13,6 +13,7 @@ import { MainPageSectionItem } from './types';
 import { MainPageSection } from 'components/MainPageListItem/Section';
 import { useVisitAnalytics } from 'utils/hooks/analytics';
 import { AddHomeButtonToolTip } from 'components/Tooltips/AddHomeButtonTooltip';
+import { HomepageHelmet } from 'components/DocumentHeaders/HomepageHelmet';
 
 interface Props extends RouteComponentProps {}
 
@@ -30,10 +31,7 @@ export default function HomePage(props: Props) {
 
   return (
     <AppBackgroundContainer>
-      <Helmet>
-        <title>Slackline App</title>
-        <meta name="description" content="Collection of tools and resources" />
-      </Helmet>
+      <HomepageHelmet/>
       <Wrapper>
         <TextSection>
           <Text>
