@@ -4,6 +4,12 @@ export const setStorageItem = (key: string, value: string): void => {
   }
 };
 
+export const removeStorageItem = (key: string): void => {
+  if (window.localStorage) {
+    localStorage.removeItem(key);
+  }
+};
+
 export const getStorageItem = (key: string): string | null => {
   return window.localStorage ? localStorage.getItem(key) || null : null;
 };
