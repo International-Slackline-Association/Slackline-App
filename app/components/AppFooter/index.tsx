@@ -20,14 +20,13 @@ const InnerWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  /* padding: 0.5rem; */
-  flex-grow: 1;
   height: 100%;
   width: 100%;
 `;
 const ClippedZone = styled.div`
   display: flex;
-  flex: 0 0 16%;
+  width: 100%;
+  height: 22px;
 `;
 
 const Wrapper = styled.div`
@@ -35,8 +34,6 @@ const Wrapper = styled.div`
   align-self: flex-end;
   flex-direction: column;
   width: 100%;
-  height: 155px;
-  flex: 0 0 auto;
   justify-content: flex-end;
   clip-path: polygon(0 16%, 33% 0, 100% 16%, 100% 100%, 0 100%);
   background: ${props =>

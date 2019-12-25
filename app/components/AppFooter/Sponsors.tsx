@@ -41,7 +41,7 @@ const AuthorText = styled.span`
 `;
 
 const SupportedByText = styled.span`
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin: 0.5rem 0rem 0.5rem 0rem;
 `;
 
@@ -50,18 +50,14 @@ const Logo = styled.a`
   justify-content: flex-start;
   /* flex: none; */
   /* width: 100%; */
-  height: 80%;
+  height: 3.5rem;
   margin: 0rem 1rem 0rem 0rem;
 `;
 const LogoWrapper = styled.div`
   display: flex;
-  /* margin-top: 1rem; */
-  /* padding: 0rem 1rem 1rem 1rem; */
   justify-content: center;
   align-items: center;
-  /* flex-wrap: wrap; */
-  height: 100%;
-  width: 100%;
+  margin: 0.2rem 0rem 0rem 0rem;
 `;
 
 const Wrapper = styled.div`
