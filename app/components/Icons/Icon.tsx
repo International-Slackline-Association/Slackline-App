@@ -25,6 +25,7 @@ import CellphoneTensionIcon from './svgs/cellphone_tension.svg';
 import CubeIcon from './svgs/cube.svg';
 import SpiritLevelIcon from './svgs/spirit_level.svg';
 import BookIcon from './svgs/book.svg';
+import LocationConnectionIcon from './svgs/location_connection.svg';
 
 export type IconType =
   | 'instructor_certificate'
@@ -50,6 +51,7 @@ export type IconType =
   | 'volume_calculator'
   | 'spirit_level'
   | 'terminology_cheatsheet'
+  | 'meetup'
   | 'default';
 
 interface Props {
@@ -129,6 +131,9 @@ export const Icon = memo((props: Props) => {
       break;
     case 'terminology_cheatsheet':
       src = BookIcon;
+      break;
+    case 'meetup':
+      src = LocationConnectionIcon;
       break;
     default:
       break;
