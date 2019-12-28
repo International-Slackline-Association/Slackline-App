@@ -23,6 +23,15 @@ function Sponsors(props: Props) {
         Designed & Developed by{' '}
         <a href={'//github.com/Can-Sahin'} target="_blank">
           Can Sahin
+        </a>{' '}
+        |{' '}
+        <a
+          href={
+            '//github.com/International-Slackline-Association/Slackline-App'
+          }
+          target="_blank"
+        >
+          Open Source
         </a>
       </AuthorText>{' '}
     </Wrapper>

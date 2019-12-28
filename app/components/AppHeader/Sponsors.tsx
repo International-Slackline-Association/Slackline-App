@@ -17,22 +17,25 @@ function Sponsors(props: Props) {
           href={'//www.slackline.org.tr'}
           target="_blank"
         >
-          <img
-            style={{ height: '100%'}}
-            src={turkishSlacklineIcon}
-          />
+          <img style={{ height: '100%' }} src={turkishSlacklineIcon} />
         </Logo>
         <Logo href={'//www.swiss-slackline.ch'} target="_blank">
-          <img
-            style={{ height: '100%'}}
-            src={swissSlacklineIcon}
-          />
+          <img style={{ height: '100%' }} src={swissSlacklineIcon} />
         </Logo>
       </LogoWrapper>
       <AuthorText>
         Designed & Developed by{' '}
         <a href={'//github.com/Can-Sahin'} target="_blank">
           Can Sahin
+        </a>{' '}
+        |{' '}
+        <a
+          href={
+            '//github.com/International-Slackline-Association/Slackline-App'
+          }
+          target="_blank"
+        >
+          Open Source
         </a>
       </AuthorText>
     </Wrapper>
