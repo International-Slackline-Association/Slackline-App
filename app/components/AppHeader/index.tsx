@@ -39,7 +39,7 @@ const BackButton = styled.img`
   top: 40%;
   left: 1rem;
   width: 2rem;
-  ${media.pwaInstalled`
+  ${media.isStandalone`
     display: flex;
   `};
 `;

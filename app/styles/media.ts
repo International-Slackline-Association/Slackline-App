@@ -9,7 +9,7 @@ const media = Object.keys(breakpoints).reduce(
       ...placeholders: any[]
     ) => {
       const l = label as keyof typeof breakpoints;
-      if (l === 'pwaInstalled') {
+      if (l === 'isStandalone') {
         return css`
           @media all and (display-mode: standalone) {
             ${css(literals, ...placeholders)};
@@ -31,6 +31,7 @@ const media = Object.keys(breakpoints).reduce(
     (l: TemplateStringsArray, ...p: any[]) => string
   >,
 );
+
 
 export function isMobile() {
   return window.innerWidth < breakpoints.desktop;

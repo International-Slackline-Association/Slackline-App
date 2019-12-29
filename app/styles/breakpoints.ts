@@ -1,11 +1,11 @@
 export interface IBreakpoints {
-  pwaInstalled: any;
+  isStandalone: any;
   mobile: number;
   desktop: number;
 }
 
 const breakpoints: IBreakpoints = {
-  pwaInstalled: true,
+  isStandalone: true,
   mobile: 0,
   desktop: 1024,
 };
