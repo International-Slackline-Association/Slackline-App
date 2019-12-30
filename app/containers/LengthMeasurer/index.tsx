@@ -19,7 +19,7 @@ import { useVisitAnalytics } from 'utils/hooks/analytics';
 import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation';
 import { Utils } from 'utils/index';
 
-const descriptionClickedKey = 'length-measurer-description-closed';
+// const descriptionClickedKey = 'length-measurer-description-closed';
 const storageKey = 'length-measurer-length';
 
 interface Props {}
@@ -49,15 +49,15 @@ export default function LengthMeasurer(props: Props) {
       if (!isMobile) {
         alert(`Length Measurer works with mobiles devices only`);
       }
-      setIsDescriptionOpen(
-        getStorageItem(descriptionClickedKey) ? false : true,
-      );
+      // setIsDescriptionOpen(
+      //   getStorageItem(descriptionClickedKey) ? false : true,
+      // );
     }, 200);
   }, []);
 
   function cameraClicked() {
     Utils.requestMotionEventPermission().then(granted => {
-      if (granted !== undefined && granted) {
+      if (granted !== undefined && !granted) {
         alert('You have disabled motion and orientation access!');
       }
     });
@@ -70,7 +70,7 @@ export default function LengthMeasurer(props: Props) {
   }
 
   function descriptionToggled(open: boolean) {
-    setStorageItem(descriptionClickedKey, 'true');
+    // setStorageItem(descriptionClickedKey, 'true');
   }
 
   return (

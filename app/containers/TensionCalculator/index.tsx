@@ -24,7 +24,7 @@ import { useCheckDeviceOrientation } from 'utils/hooks/useCheckDeviceOrientation
 import { Utils } from 'utils/index';
 import { TensionCalculatorHelmet } from 'components/DocumentHeaders/TensionCalculatorHelmet';
 
-const descriptionClickedKey = 'tension-calculator-description-closed';
+// const descriptionClickedKey = 'tension-calculator-description-closed';
 const weightKey = 'tension-calculator-weight';
 
 export default function TensionCalculator() {
@@ -44,9 +44,9 @@ export default function TensionCalculator() {
       if (!isMobile) {
         alert(`Tension Calculator works only on mobiles devices`);
       }
-      setIsDescriptionOpen(
-        getStorageItem(descriptionClickedKey) ? false : true,
-      );
+      // setIsDescriptionOpen(
+      //   getStorageItem(descriptionClickedKey) ? false : true,
+      // );
     }, 200);
   }, []);
 
@@ -64,7 +64,7 @@ export default function TensionCalculator() {
   }
   function measureClicked() {
     Utils.requestMotionEventPermission().then(granted => {
-      if (granted !== undefined && granted) {
+      if (granted !== undefined && !granted) {
         alert('You have disabled motion and orientation access!');
       }
     });
@@ -76,7 +76,7 @@ export default function TensionCalculator() {
   }
 
   function descriptionToggled(open: boolean) {
-    setStorageItem(descriptionClickedKey, 'true');
+    // setStorageItem(descriptionClickedKey, 'true');
   }
 
   return (

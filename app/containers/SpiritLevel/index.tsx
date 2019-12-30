@@ -54,7 +54,7 @@ export default function SpiritLevel(props: Props) {
 
   function cameraClicked() {
     Utils.requestMotionEventPermission().then(granted => {
-      if (granted !== undefined && granted) {
+      if (granted !== undefined && !granted) {
         alert('You have disabled motion and orientation access!');
       }
     });

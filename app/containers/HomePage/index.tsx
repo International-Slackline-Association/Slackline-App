@@ -66,8 +66,8 @@ export default function HomePage(props: Props) {
   }
 
   function onItemClick(item: MainPageSectionItem) {
-    return () => {
-      if (!item.isMobileOnly || isMobile) {
+    return (isDisabled?: boolean) => {
+      if (!isDisabled) {
         dispatch(push(item.path));
       }
     };

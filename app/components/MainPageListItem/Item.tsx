@@ -15,13 +15,13 @@ interface Props {
   notAvailableStatus?: string;
   isMobileOnly?: boolean;
   restrictedPlatform?: 'ios' | 'android' | 'iosPWA' | 'androidPWA';
-  onItemClick(): void;
+  onItemClick(isDisabled?: boolean): void;
 }
 
 function Item(props: Props) {
   function onItemClick(event: any) {
     event.preventDefault();
-    props.onItemClick();
+    props.onItemClick(isRestrictedIniOSPWA || !isAvailable);
   }
 
   const [isHoverState, setIsHoverState] = useState<boolean>();
@@ -84,14 +84,16 @@ const NotAvailableWrapper = styled.div<{ centerText?: boolean }>`
   & span {
     background-color: ${props => props.theme.background};
     ${props =>
-      !props.centerText &&
-      css`
-        transform: rotate(45deg);
-        position: absolute;
-        right: 0;
-      `}
-
-    font-size: 0.5rem;
+      props.centerText
+        ? css`
+            font-size: 0.8rem;
+          `
+        : css`
+            transform: rotate(45deg);
+            position: absolute;
+            right: 0;
+            font-size: 0.5rem;
+          `}
   }
 `;
 
