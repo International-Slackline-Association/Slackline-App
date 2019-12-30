@@ -1,10 +1,11 @@
 import React, { memo, useState } from 'react';
-import { isMobile } from 'react-device-detect';
-import styled from '../../styles/styled-components';
+import { isMobile, isIOS } from 'react-device-detect';
+import styled, { css } from '../../styles/styled-components';
 
 import { touchableOpacity } from 'styles/mixins';
 import { cover } from 'polished';
 import { Icon, IconType } from '../Icons/Icon';
+import { Utils } from 'utils/index';
 
 interface Props {
   icon: IconType;
@@ -13,6 +14,7 @@ interface Props {
   subtitle: string;
   notAvailableStatus?: string;
   isMobileOnly?: boolean;
+  restrictedPlatform?: 'ios' | 'android' | 'iosPWA' | 'androidPWA';
   onItemClick(): void;
 }
 
@@ -28,6 +30,10 @@ function Item(props: Props) {
     setIsHoverState(!isHoverState);
   }
   const isAvailable = props.notAvailableStatus === undefined;
+  const isRestrictedIniOSPWA =
+    props.restrictedPlatform === 'iosPWA' &&
+    isIOS &&
+    Utils.isInStandaloneMode();
   return (
     <Wrapper
       onClick={onItemClick}
@@ -43,12 +49,17 @@ function Item(props: Props) {
           </span>
         </NotAvailableWrapper>
       )}
+      {isRestrictedIniOSPWA && (
+        <NotAvailableWrapper centerText={true}>
+          <span>Only available in Safari browser.</span>
+        </NotAvailableWrapper>
+      )}
       <LeftIcon
         vertical={props.isIconVertical}
-        disabled={!isAvailable}
+        disabled={!isAvailable || isRestrictedIniOSPWA}
         iconType={props.icon}
       />
-      <TitleWrapper disabled={!isAvailable}>
+      <TitleWrapper disabled={!isAvailable || isRestrictedIniOSPWA}>
         <Title>{props.title}</Title>
         <Subtitle>{props.subtitle}</Subtitle>
       </TitleWrapper>
@@ -65,17 +76,21 @@ const LeftIcon = styled(Icon)<{ disabled?: boolean; vertical?: boolean }>`
   opacity: ${props => (props.disabled ? 0.3 : 1)};
 `;
 
-const NotAvailableWrapper = styled.div`
+const NotAvailableWrapper = styled.div<{ centerText?: boolean }>`
   ${cover()}
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: ${props => props.theme.overlay}; */
   & span {
     background-color: ${props => props.theme.background};
-    transform: rotate(45deg);
-    position: absolute;
-    right: 0;
+    ${props =>
+      !props.centerText &&
+      css`
+        transform: rotate(45deg);
+        position: absolute;
+        right: 0;
+      `}
+
     font-size: 0.5rem;
   }
 `;

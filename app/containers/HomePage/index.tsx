@@ -109,6 +109,7 @@ export default function HomePage(props: Props) {
                           subtitle={item.subtitle}
                           notAvailableStatus={item.notAvailableStatus}
                           isMobileOnly={item.isMobileOnly}
+                          restrictedPlatform={item.restrictedPlatform}
                         />
                         {index !== section.items.length - 1 && <Divider />}
                       </React.Fragment>

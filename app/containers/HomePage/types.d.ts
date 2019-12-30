@@ -14,6 +14,7 @@ export interface MainPageSectionItem {
   notAvailableStatus?: string;
   isIconVertical?: boolean;
   isMobileOnly?: boolean;
+  restrictedPlatform?: 'ios' | 'android' | 'iosPWA' | 'androidPWA';
 }
 /* --- STATE --- */
 interface State {

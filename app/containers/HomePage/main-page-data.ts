@@ -19,6 +19,7 @@ export const data: MainPageSection[] = [
         title: 'Length Measurer',
         subtitle: `Measure the length of the line with your camera`,
         isMobileOnly: true,
+        restrictedPlatform: 'iosPWA',
       },
       {
         icon: 'spirit_level',
@@ -26,6 +27,7 @@ export const data: MainPageSection[] = [
         title: 'Horizontal Leveling',
         subtitle: `Use your camera to level your anchors`,
         isMobileOnly: true,
+        restrictedPlatform: 'iosPWA',
       },
     ],
   },
