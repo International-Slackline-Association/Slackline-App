@@ -21,7 +21,7 @@ interface Props {
 function Item(props: Props) {
   function onItemClick(event: any) {
     event.preventDefault();
-    props.onItemClick(isRestrictedIniOSPWA || !isAvailable);
+    props.onItemClick(isRestrictedIniOSPWA || !isAvailable || (props.isMobileOnly && !isMobile));
   }
 
   const [isHoverState, setIsHoverState] = useState<boolean>();
