@@ -21,7 +21,9 @@ interface Props extends RouteComponentProps {}
 
 export default function HomePage(props: Props) {
   const [showInstallButton, setShowInstallButton] = useState(false);
-  const [showAccessOfflineTip, setShowAccessOfflineTip] = useState(true);
+  const [showAccessOfflineTip, setShowAccessOfflineTip] = useState(
+    !Utils.isInStandaloneMode(),
+  );
 
   const [deferredPrompt, setDeferredPrompt] = useState();
 
@@ -86,10 +88,12 @@ export default function HomePage(props: Props) {
               </Text>
             )}
           </Text>
-          <InstallButton show={showInstallButton} onClick={onInstallClick}>
-            Install
-            <img src={InstallIcon} />
-          </InstallButton>
+          {!Utils.isInStandaloneMode() && (
+            <InstallButton show={showInstallButton} onClick={onInstallClick}>
+              Install
+              <img src={InstallIcon} />
+            </InstallButton>
+          )}
         </TextSection>
         <ItemsWrapper>
           {data.map((section, index) => {
