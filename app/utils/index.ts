@@ -10,7 +10,6 @@ export namespace Utils {
         return decodeURIComponent(pair[1]);
       }
     }
-    // console.log('Query variable %s not found', variable);
     return '';
   }
   export function isNil(...value: any) {

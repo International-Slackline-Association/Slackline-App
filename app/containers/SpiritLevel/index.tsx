@@ -73,32 +73,32 @@ export default function SpiritLevel(props: Props) {
       <SpiritLevelHelmet />
       <AppBackgroundContainer showBackButton>
         <Wrapper>
-          <Header>
-            <HeaderIcon iconType="spirit_level" />
-            <span>Horizontal Leveling</span>
-          </Header>
-          <CustomExpandableTextArea
-            height={500}
-            isOpen={isDescriptionOpen}
-            toggled={descriptionToggled}
-            title={'Description & Instructions'}
-          >
-            <Description />
-          </CustomExpandableTextArea>
-          <Input
-            switchValues={['meters', 'feet']}
-            type="number"
-            label="Length (Optional)"
-            description={'The length of the slackline or the gap'}
-            onChange={updateLengthValue}
-            value={lengthString}
-          />
-          <CustomButton onClick={cameraClicked}>Open Camera</CustomButton>
-
-          {isCameraActive && (
-            <Portal isTransparentBackground={false}>
-              <Camera closeClicked={cancelCamera} length={length} />
-            </Portal>
+          {!isCameraActive ? (
+            <React.Fragment>
+              <Header>
+                <HeaderIcon iconType="spirit_level" />
+                <span>Horizontal Leveling</span>
+              </Header>
+              <CustomExpandableTextArea
+                height={500}
+                isOpen={isDescriptionOpen}
+                toggled={descriptionToggled}
+                title={'Description & Instructions'}
+              >
+                <Description />
+              </CustomExpandableTextArea>
+              <Input
+                switchValues={['meters', 'feet']}
+                type="number"
+                label="Length (Optional)"
+                description={'The length of the slackline or the gap'}
+                onChange={updateLengthValue}
+                value={lengthString}
+              />
+              <CustomButton onClick={cameraClicked}>Open Camera</CustomButton>
+            </React.Fragment>
+          ) : (
+            <Camera closeClicked={cancelCamera} length={length} />
           )}
         </Wrapper>
       </AppBackgroundContainer>
