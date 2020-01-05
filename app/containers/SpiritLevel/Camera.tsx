@@ -194,7 +194,9 @@ function Component(props: Props) {
         onInput={sliderOnChange}
         value={zoomValue}
         hidden={true}
-        style={{ display: screenOrientation === 'landscape' ? 'unset' : 'none' }}
+        style={{
+          visibility: screenOrientation === 'landscape' ? 'unset' : 'hidden',
+        }}
       />
     </Wrapper>
   );

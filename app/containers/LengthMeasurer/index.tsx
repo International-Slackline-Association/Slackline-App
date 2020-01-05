@@ -78,36 +78,36 @@ export default function LengthMeasurer(props: Props) {
       <LengthMeasurerHelmet />
       <AppBackgroundContainer showBackButton>
         <Wrapper>
-          <Header>
-            <HeaderIcon iconType="length_measurer" />
-            <span>Length Measurer</span>
-          </Header>
-          <CustomExpandableTextArea
-            height={750}
-            isOpen={isDescriptionOpen}
-            toggled={descriptionToggled}
-            title={'Description & Instructions'}
-          >
-            <Description />
-          </CustomExpandableTextArea>
-          <Input
-            switchValues={['meters', 'feet']}
-            type="number"
-            label="Length of defined rope/sling"
-            onChange={updateLengthValue}
-            value={lengthString}
-          />
-          <CustomButton
-            disabled={!length || length <= 0}
-            onClick={cameraClicked}
-          >
-            Open Camera
-          </CustomButton>
-
-          {isCameraActive && (
-            <Portal isTransparentBackground={false}>
-              <Camera closeClicked={cancelCamera} knownDistance={length!} />
-            </Portal>
+          {!isCameraActive ? (
+            <React.Fragment>
+              <Header>
+                <HeaderIcon iconType="length_measurer" />
+                <span>Length Measurer</span>
+              </Header>
+              <CustomExpandableTextArea
+                height={750}
+                isOpen={isDescriptionOpen}
+                toggled={descriptionToggled}
+                title={'Description & Instructions'}
+              >
+                <Description />
+              </CustomExpandableTextArea>
+              <Input
+                switchValues={['meters', 'feet']}
+                type="number"
+                label="Length of defined rope/sling"
+                onChange={updateLengthValue}
+                value={lengthString}
+              />
+              <CustomButton
+                disabled={!length || length <= 0}
+                onClick={cameraClicked}
+              >
+                Open Camera
+              </CustomButton>
+            </React.Fragment>
+          ) : (
+            <Camera closeClicked={cancelCamera} knownDistance={length!} />
           )}
         </Wrapper>
       </AppBackgroundContainer>

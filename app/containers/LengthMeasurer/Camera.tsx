@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useContext, useState, useEffect } from 'react';
 import styled, { ThemeContext } from 'styles/styled-components';
 import media from 'styles/media';
 import Webcam from 'react-webcam';
@@ -31,6 +31,16 @@ function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
   const [measuringState, setMeasuringState] = useState(MeasuringState.started);
 
+  const webcamRef = React.useRef<Webcam>(null);
+  const sliderRef = React.useRef<HTMLInputElement>(null);
+
+  const [zoomValue, setZoomValue] = useState(0);
+  useEffect(() => {
+    if (webcamRef) {
+      enableZoom();
+    }
+  }, [webcamRef, sliderRef]);
+
   let currentAlpha = 0;
   let tiltAngle = 0;
 
@@ -55,6 +65,42 @@ function Component(props: Props) {
 
   const videoConstraints = {
     facingMode: 'environment',
+  };
+  function enableZoom() {
+    setTimeout(() => {
+      if (webcamRef.current?.stream) {
+        const track = webcamRef.current.stream.getVideoTracks()[0];
+        const capabilities = track.getCapabilities() as any;
+        const settings = track.getSettings() as any;
+
+        // Check whether zoom is supported or not.
+        if (!('zoom' in capabilities)) {
+          console.log('Zoom is not supported by ' + track.label);
+          return;
+        }
+        const slider = sliderRef.current;
+        if (slider) {
+          slider.min = capabilities.zoom?.min;
+          slider.max = capabilities.zoom?.max;
+          slider.step = capabilities.zoom?.step;
+          slider.value = settings.zoom;
+          slider.hidden = false;
+          setZoomValue(settings.zoom);
+          slider.onchange = slider.oninput = (event: any) => {
+            if (event?.target?.value) {
+              setZoomValue(event.target.value);
+              track.applyConstraints({
+                advanced: [{ zoom: event.target.value } as any],
+              });
+            }
+          };
+        }
+      }
+    }, 1000);
+  }
+
+  const sliderOnChange = e => {
+    // setZoomValue(e.target.value);
   };
 
   function farAnchorAngle() {
@@ -137,6 +183,8 @@ function Component(props: Props) {
         audio={false}
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
+        ref={webcamRef}
+        onUserMedia={enableZoom}
       />
 
       <CloseButton onClick={props.closeClicked} />
@@ -208,9 +256,51 @@ function Component(props: Props) {
           <RotateDeviceModal />
         </Portal>
       )}
+      <ZoomSlider
+        ref={sliderRef}
+        onChange={sliderOnChange}
+        onInput={sliderOnChange}
+        value={zoomValue}
+        hidden={true}
+        style={{
+          visibility: screenOrientation === 'landscape' ? 'unset' : 'hidden',
+        }}
+      />
     </Wrapper>
   );
 }
+
+const ZoomSlider = styled.input.attrs({ type: 'range' })`
+  position: absolute;
+  margin: auto;
+  right: -2rem;
+  -webkit-appearance: none;
+  width: 50vh;
+  height: 4px;
+  border-radius: 10px;
+  background: ${props => props.theme.text};
+  outline: none;
+  transform-origin: center;
+  transform: rotate(-90deg);
+  pointer-events: visible;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: ${props => props.theme.text};
+    cursor: pointer;
+  }
+  &::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+  }
+`;
 
 const Crosshair = styled.img.attrs({
   src: CrosshairIcon,
@@ -283,7 +373,7 @@ const Text = styled.span`
   }
 `;
 
-const StyledCamera = styled(Webcam)`
+const StyledCamera = styled(Webcam)<{ ref?: any }>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -335,6 +425,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${props => props.theme.surface};
+  z-index: 2;
 `;
 
 export const Camera = memo(Component);
