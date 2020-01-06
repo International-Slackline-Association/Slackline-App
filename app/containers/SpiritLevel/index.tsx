@@ -58,10 +58,14 @@ export default function SpiritLevel(props: Props) {
         alert('You have disabled motion and orientation access!');
       }
     });
+    document.documentElement.requestFullscreen();
     setIsCameraActive(true);
   }
 
   function cancelCamera() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
     setIsCameraActive(false);
   }
 

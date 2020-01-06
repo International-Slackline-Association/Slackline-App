@@ -61,11 +61,14 @@ export default function LengthMeasurer(props: Props) {
         alert('You have disabled motion and orientation access!');
       }
     });
-
+    document.documentElement.requestFullscreen();
     setIsCameraActive(true);
   }
 
   function cancelCamera() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
     setIsCameraActive(false);
   }
 
