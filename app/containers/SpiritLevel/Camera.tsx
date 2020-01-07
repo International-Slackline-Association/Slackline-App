@@ -25,6 +25,8 @@ function Component(props: Props) {
   const sliderRef = React.useRef<HTMLInputElement>(null);
 
   const [zoomValue, setZoomValue] = useState(0);
+  const [cameraError, setCameraError] = useState<string>();
+
   useEffect(() => {
     if (webcamRef) {
       enableZoom();
@@ -126,6 +128,11 @@ function Component(props: Props) {
     // setZoomValue(e.target.value);
   };
 
+  function webcamError(error: string) {
+    alert('Cannot access to the camera: ' + error);
+    setCameraError(error);
+  }
+
   return (
     <Wrapper>
       <LoadingText>
@@ -138,6 +145,7 @@ function Component(props: Props) {
         videoConstraints={videoConstraints}
         ref={webcamRef}
         onUserMedia={enableZoom}
+        onUserMediaError={webcamError}
       />
 
       <CloseButton onClick={props.closeClicked} />

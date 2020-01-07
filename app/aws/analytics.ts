@@ -10,6 +10,10 @@ import {
 const analyticsQueueKey = 'analytics-queue';
 export class AppAnalytics {
   public static recordPageVisit(name: string) {
+    if (process.env.APP_ENV !== 'production') {
+      return;
+    }
+
     if (navigator.onLine) {
       this.flushRecordsQueue();
       Analytics.record({ name: name });

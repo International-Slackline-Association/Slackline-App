@@ -30,6 +30,7 @@ let closeAnchorAlpha = 0;
 function Component(props: Props) {
   const [orientation, screenOrientation] = useDeviceOrientation();
   const [measuringState, setMeasuringState] = useState(MeasuringState.started);
+  const [cameraError, setCameraError] = useState<string>();
 
   const webcamRef = React.useRef<Webcam>(null);
   const sliderRef = React.useRef<HTMLInputElement>(null);
@@ -102,6 +103,12 @@ function Component(props: Props) {
   const sliderOnChange = e => {
     // setZoomValue(e.target.value);
   };
+
+  function webcamError(error: string) {
+    alert('Cannot access to the camera: ' + error);
+    setCameraError(error);
+  }
+
 
   function farAnchorAngle() {
     if (farAnchorAlpha && currentAlpha) {
@@ -185,6 +192,8 @@ function Component(props: Props) {
         videoConstraints={videoConstraints}
         ref={webcamRef}
         onUserMedia={enableZoom}
+        onUserMediaError={webcamError}
+
       />
 
       <CloseButton onClick={props.closeClicked} />
