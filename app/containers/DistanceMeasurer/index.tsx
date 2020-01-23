@@ -141,7 +141,9 @@ export default function DistanceMeasurer() {
         <CloseButton onClick={onCancelClick} />
 
         <ReactMapGL
-          mapStyle={`https://api.maptiler.com/maps/hybrid/style.json?key=${process.env.MAPTILER_KEY}`}
+          mapStyle={`mapbox://styles/mapbox/satellite-streets-v9`}
+          // tslint:disable-next-line: max-line-length
+          mapboxApiAccessToken={`pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2p5aHB5bzEzMDI3MjNucWx4dmhvbW5wYyJ9.ZjLMWjog4imdrZhtheCOtA`}
           {...viewport}
           onViewportChange={onViewporChange}
         >

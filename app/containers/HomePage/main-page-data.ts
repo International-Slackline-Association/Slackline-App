@@ -92,24 +92,24 @@ export const data: MainPageSection[] = [
       },
     ],
   },
-  {
-    title: 'Community',
-    items: [
-      {
-        icon: 'meetup',
-        path: '',
-        title: 'Meetup',
-        subtitle: 'Find & organize slackline activities with people around you',
-        notAvailableStatus: 'Future Plan',
-        isIconVertical: true,
-      },
-      {
-        icon: 'maps',
-        path: '',
-        title: 'SlackMap',
-        subtitle: 'Simplified version of SlackMap spots',
-        notAvailableStatus: 'Future Plan',
-      },
-    ],
-  },
+  // {
+  //   title: 'Community',
+  //   items: [
+  //     {
+  //       icon: 'meetup',
+  //       path: '',
+  //       title: 'Meetup',
+  //       subtitle: 'Find & organize slackline activities with people around you',
+  //       notAvailableStatus: 'Future Plan',
+  //       isIconVertical: true,
+  //     },
+  //     {
+  //       icon: 'maps',
+  //       path: '',
+  //       title: 'SlackMap',
+  //       subtitle: 'Simplified version of SlackMap spots',
+  //       notAvailableStatus: 'Future Plan',
+  //     },
+  //   ],
+  // },
 ];
