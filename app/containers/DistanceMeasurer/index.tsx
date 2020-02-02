@@ -170,7 +170,8 @@ export default function DistanceMeasurer() {
 
           <GPSControl
             positionOptions={{ enableHighAccuracy: false }}
-            trackUserLocation={true}
+            showUserLocation={true}
+            // trackUserLocation={true}
           />
 
           {selectedTab === SelectedTab.To && (
