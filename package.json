@@ -86,7 +86,7 @@
     "ip": "1.1.5",
     "lodash": "4.17.15",
     "mapbox-gl": "^1.6.0",
-    "minimist": "1.2.0",
+    "minimist": "1.2.2",
     "polished": "^3.4.1",
     "react": "16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
