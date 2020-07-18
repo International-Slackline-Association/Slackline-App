@@ -84,7 +84,7 @@
     "intl": "1.2.5",
     "invariant": "2.2.4",
     "ip": "1.1.5",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "mapbox-gl": "^1.6.0",
     "minimist": "1.2.0",
     "polished": "^3.4.1",
